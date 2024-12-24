@@ -1,0 +1,38 @@
+{
+  "name": "@docuseal/api",
+  "version": "1.0.0",
+  "description": "JavaScript / TypeScript library for the DocuSeal API",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/docusealco/docuseal-js.git"
+  },
+  "keywords": [
+    "esignature",
+    "documents"
+  ],
+  "author": "DocuSeal <support@docuseal.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/docusealco/docuseal-js/issues"
+  },
+  "homepage": "https://www.docuseal.com/docs/api?lang=javascript",
+  "devDependencies": {
+    "@hey-api/openapi-ts": "^0.60.1",
+    "@types/node": "^22.10.2",
+    "esbuild": "^0.24.2",
+    "prettier": "^3.4.2",
+    "typescript": "^5.7.2"
+  },
+  "files": [
+    "dist",
+    "!dist/*.tsbuildinfo"
+  ],
+  "scripts": {
+    "build": "node esbuild.config.js && tsc --outDir dist",
+    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
+    "generate-types": "node generate-types.js && prettier src/types.ts --write"
+  }
+}
