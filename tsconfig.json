@@ -1,33 +1,18 @@
 {
   "compilerOptions": {
-    "target": "ES2020", // Specifies the ECMAScript target version for the compilation
-    "module": "CommonJS", // Use CommonJS modules, suitable for server-side Node.js
-    "lib": ["ES2020"], // Include only modern ECMAScript features, no DOM support
-    "outDir": "./dist", // Directory where the compiled files will be placed
-    "rootDir": "./src", // The root directory of the source files
-    "declaration": true, // Generate .d.ts files for type definitions
-    "esModuleInterop": true, // Enables compatibility between CommonJS and ES Modules
-    "forceConsistentCasingInFileNames": true, // Disallow inconsistent casing in file names
-    "allowImportingTsExtensions": true, // Allow importing TypeScript files without specifying the extension
-    "strict": true, // Enable all strict type checking options
-    "noImplicitAny": true, // Raise errors on expressions and declarations with an implied 'any' type
-    "strictNullChecks": true, // Ensure strict null and undefined handling
-    "strictFunctionTypes": true, // Enforce stricter checking of function types
-    "strictBindCallApply": true, // Ensure stricter checks on `bind`, `call`, and `apply` methods
-    "noUnusedLocals": true, // Report errors on unused local variables
-    "noUnusedParameters": true, // Report errors on unused function parameters
-    "noFallthroughCasesInSwitch": true, // Disallow fallthrough cases in switch statements
-    "noEmitOnError": true, // Prevent emitting JavaScript files if there are TypeScript errors
-    "skipLibCheck": true, // Skip type checking for declaration files
-    "moduleResolution": "Node", // Use Node.js-style module resolution
-    "resolveJsonModule": true, // Allow importing .json files as modules
-    "incremental": false, // Enable incremental compilation
-    "isolatedModules": true, // Ensure each file is treated as an isolated module
-    "noEmit": false, // Allow emitting JavaScript files
-    "emitDeclarationOnly": true, // Only generate .d.ts files
-    "sourceMap": true, // Generate source map files for debugging
-    "types": ["node"] // Include type definitions for Node.js
-  },
-  "include": ["src/**/*.ts", "src/**/*.tsx"], // Include all TypeScript files in the src directory
-  "exclude": ["node_modules", "dist"]
+    "target": "es2017",
+    "alwaysStrict": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strict": true,
+    "strictFunctionTypes": true,
+    "types": [
+      "node"
+    ],
+    "paths": {
+      "undici-types": [
+        "./node_modules/undici-types/index.d.ts"
+      ]
+    }
+  }
 }

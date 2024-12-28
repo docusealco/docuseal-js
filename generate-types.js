@@ -1,5 +1,5 @@
-import { createClient, defaultPlugins } from "@hey-api/openapi-ts";
-import fs from "fs";
+const { createClient, defaultPlugins } = require("@hey-api/openapi-ts");
+const fs = require("fs");
 
 createClient({
   client: "@hey-api/client-fetch",

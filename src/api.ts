@@ -1,4 +1,4 @@
-import { Http } from "./http.ts";
+import { Http } from "./http.js";
 import {
   GetTemplatesResponse,
   GetTemplateResponse,
@@ -31,7 +31,7 @@ import {
   UpdateSubmitterResponse,
   GetSubmittersQuery,
   GetSubmittersResponse,
-} from "./types.ts";
+} from "./types.js";
 
 interface DocusealConfig {
   key?: string;

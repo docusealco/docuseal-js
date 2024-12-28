@@ -1,8 +1,8 @@
-import https from "node:https";
-import http from "node:http";
+import * as https from "node:https";
+import * as http from "node:http";
 import { URL } from "node:url";
 
-import VERSION from "./version.ts";
+import VERSION from "./version.js";
 
 export interface HttpConfig {
   key: string;
@@ -81,10 +81,10 @@ export class Http {
 
       const transport = url.protocol === "https:" ? https : http;
 
-      const req = transport.request(options, (res) => {
+      const req = transport.request(options, (res: http.IncomingMessage) => {
         let body = "";
 
-        res.on("data", (chunk) => {
+        res.on("data", (chunk: string) => {
           body += chunk;
         });
 

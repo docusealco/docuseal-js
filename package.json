@@ -1,10 +1,10 @@
 {
   "name": "@docuseal/api",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "JavaScript / TypeScript library for the DocuSeal API",
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.esm.js",
-  "types": "dist/index.d.ts",
+  "main": "cjs/index.cjs.js",
+  "module": "esm/index.esm.js",
+  "types": "types/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/docusealco/docuseal-js.git"
@@ -22,16 +22,20 @@
   "devDependencies": {
     "@hey-api/openapi-ts": "^0.60.1",
     "@types/node": "^22.10.2",
-    "esbuild": "^0.24.2",
     "prettier": "^3.4.2",
-    "typescript": "^5.7.2"
+    "typescript": "^5.7.2",
+    "undici-types": "^7.2.0"
   },
   "files": [
-    "dist",
-    "!dist/*.tsbuildinfo"
+    "cjs",
+    "esm",
+    "types"
   ],
   "scripts": {
-    "build": "node esbuild.config.js && tsc --outDir dist",
+    "build": "rm -rf ./esm ./cjs ./types && yarn build-esm && yarn build-cjs && yarn build-types",
+    "build-esm": "tsc -p tsconfig.esm.json && echo '{\"type\":\"module\"}' > esm/package.json",
+    "build-cjs": "tsc -p tsconfig.cjs.json && echo '{\"type\":\"commonjs\"}' > cjs/package.json",
+    "build-types": "tsc -p tsconfig.esm.json --declaration --emitDeclarationOnly --outDir ./types",
     "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\"",
     "generate-types": "node generate-types.js && prettier src/types.ts --write"
   }
