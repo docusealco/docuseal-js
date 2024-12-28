@@ -1,13 +1,20 @@
 {
   "name": "@docuseal/api",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "JavaScript / TypeScript library for the DocuSeal API",
   "main": "cjs/index.cjs.js",
-  "module": "esm/index.esm.js",
+  "module": "esm/index.js",
   "types": "types/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/docusealco/docuseal-js.git"
+  },
+  "exports": {
+    "types": "./types/index.d.ts",
+    "default": {
+      "import": "./esm/index.js",
+      "require": "./cjs/index.cjs.js"
+    }
   },
   "keywords": [
     "esignature",
