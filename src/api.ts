@@ -40,7 +40,10 @@ interface DocusealConfig {
 }
 
 interface CreateSubmissionInitResponse {
+  id: number;
   submitters: CreateSubmissionResponse;
+  expired_at: string | null;
+  created_at: string;
 }
 
 export class DocusealApi {

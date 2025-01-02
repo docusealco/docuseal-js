@@ -819,14 +819,6 @@ export type CreateSubmissionResponse = Array<{
     [key: string]: unknown;
   };
   /**
-   * User agent string of the submitter.
-   */
-  ua: string | null;
-  /**
-   * IP address of the submitter.
-   */
-  ip: string | null;
-  /**
    * The date and time when the signing request was sent to the submitter.
    */
   sent_at: string | null;
@@ -872,6 +864,14 @@ export type CreateSubmissionResponse = Array<{
      */
     send_sms?: boolean;
   };
+  /**
+   * The role of the submitter in the signing process.
+   */
+  role: string;
+  /**
+   * The `src` URL value to embed the signing form or sign via a link.
+   */
+  embed_src: string;
 }>;
 
 export type GetSubmissionResponse = {
@@ -1172,14 +1172,6 @@ export type CreateSubmissionsFromEmailsResponse = Array<{
     [key: string]: unknown;
   };
   /**
-   * User agent string of the submitter.
-   */
-  ua: string | null;
-  /**
-   * IP address of the submitter.
-   */
-  ip: string | null;
-  /**
    * The date and time when the signing request was sent to the submitter.
    */
   sent_at: string | null;
@@ -1225,6 +1217,14 @@ export type CreateSubmissionsFromEmailsResponse = Array<{
      */
     send_sms?: boolean;
   };
+  /**
+   * The role of the submitter in the signing process.
+   */
+  role: string;
+  /**
+   * The `src` URL value to embed the signing form or sign via a link.
+   */
+  embed_src: string;
 }>;
 
 export type GetSubmitterResponse = {

@@ -746,7 +746,7 @@ export type CreateSubmissionData = {
             /**
              * Default value of the field. Use base64 encoded file or a public URL to the image file to set default signature or image fields.
              */
-            default_value?: string | number | Array<string | number>;
+            default_value?: string | number | boolean | Array<string | number | boolean>;
             /**
              * HTML field validation pattern string based on https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern specification.
              */
@@ -798,19 +798,11 @@ export type CreateSubmissionResponse = Array<{
         /**
          * Pre-filled value of the field.
          */
-        value: string | number | Array<string | number>;
+        value: string | number | boolean | Array<string | number | boolean>;
     }>;
     metadata: {
         [key: string]: unknown;
     };
-    /**
-     * User agent string of the submitter.
-     */
-    ua: string | null;
-    /**
-     * IP address of the submitter.
-     */
-    ip: string | null;
     /**
      * The date and time when the signing request was sent to the submitter.
      */
@@ -857,6 +849,14 @@ export type CreateSubmissionResponse = Array<{
          */
         send_sms?: boolean;
     };
+    /**
+     * The role of the submitter in the signing process.
+     */
+    role: string;
+    /**
+     * The `src` URL value to embed the signing form or sign via a link.
+     */
+    embed_src: string;
 }>;
 export type GetSubmissionResponse = {
     /**
@@ -970,7 +970,7 @@ export type GetSubmissionResponse = {
             /**
              * Pre-filled value of the field.
              */
-            value: string | number | Array<string | number>;
+            value: string | number | boolean | Array<string | number | boolean>;
         }>;
         /**
          * An array of documents that the submitter has to sign.
@@ -1147,19 +1147,11 @@ export type CreateSubmissionsFromEmailsResponse = Array<{
         /**
          * Pre-filled value of the field.
          */
-        value: string | number | Array<string | number>;
+        value: string | number | boolean | Array<string | number | boolean>;
     }>;
     metadata: {
         [key: string]: unknown;
     };
-    /**
-     * User agent string of the submitter.
-     */
-    ua: string | null;
-    /**
-     * IP address of the submitter.
-     */
-    ip: string | null;
     /**
      * The date and time when the signing request was sent to the submitter.
      */
@@ -1206,6 +1198,14 @@ export type CreateSubmissionsFromEmailsResponse = Array<{
          */
         send_sms?: boolean;
     };
+    /**
+     * The role of the submitter in the signing process.
+     */
+    role: string;
+    /**
+     * The `src` URL value to embed the signing form or sign via a link.
+     */
+    embed_src: string;
 }>;
 export type GetSubmitterResponse = {
     /**
@@ -1324,7 +1324,7 @@ export type GetSubmitterResponse = {
         /**
          * Pre-filled value of the field.
          */
-        value: string | number | Array<string | number>;
+        value: string | number | boolean | Array<string | number | boolean>;
     }>;
     /**
      * An array of documents that the submitter has to sign.
@@ -1408,7 +1408,7 @@ export type UpdateSubmitterData = {
         /**
          * Default value of the field. Use base64 encoded file or a public URL to the image file to set default signature or image fields.
          */
-        default_value?: string | number | Array<string | number>;
+        default_value?: string | number | boolean | Array<string | number | boolean>;
         /**
          * HTML field validation pattern string based on https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern specification.
          */
@@ -1487,7 +1487,7 @@ export type UpdateSubmitterResponse = {
         /**
          * Pre-filled value of the field.
          */
-        value: string | number;
+        value: string | number | boolean;
     }>;
     /**
      * An array of documents that the submitter has to sign.
@@ -1644,7 +1644,7 @@ export type GetSubmittersResponse = {
             /**
              * Pre-filled value of the field.
              */
-            value: string | number | Array<string | number>;
+            value: string | number | boolean | Array<string | number | boolean>;
         }>;
         /**
          * An array of documents that the submitter has to sign.
