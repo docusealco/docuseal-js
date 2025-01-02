@@ -8,7 +8,7 @@ Detailed documentation is available at [DocuSeal API Docs](https://www.docuseal.
 
 ## Requirements
 
-Node 12 or higher.
+Node 14 or higher.
 
 ## Installation
 
