@@ -441,6 +441,10 @@ export type GetSubmissionsQuery = {
      */
     q?: string;
     /**
+     * Filter submissions by status.
+     */
+    status?: "pending" | "completed" | "declined" | "expired";
+    /**
      * Filter submissions by template folder name.
      */
     template_folder?: string;
