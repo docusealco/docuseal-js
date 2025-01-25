@@ -754,10 +754,6 @@ export type CreateSubmissionData = {
        */
       name: string;
       /**
-       * Description of the field to be displayed on the signing form. Can accept markdown.
-       */
-      description?: string;
-      /**
        * Default value of the field. Use base64 encoded file or a public URL to the image file to set default signature or image fields.
        */
       default_value?:
@@ -766,6 +762,18 @@ export type CreateSubmissionData = {
         | boolean
         | Array<string | number | boolean>;
       /**
+       * Set `true` to make it impossible for the submitter to edit predefined field value.
+       */
+      readonly?: boolean;
+      /**
+       * Title of the field to be displayed on the signing form.
+       */
+      title?: string;
+      /**
+       * Description of the field to be displayed on the signing form. Can accept markdown.
+       */
+      description?: string;
+      /**
        * HTML field validation pattern string based on https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern specification.
        */
       validation_pattern?: string;
@@ -773,10 +781,36 @@ export type CreateSubmissionData = {
        * A custom message to display on pattern validation failure.
        */
       invalid_message?: string;
-      /**
-       * Set `true` to make it impossible for the submitter to edit predefined field value.
-       */
-      readonly?: boolean;
+      preferences?: {
+        /**
+         * Font size of the field value in pixels.
+         */
+        font_size?: number;
+        /**
+         * Font family of the field value.
+         */
+        font?: "Times" | "Helvetica" | "Courier";
+        /**
+         * Font color of the field value.
+         */
+        color?: "black" | "white" | "blue";
+        /**
+         * Text alignment of the field value.
+         */
+        align?: "left" | "center" | "right";
+        /**
+         * The data format for different field types.<br>- Date field: accepts formats such as DD/MM/YYYY (default: MM/DD/YYYY).<br>- Signature field: accepts drawn, typed, drawn_or_typed (default), or upload.<br>- Number field: accepts currency formats such as usd, eur, gbp.
+         */
+        format?: string;
+        /**
+         * Price of the field value. Only for payment fields.
+         */
+        price?: number;
+        /**
+         * Currency of the price field value. Only for payment fields.
+         */
+        currency?: "USD" | "EUR" | "GBP" | "CAD" | "AUD";
+      };
     }>;
   }>;
 };
@@ -1439,6 +1473,10 @@ export type UpdateSubmitterData = {
       | boolean
       | Array<string | number | boolean>;
     /**
+     * Set `true` to make it impossible for the submitter to edit predefined field value.
+     */
+    readonly?: boolean;
+    /**
      * HTML field validation pattern string based on https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern specification.
      */
     validation_pattern?: string;
@@ -1446,10 +1484,6 @@ export type UpdateSubmitterData = {
      * A custom message to display on pattern validation failure.
      */
     invalid_message?: string;
-    /**
-     * Set `true` to make it impossible for the submitter to edit predefined field value.
-     */
-    readonly?: boolean;
   }>;
 };
 
@@ -2418,7 +2452,37 @@ export type CreateTemplateFromDocxData = {
       /**
        * An array of option values for 'select' field type.
        */
-      options?: Array<number>;
+      options?: Array<string>;
+      preferences?: {
+        /**
+         * Font size of the field value in pixels.
+         */
+        font_size?: number;
+        /**
+         * Font family of the field value.
+         */
+        font?: "Times" | "Helvetica" | "Courier";
+        /**
+         * Font color of the field value.
+         */
+        color?: "black" | "white" | "blue";
+        /**
+         * Text alignment of the field value.
+         */
+        align?: "left" | "center" | "right";
+        /**
+         * The data format for different field types.<br>- Date field: accepts formats such as DD/MM/YYYY (default: MM/DD/YYYY).<br>- Signature field: accepts drawn, typed, drawn_or_typed (default), or upload.<br>- Number field: accepts currency formats such as usd, eur, gbp.
+         */
+        format?: string;
+        /**
+         * Price of the field value. Only for payment fields.
+         */
+        price?: number;
+        /**
+         * Currency of the price field value. Only for payment fields.
+         */
+        currency?: "USD" | "EUR" | "GBP" | "CAD" | "AUD";
+      };
     }>;
   }>;
 };
@@ -2677,12 +2741,46 @@ export type CreateTemplateFromPdfData = {
       /**
        * An array of option values for 'select' field type.
        */
-      options?: Array<number>;
+      options?: Array<string>;
+      preferences?: {
+        /**
+         * Font size of the field value in pixels.
+         */
+        font_size?: number;
+        /**
+         * Font family of the field value.
+         */
+        font?: "Times" | "Helvetica" | "Courier";
+        /**
+         * Font color of the field value.
+         */
+        color?: "black" | "white" | "blue";
+        /**
+         * Text alignment of the field value.
+         */
+        align?: "left" | "center" | "right";
+        /**
+         * The data format for different field types.<br>- Date field: accepts formats such as DD/MM/YYYY (default: MM/DD/YYYY).<br>- Signature field: accepts drawn, typed, drawn_or_typed (default), or upload.<br>- Number field: accepts currency formats such as usd, eur, gbp.
+         */
+        format?: string;
+        /**
+         * Price of the field value. Only for payment fields.
+         */
+        price?: number;
+        /**
+         * Currency of the price field value. Only for payment fields.
+         */
+        currency?: "USD" | "EUR" | "GBP" | "CAD" | "AUD";
+      };
     }>;
     /**
      * Remove PDF form fields from the document.
      */
     flatten?: boolean;
+    /**
+     * Pass `false` to disable the removal of {{text}} tags from the PDF. This can be used along with transparent text tags for faster and more robust PDF processing.
+     */
+    remove_tags?: boolean;
   }>;
 };
 
