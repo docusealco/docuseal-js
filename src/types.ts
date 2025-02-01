@@ -766,11 +766,11 @@ export type CreateSubmissionData = {
        */
       readonly?: boolean;
       /**
-       * Title of the field to be displayed on the signing form.
+       * Field title displayed to the user instead of the name, shown on the signing form. Supports Markdown.
        */
       title?: string;
       /**
-       * Description of the field to be displayed on the signing form. Can accept markdown.
+       * Field description displayed on the signing form. Supports Markdown.
        */
       description?: string;
       /**
@@ -2690,6 +2690,14 @@ export type CreateTemplateFromPdfData = {
        * Name of the field.
        */
       name?: string;
+      /**
+       * Field title displayed to the user instead of the name, shown on the signing form. Supports Markdown.
+       */
+      title?: string;
+      /**
+       * Field description displayed on the signing form. Supports Markdown.
+       */
+      description?: string;
       /**
        * Role name of the signer.
        */
