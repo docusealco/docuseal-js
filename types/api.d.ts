@@ -1,15 +1,16 @@
-import { GetTemplatesResponse, GetTemplateResponse, GetTemplatesQuery, CreateTemplateFromDocxResponse, CreateTemplateFromDocxData, CreateTemplateFromHtmlData, CreateTemplateFromHtmlResponse, CreateTemplateFromPdfData, CreateTemplateFromPdfResponse, MergeTemplateData, MergeTemplateResponse, CloneTemplateData, CloneTemplateResponse, UpdateTemplateData, UpdateTemplateResponse, AddDocumentToTemplateData, AddDocumentToTemplateResponse, ArchiveTemplateResponse, GetSubmissionsQuery, GetSubmissionsResponse, GetSubmissionResponse, CreateSubmissionData, CreateSubmissionResponse, CreateSubmissionsFromEmailsData, CreateSubmissionsFromEmailsResponse, ArchiveSubmissionResponse, GetSubmitterResponse, UpdateSubmitterData, UpdateSubmitterResponse, GetSubmittersQuery, GetSubmittersResponse } from "./types.js";
-interface DocusealConfig {
+import { GetTemplatesResponse, GetTemplateResponse, GetTemplatesQuery, CreateTemplateFromDocxResponse, CreateTemplateFromDocxData, CreateTemplateFromHtmlData, CreateTemplateFromHtmlResponse, CreateTemplateFromPdfData, CreateTemplateFromPdfResponse, MergeTemplateData, MergeTemplateResponse, CloneTemplateData, CloneTemplateResponse, UpdateTemplateData, UpdateTemplateResponse, AddDocumentToTemplateData, AddDocumentToTemplateResponse, ArchiveTemplateResponse, GetSubmissionsQuery, GetSubmissionsResponse, GetSubmissionResponse, CreateSubmissionData, CreateSubmissionResponse as CreateSubmissionLegacyResponse, CreateSubmissionsFromEmailsData, CreateSubmissionsFromEmailsResponse, ArchiveSubmissionResponse, GetSubmitterResponse, UpdateSubmitterData, UpdateSubmitterResponse, GetSubmittersQuery, GetSubmittersResponse } from "./types.js";
+export type { GetTemplatesResponse, GetTemplateResponse, GetTemplatesQuery, CreateTemplateFromDocxResponse, CreateTemplateFromDocxData, CreateTemplateFromHtmlData, CreateTemplateFromHtmlResponse, CreateTemplateFromPdfData, CreateTemplateFromPdfResponse, MergeTemplateData, MergeTemplateResponse, CloneTemplateData, CloneTemplateResponse, UpdateTemplateData, UpdateTemplateResponse, AddDocumentToTemplateData, AddDocumentToTemplateResponse, ArchiveTemplateResponse, GetSubmissionsQuery, GetSubmissionsResponse, GetSubmissionResponse, CreateSubmissionData, CreateSubmissionsFromEmailsData, CreateSubmissionsFromEmailsResponse, ArchiveSubmissionResponse, GetSubmitterResponse, UpdateSubmitterData, UpdateSubmitterResponse, GetSubmittersQuery, GetSubmittersResponse };
+export type DocusealConfig = {
     key?: string;
     url?: string;
     openTimeout?: number;
-}
-interface CreateSubmissionInitResponse {
+};
+export type CreateSubmissionResponse = {
     id: number;
-    submitters: CreateSubmissionResponse;
+    submitters: CreateSubmissionLegacyResponse;
     expired_at: string | null;
     created_at: string;
-}
+};
 export declare class DocusealApi {
     private http;
     key: string;
@@ -30,7 +31,7 @@ export declare class DocusealApi {
     permanentlyDeleteTemplate(id: number): Promise<ArchiveTemplateResponse>;
     listSubmissions(query?: GetSubmissionsQuery): Promise<GetSubmissionsResponse>;
     getSubmission(id: number): Promise<GetSubmissionResponse>;
-    createSubmission(data: CreateSubmissionData): Promise<CreateSubmissionInitResponse>;
+    createSubmission(data: CreateSubmissionData): Promise<CreateSubmissionResponse>;
     createSubmissionFromEmails(data: CreateSubmissionsFromEmailsData): Promise<CreateSubmissionsFromEmailsResponse>;
     archiveSubmission(id: number): Promise<ArchiveSubmissionResponse>;
     permanentlyDeleteSubmission(id: number): Promise<ArchiveSubmissionResponse>;
@@ -38,4 +39,3 @@ export declare class DocusealApi {
     getSubmitter(id: number): Promise<GetSubmitterResponse>;
     updateSubmitter(id: number, data: UpdateSubmitterData): Promise<UpdateSubmitterResponse>;
 }
-export {};

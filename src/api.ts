@@ -22,7 +22,7 @@ import {
   GetSubmissionsResponse,
   GetSubmissionResponse,
   CreateSubmissionData,
-  CreateSubmissionResponse,
+  CreateSubmissionResponse as CreateSubmissionLegacyResponse,
   CreateSubmissionsFromEmailsData,
   CreateSubmissionsFromEmailsResponse,
   ArchiveSubmissionResponse,
@@ -33,15 +33,48 @@ import {
   GetSubmittersResponse,
 } from "./types.js";
 
-interface DocusealConfig {
+export type {
+  GetTemplatesResponse,
+  GetTemplateResponse,
+  GetTemplatesQuery,
+  CreateTemplateFromDocxResponse,
+  CreateTemplateFromDocxData,
+  CreateTemplateFromHtmlData,
+  CreateTemplateFromHtmlResponse,
+  CreateTemplateFromPdfData,
+  CreateTemplateFromPdfResponse,
+  MergeTemplateData,
+  MergeTemplateResponse,
+  CloneTemplateData,
+  CloneTemplateResponse,
+  UpdateTemplateData,
+  UpdateTemplateResponse,
+  AddDocumentToTemplateData,
+  AddDocumentToTemplateResponse,
+  ArchiveTemplateResponse,
+  GetSubmissionsQuery,
+  GetSubmissionsResponse,
+  GetSubmissionResponse,
+  CreateSubmissionData,
+  CreateSubmissionsFromEmailsData,
+  CreateSubmissionsFromEmailsResponse,
+  ArchiveSubmissionResponse,
+  GetSubmitterResponse,
+  UpdateSubmitterData,
+  UpdateSubmitterResponse,
+  GetSubmittersQuery,
+  GetSubmittersResponse
+}
+
+export type DocusealConfig = {
   key?: string;
   url?: string;
   openTimeout?: number;
 }
 
-interface CreateSubmissionInitResponse {
+export type CreateSubmissionResponse = {
   id: number;
-  submitters: CreateSubmissionResponse;
+  submitters: CreateSubmissionLegacyResponse;
   expired_at: string | null;
   created_at: string;
 }
@@ -169,8 +202,8 @@ export class DocusealApi {
 
   async createSubmission(
     data: CreateSubmissionData,
-  ): Promise<CreateSubmissionInitResponse> {
-    return this.http.post<CreateSubmissionInitResponse>(
+  ): Promise<CreateSubmissionResponse> {
+    return this.http.post<CreateSubmissionResponse>(
       "/submissions/init",
       data,
     );
