@@ -80,7 +80,24 @@ export type GetTemplatesResponse = {
       /**
        * Type of the field (e.g., text, signature, date, initials).
        */
-      type: string;
+      type:
+        | "heading"
+        | "text"
+        | "signature"
+        | "initials"
+        | "date"
+        | "number"
+        | "image"
+        | "checkbox"
+        | "multiple"
+        | "file"
+        | "radio"
+        | "select"
+        | "cells"
+        | "stamp"
+        | "payment"
+        | "phone"
+        | "verification";
       /**
        * Indicates if the field is required.
        */
@@ -144,7 +161,7 @@ export type GetTemplatesResponse = {
     /**
      * Source of the template.
      */
-    source: string;
+    source: "native" | "api" | "embed";
     /**
      * Identifier of the template in the external system.
      */
@@ -268,7 +285,24 @@ export type GetTemplateResponse = {
     /**
      * Type of the field (e.g., text, signature, date, initials).
      */
-    type: string;
+    type:
+      | "heading"
+      | "text"
+      | "signature"
+      | "initials"
+      | "date"
+      | "number"
+      | "image"
+      | "checkbox"
+      | "multiple"
+      | "file"
+      | "radio"
+      | "select"
+      | "cells"
+      | "stamp"
+      | "payment"
+      | "phone"
+      | "verification";
     /**
      * Indicates if the field is required.
      */
@@ -332,7 +366,7 @@ export type GetTemplateResponse = {
   /**
    * Source of the template.
    */
-  source: string;
+  source: "native" | "api" | "embed";
   /**
    * Identifier of the template in the external system.
    */
@@ -471,7 +505,7 @@ export type GetSubmissionsResponse = {
     /**
      * The source of the submission.
      */
-    source: string;
+    source: "invite" | "bulk" | "api" | "embed" | "link";
     /**
      * Unique slug of the submission.
      */
@@ -479,11 +513,11 @@ export type GetSubmissionsResponse = {
     /**
      * The status of the submission.
      */
-    status: string;
+    status: "completed" | "declined" | "expired" | "pending";
     /**
      * The order of submitters.
      */
-    submitters_order: string;
+    submitters_order: "random" | "preserved";
     /**
      * Audit log file URL.
      */
@@ -571,7 +605,7 @@ export type GetSubmissionsResponse = {
       /**
        * The status of signing request for the submitter.
        */
-      status: string;
+      status: "completed" | "declined" | "opened" | "sent" | "awaiting";
       /**
        * The role of the submitter.
        */
@@ -734,7 +768,7 @@ export type CreateSubmissionData = {
       [key: string]: unknown;
     };
     /**
-     * Set `false` to disable signature request emails sending.
+     * Set `false` to disable signature request emails sending only for this submitter.
      */
     send_email?: boolean;
     /**
@@ -742,9 +776,23 @@ export type CreateSubmissionData = {
      */
     send_sms?: boolean;
     /**
+     * Specify Reply-To address to use in the notification emails for this submitter.
+     */
+    reply_to?: string;
+    /**
      * Submitter specific URL to redirect to after the submission completion.
      */
     completed_redirect_url?: string;
+    message?: {
+      /**
+       * Custom signature request email subject for the submitter.
+       */
+      subject?: string;
+      /**
+       * Custom signature request email body for the submitter. Can include the following variables: {{template.name}}, {{submitter.link}}, {{account.name}}.
+       */
+      body?: string;
+    };
     /**
      * A list of configurations for template document form fields.
      */
@@ -839,7 +887,7 @@ export type CreateSubmissionResponse = Array<{
   /**
    * The status of signing request for the submitter.
    */
-  status: string;
+  status: "completed" | "declined" | "opened" | "sent" | "awaiting";
   /**
    * An array of pre-filled values for the submission.
    */
@@ -924,11 +972,11 @@ export type GetSubmissionResponse = {
   /**
    * The source of the submission.
    */
-  source: string;
+  source: "invite" | "bulk" | "api" | "embed" | "link";
   /**
    * The order of submitters.
    */
-  submitters_order: string;
+  submitters_order: "random" | "preserved";
   /**
    * Audit log file URL.
    */
@@ -1012,7 +1060,7 @@ export type GetSubmissionResponse = {
     /**
      * The status of signing request for the submitter.
      */
-    status: string;
+    status: "completed" | "declined" | "opened" | "sent" | "awaiting";
     /**
      * An array of pre-filled values for the submission.
      */
@@ -1100,7 +1148,23 @@ export type GetSubmissionResponse = {
     /**
      * Event type.
      */
-    event_type: string;
+    event_type:
+      | "send_email"
+      | "send_reminder_email"
+      | "send_sms"
+      | "send_2fa_sms"
+      | "open_email"
+      | "click_email"
+      | "click_sms"
+      | "phone_verified"
+      | "start_form"
+      | "start_verification"
+      | "complete_verification"
+      | "view_form"
+      | "invite_party"
+      | "complete_form"
+      | "decline_form"
+      | "api_complete_form";
     /**
      * Date and time when the event was triggered.
      */
@@ -1119,7 +1183,7 @@ export type GetSubmissionResponse = {
   /**
    * The status of the submission.
    */
-  status: string;
+  status: "completed" | "declined" | "expired" | "pending";
   /**
    * Object with custom metadata.
    */
@@ -1192,7 +1256,7 @@ export type CreateSubmissionsFromEmailsResponse = Array<{
   /**
    * The status of signing request for the submitter.
    */
-  status: string;
+  status: "completed" | "declined" | "opened" | "sent" | "awaiting";
   /**
    * An array of pre-filled values for the submission.
    */
@@ -1321,7 +1385,7 @@ export type GetSubmitterResponse = {
   /**
    * Submitter's submission status.
    */
-  status: string;
+  status: "completed" | "declined" | "opened" | "sent" | "awaiting";
   /**
    * The unique applications-specific identifier
    */
@@ -1365,7 +1429,23 @@ export type GetSubmitterResponse = {
     /**
      * Event type.
      */
-    event_type: string;
+    event_type:
+      | "send_email"
+      | "send_reminder_email"
+      | "send_sms"
+      | "send_2fa_sms"
+      | "open_email"
+      | "click_email"
+      | "click_sms"
+      | "phone_verified"
+      | "start_form"
+      | "start_verification"
+      | "complete_verification"
+      | "view_form"
+      | "invite_party"
+      | "complete_form"
+      | "decline_form"
+      | "api_complete_form";
     /**
      * Date and time when the event was triggered.
      */
@@ -1664,7 +1744,7 @@ export type GetSubmittersResponse = {
     /**
      * Submitter's submission status.
      */
-    status: string;
+    status: "completed" | "declined" | "opened" | "sent" | "awaiting";
     /**
      * The unique applications-specific identifier
      */
@@ -1693,7 +1773,23 @@ export type GetSubmittersResponse = {
       /**
        * Event type.
        */
-      event_type: string;
+      event_type:
+        | "send_email"
+        | "send_reminder_email"
+        | "send_sms"
+        | "send_2fa_sms"
+        | "open_email"
+        | "click_email"
+        | "click_sms"
+        | "phone_verified"
+        | "start_form"
+        | "start_verification"
+        | "complete_verification"
+        | "view_form"
+        | "invite_party"
+        | "complete_form"
+        | "decline_form"
+        | "api_complete_form";
       /**
        * Date and time when the event was triggered.
        */
@@ -1833,7 +1929,24 @@ export type AddDocumentToTemplateResponse = {
     /**
      * Type of the field (e.g., text, signature, date, initials).
      */
-    type: string;
+    type:
+      | "heading"
+      | "text"
+      | "signature"
+      | "initials"
+      | "date"
+      | "number"
+      | "image"
+      | "checkbox"
+      | "multiple"
+      | "file"
+      | "radio"
+      | "select"
+      | "cells"
+      | "stamp"
+      | "payment"
+      | "phone"
+      | "verification";
     /**
      * Indicates if the field is required.
      */
@@ -1897,7 +2010,7 @@ export type AddDocumentToTemplateResponse = {
   /**
    * Source of the template.
    */
-  source: string;
+  source: "native" | "api" | "embed";
   /**
    * Identifier of the template in the external system.
    */
@@ -2021,7 +2134,24 @@ export type CloneTemplateResponse = {
     /**
      * Type of the field (e.g., text, signature, date, initials).
      */
-    type: string;
+    type:
+      | "heading"
+      | "text"
+      | "signature"
+      | "initials"
+      | "date"
+      | "number"
+      | "image"
+      | "checkbox"
+      | "multiple"
+      | "file"
+      | "radio"
+      | "select"
+      | "cells"
+      | "stamp"
+      | "payment"
+      | "phone"
+      | "verification";
     /**
      * Indicates if the field is required.
      */
@@ -2085,7 +2215,7 @@ export type CloneTemplateResponse = {
   /**
    * Source of the template.
    */
-  source: string;
+  source: "native" | "api" | "embed";
   /**
    * Identifier of the template in the external system.
    */
@@ -2249,7 +2379,24 @@ export type CreateTemplateFromHtmlResponse = {
     /**
      * Type of the field (e.g., text, signature, date, initials).
      */
-    type: string;
+    type:
+      | "heading"
+      | "text"
+      | "signature"
+      | "initials"
+      | "date"
+      | "number"
+      | "image"
+      | "checkbox"
+      | "multiple"
+      | "file"
+      | "radio"
+      | "select"
+      | "cells"
+      | "stamp"
+      | "payment"
+      | "phone"
+      | "verification";
     /**
      * Indicates if the field is required.
      */
@@ -2313,7 +2460,7 @@ export type CreateTemplateFromHtmlResponse = {
   /**
    * Source of the template.
    */
-  source: string;
+  source: "native" | "api" | "embed";
   /**
    * Identifier of the template in the external system.
    */
@@ -2409,20 +2556,23 @@ export type CreateTemplateFromDocxData = {
        * Type of the field (e.g., text, signature, date, initials).
        */
       type?:
+        | "heading"
         | "text"
         | "signature"
         | "initials"
         | "date"
+        | "number"
         | "image"
-        | "file"
-        | "payment"
-        | "stamp"
-        | "select"
         | "checkbox"
         | "multiple"
+        | "file"
         | "radio"
+        | "select"
         | "cells"
-        | "phone";
+        | "stamp"
+        | "payment"
+        | "phone"
+        | "verification";
       areas?: Array<{
         /**
          * X-coordinate of the field area.
@@ -2538,7 +2688,24 @@ export type CreateTemplateFromDocxResponse = {
     /**
      * Type of the field (e.g., text, signature, date, initials).
      */
-    type: string;
+    type:
+      | "heading"
+      | "text"
+      | "signature"
+      | "initials"
+      | "date"
+      | "number"
+      | "image"
+      | "checkbox"
+      | "multiple"
+      | "file"
+      | "radio"
+      | "select"
+      | "cells"
+      | "stamp"
+      | "payment"
+      | "phone"
+      | "verification";
     /**
      * Indicates if the field is required.
      */
@@ -2602,7 +2769,7 @@ export type CreateTemplateFromDocxResponse = {
   /**
    * Source of the template.
    */
-  source: string;
+  source: "native" | "api" | "embed";
   /**
    * Identifier of the template in the external system.
    */
@@ -2706,20 +2873,23 @@ export type CreateTemplateFromPdfData = {
        * Type of the field (e.g., text, signature, date, initials).
        */
       type?:
+        | "heading"
         | "text"
         | "signature"
         | "initials"
         | "date"
+        | "number"
         | "image"
-        | "file"
-        | "payment"
-        | "stamp"
-        | "select"
         | "checkbox"
         | "multiple"
+        | "file"
         | "radio"
+        | "select"
         | "cells"
-        | "phone";
+        | "stamp"
+        | "payment"
+        | "phone"
+        | "verification";
       areas?: Array<{
         /**
          * X-coordinate of the field area.
@@ -2843,7 +3013,24 @@ export type CreateTemplateFromPdfResponse = {
     /**
      * Type of the field (e.g., text, signature, date, initials).
      */
-    type: string;
+    type:
+      | "heading"
+      | "text"
+      | "signature"
+      | "initials"
+      | "date"
+      | "number"
+      | "image"
+      | "checkbox"
+      | "multiple"
+      | "file"
+      | "radio"
+      | "select"
+      | "cells"
+      | "stamp"
+      | "payment"
+      | "phone"
+      | "verification";
     /**
      * Indicates if the field is required.
      */
@@ -2907,7 +3094,7 @@ export type CreateTemplateFromPdfResponse = {
   /**
    * Source of the template.
    */
-  source: string;
+  source: "native" | "api" | "embed";
   /**
    * Identifier of the template in the external system.
    */
@@ -3035,7 +3222,24 @@ export type MergeTemplateResponse = {
     /**
      * Type of the field (e.g., text, signature, date, initials).
      */
-    type: string;
+    type:
+      | "heading"
+      | "text"
+      | "signature"
+      | "initials"
+      | "date"
+      | "number"
+      | "image"
+      | "checkbox"
+      | "multiple"
+      | "file"
+      | "radio"
+      | "select"
+      | "cells"
+      | "stamp"
+      | "payment"
+      | "phone"
+      | "verification";
     /**
      * Indicates if the field is required.
      */
@@ -3099,7 +3303,7 @@ export type MergeTemplateResponse = {
   /**
    * Source of the template.
    */
-  source: string;
+  source: "native" | "api" | "embed";
   /**
    * Identifier of the template in the external system.
    */
