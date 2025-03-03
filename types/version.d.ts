@@ -1,2 +1,2 @@
-declare const _default: "1.0.10";
+declare const _default: "1.0.11";
 export default _default;

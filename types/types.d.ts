@@ -46,6 +46,12 @@ export type GetTemplatesResponse = {
          */
         name: string;
         /**
+         * Template preferences.
+         */
+        preferences: {
+            [key: string]: unknown;
+        };
+        /**
          * List of documents attached to the template.
          */
         schema: Array<{
@@ -82,6 +88,44 @@ export type GetTemplatesResponse = {
              * Indicates if the field is required.
              */
             required: boolean;
+            preferences?: {
+                /**
+                 * Font size of the field value in pixels.
+                 */
+                font_size?: number;
+                /**
+                 * Font type of the field value.
+                 */
+                font_type?: string;
+                /**
+                 * Font family of the field value.
+                 */
+                font?: string;
+                /**
+                 * Font color of the field value.
+                 */
+                color?: string;
+                /**
+                 * Text alignment of the field value.
+                 */
+                align?: string;
+                /**
+                 * The data format for different field types.
+                 */
+                format?: string;
+                /**
+                 * Price value of the payment field. Only for payment fields.
+                 */
+                price?: number;
+                /**
+                 * Currency value of the payment field. Only for payment fields.
+                 */
+                currency?: string;
+                /**
+                 * Indicates if the field is masked on the document.
+                 */
+                mask?: boolean;
+            };
             /**
              * List of areas where the field is located in the document.
              */
@@ -269,6 +313,44 @@ export type GetTemplateResponse = {
          * Indicates if the field is required.
          */
         required: boolean;
+        preferences?: {
+            /**
+             * Font size of the field value in pixels.
+             */
+            font_size?: number;
+            /**
+             * Font type of the field value.
+             */
+            font_type?: string;
+            /**
+             * Font family of the field value.
+             */
+            font?: string;
+            /**
+             * Font color of the field value.
+             */
+            color?: string;
+            /**
+             * Text alignment of the field value.
+             */
+            align?: string;
+            /**
+             * The data format for different field types.
+             */
+            format?: string;
+            /**
+             * Price value of the payment field. Only for payment fields.
+             */
+            price?: number;
+            /**
+             * Currency value of the payment field. Only for payment fields.
+             */
+            currency?: string;
+            /**
+             * Indicates if the field is masked on the document.
+             */
+            mask?: boolean;
+        };
         /**
          * List of areas where the field is located in the document.
          */
@@ -766,6 +848,10 @@ export type CreateSubmissionData = {
              */
             readonly?: boolean;
             /**
+             * Set `true` to make the field required.
+             */
+            required?: boolean;
+            /**
              * Field title displayed to the user instead of the name, shown on the signing form. Supports Markdown.
              */
             title?: string;
@@ -787,6 +873,10 @@ export type CreateSubmissionData = {
                  */
                 font_size?: number;
                 /**
+                 * Font type of the field value.
+                 */
+                font_type?: "bold" | "italic" | "bold_italic";
+                /**
                  * Font family of the field value.
                  */
                 font?: "Times" | "Helvetica" | "Courier";
@@ -803,13 +893,17 @@ export type CreateSubmissionData = {
                  */
                 format?: string;
                 /**
-                 * Price of the field value. Only for payment fields.
+                 * Price value of the payment field. Only for payment fields.
                  */
                 price?: number;
                 /**
-                 * Currency of the price field value. Only for payment fields.
+                 * Currency value of the payment field. Only for payment fields.
                  */
                 currency?: "USD" | "EUR" | "GBP" | "CAD" | "AUD";
+                /**
+                 * Set `true` to make sensitive data masked on the document.
+                 */
+                mask?: number | boolean;
             };
         }>;
     }>;
@@ -1466,6 +1560,10 @@ export type UpdateSubmitterData = {
          */
         readonly?: boolean;
         /**
+         * Set `true` to make the field required.
+         */
+        required?: boolean;
+        /**
          * HTML field validation pattern string based on https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern specification.
          */
         validation_pattern?: string;
@@ -1822,6 +1920,44 @@ export type AddDocumentToTemplateResponse = {
          * Indicates if the field is required.
          */
         required: boolean;
+        preferences?: {
+            /**
+             * Font size of the field value in pixels.
+             */
+            font_size?: number;
+            /**
+             * Font type of the field value.
+             */
+            font_type?: string;
+            /**
+             * Font family of the field value.
+             */
+            font?: string;
+            /**
+             * Font color of the field value.
+             */
+            color?: string;
+            /**
+             * Text alignment of the field value.
+             */
+            align?: string;
+            /**
+             * The data format for different field types.
+             */
+            format?: string;
+            /**
+             * Price value of the payment field. Only for payment fields.
+             */
+            price?: number;
+            /**
+             * Currency value of the payment field. Only for payment fields.
+             */
+            currency?: string;
+            /**
+             * Indicates if the field is masked on the document.
+             */
+            mask?: boolean;
+        };
         /**
          * List of areas where the field is located in the document.
          */
@@ -2008,6 +2144,44 @@ export type CloneTemplateResponse = {
          * Indicates if the field is required.
          */
         required: boolean;
+        preferences?: {
+            /**
+             * Font size of the field value in pixels.
+             */
+            font_size?: number;
+            /**
+             * Font type of the field value.
+             */
+            font_type?: string;
+            /**
+             * Font family of the field value.
+             */
+            font?: string;
+            /**
+             * Font color of the field value.
+             */
+            color?: string;
+            /**
+             * Text alignment of the field value.
+             */
+            align?: string;
+            /**
+             * The data format for different field types.
+             */
+            format?: string;
+            /**
+             * Price value of the payment field. Only for payment fields.
+             */
+            price?: number;
+            /**
+             * Currency value of the payment field. Only for payment fields.
+             */
+            currency?: string;
+            /**
+             * Indicates if the field is masked on the document.
+             */
+            mask?: boolean;
+        };
         /**
          * List of areas where the field is located in the document.
          */
@@ -2223,6 +2397,44 @@ export type CreateTemplateFromHtmlResponse = {
          * Indicates if the field is required.
          */
         required: boolean;
+        preferences?: {
+            /**
+             * Font size of the field value in pixels.
+             */
+            font_size?: number;
+            /**
+             * Font type of the field value.
+             */
+            font_type?: string;
+            /**
+             * Font family of the field value.
+             */
+            font?: string;
+            /**
+             * Font color of the field value.
+             */
+            color?: string;
+            /**
+             * Text alignment of the field value.
+             */
+            align?: string;
+            /**
+             * The data format for different field types.
+             */
+            format?: string;
+            /**
+             * Price value of the payment field. Only for payment fields.
+             */
+            price?: number;
+            /**
+             * Currency value of the payment field. Only for payment fields.
+             */
+            currency?: string;
+            /**
+             * Indicates if the field is masked on the document.
+             */
+            mask?: boolean;
+        };
         /**
          * List of areas where the field is located in the document.
          */
@@ -2370,13 +2582,25 @@ export type CreateTemplateFromDocxData = {
              */
             name?: string;
             /**
+             * Type of the field (e.g., text, signature, date, initials).
+             */
+            type?: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification";
+            /**
              * Role name of the signer.
              */
             role?: string;
             /**
-             * Type of the field (e.g., text, signature, date, initials).
+             * Indicates if the field is required.
              */
-            type?: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification";
+            required?: boolean;
+            /**
+             * Field title displayed to the user instead of the name, shown on the signing form. Supports Markdown.
+             */
+            title?: string;
+            /**
+             * Field description displayed on the signing form. Supports Markdown.
+             */
+            description?: string;
             areas?: Array<{
                 /**
                  * X-coordinate of the field area.
@@ -2413,6 +2637,10 @@ export type CreateTemplateFromDocxData = {
                  */
                 font_size?: number;
                 /**
+                 * Font type of the field value.
+                 */
+                font_type?: "bold" | "italic" | "bold_italic";
+                /**
                  * Font family of the field value.
                  */
                 font?: "Times" | "Helvetica" | "Courier";
@@ -2429,13 +2657,17 @@ export type CreateTemplateFromDocxData = {
                  */
                 format?: string;
                 /**
-                 * Price of the field value. Only for payment fields.
+                 * Price value of the payment field. Only for payment fields.
                  */
                 price?: number;
                 /**
-                 * Currency of the price field value. Only for payment fields.
+                 * Currency value of the payment field. Only for payment fields.
                  */
                 currency?: "USD" | "EUR" | "GBP" | "CAD" | "AUD";
+                /**
+                 * Set `true` to make sensitive data masked on the document.
+                 */
+                mask?: number | boolean;
             };
         }>;
     }>;
@@ -2496,6 +2728,44 @@ export type CreateTemplateFromDocxResponse = {
          * Indicates if the field is required.
          */
         required: boolean;
+        preferences?: {
+            /**
+             * Font size of the field value in pixels.
+             */
+            font_size?: number;
+            /**
+             * Font type of the field value.
+             */
+            font_type?: string;
+            /**
+             * Font family of the field value.
+             */
+            font?: string;
+            /**
+             * Font color of the field value.
+             */
+            color?: string;
+            /**
+             * Text alignment of the field value.
+             */
+            align?: string;
+            /**
+             * The data format for different field types.
+             */
+            format?: string;
+            /**
+             * Price value of the payment field. Only for payment fields.
+             */
+            price?: number;
+            /**
+             * Currency value of the payment field. Only for payment fields.
+             */
+            currency?: string;
+            /**
+             * Indicates if the field is masked on the document.
+             */
+            mask?: boolean;
+        };
         /**
          * List of areas where the field is located in the document.
          */
@@ -2643,6 +2913,18 @@ export type CreateTemplateFromPdfData = {
              */
             name?: string;
             /**
+             * Type of the field (e.g., text, signature, date, initials).
+             */
+            type?: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification";
+            /**
+             * Role name of the signer.
+             */
+            role?: string;
+            /**
+             * Indicates if the field is required.
+             */
+            required?: boolean;
+            /**
              * Field title displayed to the user instead of the name, shown on the signing form. Supports Markdown.
              */
             title?: string;
@@ -2650,14 +2932,6 @@ export type CreateTemplateFromPdfData = {
              * Field description displayed on the signing form. Supports Markdown.
              */
             description?: string;
-            /**
-             * Role name of the signer.
-             */
-            role?: string;
-            /**
-             * Type of the field (e.g., text, signature, date, initials).
-             */
-            type?: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification";
             areas?: Array<{
                 /**
                  * X-coordinate of the field area.
@@ -2694,6 +2968,10 @@ export type CreateTemplateFromPdfData = {
                  */
                 font_size?: number;
                 /**
+                 * Font type of the field value.
+                 */
+                font_type?: "bold" | "italic" | "bold_italic";
+                /**
                  * Font family of the field value.
                  */
                 font?: "Times" | "Helvetica" | "Courier";
@@ -2710,13 +2988,17 @@ export type CreateTemplateFromPdfData = {
                  */
                 format?: string;
                 /**
-                 * Price of the field value. Only for payment fields.
+                 * Price value of the payment field. Only for payment fields.
                  */
                 price?: number;
                 /**
-                 * Currency of the price field value. Only for payment fields.
+                 * Currency value of the payment field. Only for payment fields.
                  */
                 currency?: "USD" | "EUR" | "GBP" | "CAD" | "AUD";
+                /**
+                 * Set `true` to make sensitive data masked on the document.
+                 */
+                mask?: number | boolean;
             };
         }>;
         /**
@@ -2785,6 +3067,44 @@ export type CreateTemplateFromPdfResponse = {
          * Indicates if the field is required.
          */
         required: boolean;
+        preferences?: {
+            /**
+             * Font size of the field value in pixels.
+             */
+            font_size?: number;
+            /**
+             * Font type of the field value.
+             */
+            font_type?: string;
+            /**
+             * Font family of the field value.
+             */
+            font?: string;
+            /**
+             * Font color of the field value.
+             */
+            color?: string;
+            /**
+             * Text alignment of the field value.
+             */
+            align?: string;
+            /**
+             * The data format for different field types.
+             */
+            format?: string;
+            /**
+             * Price value of the payment field. Only for payment fields.
+             */
+            price?: number;
+            /**
+             * Currency value of the payment field. Only for payment fields.
+             */
+            currency?: string;
+            /**
+             * Indicates if the field is masked on the document.
+             */
+            mask?: boolean;
+        };
         /**
          * List of areas where the field is located in the document.
          */
@@ -2918,6 +3238,10 @@ export type MergeTemplateData = {
      * Your application-specific unique string key to identify this template within your app.
      */
     external_id?: string;
+    /**
+     * An array of submitter role names to be used in the merged template.
+     */
+    roles?: Array<string>;
 };
 export type MergeTemplateResponse = {
     /**
@@ -2975,6 +3299,44 @@ export type MergeTemplateResponse = {
          * Indicates if the field is required.
          */
         required: boolean;
+        preferences?: {
+            /**
+             * Font size of the field value in pixels.
+             */
+            font_size?: number;
+            /**
+             * Font type of the field value.
+             */
+            font_type?: string;
+            /**
+             * Font family of the field value.
+             */
+            font?: string;
+            /**
+             * Font color of the field value.
+             */
+            color?: string;
+            /**
+             * Text alignment of the field value.
+             */
+            align?: string;
+            /**
+             * The data format for different field types.
+             */
+            format?: string;
+            /**
+             * Price value of the payment field. Only for payment fields.
+             */
+            price?: number;
+            /**
+             * Currency value of the payment field. Only for payment fields.
+             */
+            currency?: string;
+            /**
+             * Indicates if the field is masked on the document.
+             */
+            mask?: boolean;
+        };
         /**
          * List of areas where the field is located in the document.
          */
