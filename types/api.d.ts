@@ -30,7 +30,7 @@ export declare class DocusealApi {
     archiveTemplate(id: number): Promise<ArchiveTemplateResponse>;
     permanentlyDeleteTemplate(id: number): Promise<ArchiveTemplateResponse>;
     listSubmissions(query?: GetSubmissionsQuery): Promise<GetSubmissionsResponse>;
-    getSubmission(id: number): Promise<GetSubmissionResponse>;
+    getSubmission(id: number, include_combined_document_url?: boolean): Promise<GetSubmissionResponse>;
     createSubmission(data: CreateSubmissionData): Promise<CreateSubmissionResponse>;
     createSubmissionFromEmails(data: CreateSubmissionsFromEmailsData): Promise<CreateSubmissionsFromEmailsResponse>;
     archiveSubmission(id: number): Promise<ArchiveSubmissionResponse>;
