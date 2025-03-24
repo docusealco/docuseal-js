@@ -954,6 +954,10 @@ export type CreateSubmissionData = {
         mask?: number | boolean;
       };
     }>;
+    /**
+     * A list of roles for the submitter. Use this param to merge multiple roles into one submitter.
+     */
+    roles?: Array<string>;
   }>;
 };
 
@@ -1036,11 +1040,11 @@ export type CreateSubmissionResponse = Array<{
   external_id: string | null;
   preferences: {
     /**
-     * Set `false` to disable signature request emails sending.
+     * Indicates whether the signature request email should be sent.
      */
     send_email?: boolean;
     /**
-     * Set `true` to send signature request via phone number and SMS.
+     * Indicates whether the signature request should be sent via SMS.
      */
     send_sms?: boolean;
   };
@@ -1405,11 +1409,11 @@ export type CreateSubmissionsFromEmailsResponse = Array<{
   external_id: string | null;
   preferences: {
     /**
-     * Set `false` to disable signature request emails sending.
+     * Indicates whether the signature request email should be sent.
      */
     send_email?: boolean;
     /**
-     * Set `true` to send signature request via phone number and SMS.
+     * Indicates whether the signature request should be sent via SMS.
      */
     send_sms?: boolean;
   };
@@ -1439,7 +1443,7 @@ export type GetSubmitterResponse = {
   /**
    * The email address of the submitter.
    */
-  email: string;
+  email: string | null;
   /**
    * Unique key to be used in the form signing link and embedded form.
    */
@@ -1546,7 +1550,7 @@ export type GetSubmitterResponse = {
     event_timestamp: string;
   }>;
   /**
-   * An array of pre-filled values for the submission.
+   * An array of pre-filled values for the submitter.
    */
   values: Array<{
     /**
@@ -1620,6 +1624,12 @@ export type UpdateSubmitterData = {
    * Pass `true` to mark submitter as completed and auto-signed via API.
    */
   completed?: boolean;
+  /**
+   * Metadata object with additional submitter information.
+   */
+  metadata?: {
+    [key: string]: unknown;
+  };
   message?: {
     /**
      * Custom signature request email subject.
@@ -1662,6 +1672,44 @@ export type UpdateSubmitterData = {
      * A custom message to display on pattern validation failure.
      */
     invalid_message?: string;
+    preferences?: {
+      /**
+       * Font size of the field value in pixels.
+       */
+      font_size?: number;
+      /**
+       * Font type of the field value.
+       */
+      font_type?: "bold" | "italic" | "bold_italic";
+      /**
+       * Font family of the field value.
+       */
+      font?: "Times" | "Helvetica" | "Courier";
+      /**
+       * Font color of the field value.
+       */
+      color?: "black" | "white" | "blue";
+      /**
+       * Text alignment of the field value.
+       */
+      align?: "left" | "center" | "right";
+      /**
+       * The data format for different field types.<br>- Date field: accepts formats such as DD/MM/YYYY (default: MM/DD/YYYY).<br>- Signature field: accepts drawn, typed, drawn_or_typed (default), or upload.<br>- Number field: accepts currency formats such as usd, eur, gbp.
+       */
+      format?: string;
+      /**
+       * Price value of the payment field. Only for payment fields.
+       */
+      price?: number;
+      /**
+       * Currency value of the payment field. Only for payment fields.
+       */
+      currency?: "USD" | "EUR" | "GBP" | "CAD" | "AUD";
+      /**
+       * Set `true` to make sensitive data masked on the document.
+       */
+      mask?: number | boolean;
+    };
   }>;
 };
 
@@ -1693,15 +1741,15 @@ export type UpdateSubmitterResponse = {
   /**
    * The date and time when the submitter opened the signing form.
    */
-  opened_at?: string | null;
+  opened_at: string | null;
   /**
    * The date and time when the submitter completed the signing form.
    */
-  completed_at?: string | null;
+  completed_at: string | null;
   /**
    * The date and time when the submitter declined the signing form.
    */
-  declined_at?: string | null;
+  declined_at: string | null;
   /**
    * The date and time when the submitter was created.
    */
@@ -1717,11 +1765,31 @@ export type UpdateSubmitterResponse = {
   /**
    * Submitter phone number.
    */
-  phone?: string | null;
+  phone: string | null;
   /**
-   * An array of pre-filled values for the submission.
+   * Submitter's submission status.
    */
-  values?: Array<{
+  status: "completed" | "declined" | "opened" | "sent" | "awaiting";
+  /**
+   * The unique applications-specific identifier
+   */
+  external_id: string | null;
+  /**
+   * Metadata object with additional submitter information.
+   */
+  metadata: {
+    [key: string]: unknown;
+  };
+  /**
+   * Submitter preferences.
+   */
+  preferences: {
+    [key: string]: unknown;
+  };
+  /**
+   * An array of pre-filled values for the submitter.
+   */
+  values: Array<{
     /**
      * Document template field name.
      */
@@ -1729,12 +1797,12 @@ export type UpdateSubmitterResponse = {
     /**
      * Pre-filled value of the field.
      */
-    value: string | number | boolean;
+    value: string | number | boolean | Array<string | number | boolean>;
   }>;
   /**
    * An array of documents that the submitter has to sign.
    */
-  documents?: Array<{
+  documents: Array<{
     /**
      * Document name.
      */
@@ -1748,6 +1816,10 @@ export type UpdateSubmitterResponse = {
    * The role of the submitter in the signing process.
    */
   role: string;
+  /**
+   * The `src` URL value to embed the signing form or sign via a link.
+   */
+  embed_src: string;
 };
 
 export type GetSubmittersQuery = {
