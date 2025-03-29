@@ -196,8 +196,8 @@ export class DocusealApi {
     return this.http.get<GetSubmissionsResponse>("/submissions", query);
   }
 
-  async getSubmission(id: number): Promise<GetSubmissionResponse> {
-    return this.http.get<GetSubmissionResponse>(`/submissions/${id}`);
+  async getSubmission(id: number, include_combined_document_url = false): Promise<GetSubmissionResponse> {
+    return this.http.get<GetSubmissionResponse>(`/submissions/${id}${include_combined_document_url ? "?include=combined_document_url" : ""}`);
   }
 
   async createSubmission(
