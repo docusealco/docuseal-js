@@ -553,6 +553,10 @@ export type GetSubmissionsQuery = {
    */
   after?: number;
   /**
+   * Returns only archived submissions when `true` and only active submissions when `false`.
+   */
+  archived?: boolean;
+  /**
    * The unique identifier of the submission that marks the end of the list. It allows you to receive only submissions with an ID less than the specified value.
    */
   before?: number;
