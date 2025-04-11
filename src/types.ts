@@ -126,9 +126,13 @@ export type GetTemplatesResponse = {
          */
         color?: string;
         /**
-         * Text alignment of the field value.
+         * Horizontal alignment of the field text value.
          */
         align?: string;
+        /**
+         * Vertical alignment of the field text value.
+         */
+        valign?: string;
         /**
          * The data format for different field types.
          */
@@ -369,9 +373,13 @@ export type GetTemplateResponse = {
        */
       color?: string;
       /**
-       * Text alignment of the field value.
+       * Horizontal alignment of the field text value.
        */
       align?: string;
+      /**
+       * Vertical alignment of the field text value.
+       */
+      valign?: string;
       /**
        * The data format for different field types.
        */
@@ -937,9 +945,13 @@ export type CreateSubmissionData = {
          */
         color?: "black" | "white" | "blue";
         /**
-         * Text alignment of the field value.
+         * Horizontal alignment of the field text value.
          */
         align?: "left" | "center" | "right";
+        /**
+         * Vertical alignment of the field text value.
+         */
+        valign?: "top" | "center" | "bottom";
         /**
          * The data format for different field types.<br>- Date field: accepts formats such as DD/MM/YYYY (default: MM/DD/YYYY).<br>- Signature field: accepts drawn, typed, drawn_or_typed (default), or upload.<br>- Number field: accepts currency formats such as usd, eur, gbp.
          */
@@ -1694,9 +1706,13 @@ export type UpdateSubmitterData = {
        */
       color?: "black" | "white" | "blue";
       /**
-       * Text alignment of the field value.
+       * Horizontal alignment of the field text value.
        */
       align?: "left" | "center" | "right";
+      /**
+       * Vertical alignment of the field text value.
+       */
+      valign?: "top" | "center" | "bottom";
       /**
        * The data format for different field types.<br>- Date field: accepts formats such as DD/MM/YYYY (default: MM/DD/YYYY).<br>- Signature field: accepts drawn, typed, drawn_or_typed (default), or upload.<br>- Number field: accepts currency formats such as usd, eur, gbp.
        */
@@ -2143,9 +2159,13 @@ export type AddDocumentToTemplateResponse = {
        */
       color?: string;
       /**
-       * Text alignment of the field value.
+       * Horizontal alignment of the field text value.
        */
       align?: string;
+      /**
+       * Vertical alignment of the field text value.
+       */
+      valign?: string;
       /**
        * The data format for different field types.
        */
@@ -2386,9 +2406,13 @@ export type CloneTemplateResponse = {
        */
       color?: string;
       /**
-       * Text alignment of the field value.
+       * Horizontal alignment of the field text value.
        */
       align?: string;
+      /**
+       * Vertical alignment of the field text value.
+       */
+      valign?: string;
       /**
        * The data format for different field types.
        */
@@ -2669,9 +2693,13 @@ export type CreateTemplateFromHtmlResponse = {
        */
       color?: string;
       /**
-       * Text alignment of the field value.
+       * Horizontal alignment of the field text value.
        */
       align?: string;
+      /**
+       * Vertical alignment of the field text value.
+       */
+      valign?: string;
       /**
        * The data format for different field types.
        */
@@ -2921,9 +2949,13 @@ export type CreateTemplateFromDocxData = {
          */
         color?: "black" | "white" | "blue";
         /**
-         * Text alignment of the field value.
+         * Horizontal alignment of the field text value.
          */
         align?: "left" | "center" | "right";
+        /**
+         * Vertical alignment of the field text value.
+         */
+        valign?: "top" | "center" | "bottom";
         /**
          * The data format for different field types.<br>- Date field: accepts formats such as DD/MM/YYYY (default: MM/DD/YYYY).<br>- Signature field: accepts drawn, typed, drawn_or_typed (default), or upload.<br>- Number field: accepts currency formats such as usd, eur, gbp.
          */
@@ -3036,9 +3068,13 @@ export type CreateTemplateFromDocxResponse = {
        */
       color?: string;
       /**
-       * Text alignment of the field value.
+       * Horizontal alignment of the field text value.
        */
       align?: string;
+      /**
+       * Vertical alignment of the field text value.
+       */
+      valign?: string;
       /**
        * The data format for different field types.
        */
@@ -3288,9 +3324,13 @@ export type CreateTemplateFromPdfData = {
          */
         color?: "black" | "white" | "blue";
         /**
-         * Text alignment of the field value.
+         * Horizontal alignment of the field text value.
          */
         align?: "left" | "center" | "right";
+        /**
+         * Vertical alignment of the field text value.
+         */
+        valign?: "top" | "center" | "bottom";
         /**
          * The data format for different field types.<br>- Date field: accepts formats such as DD/MM/YYYY (default: MM/DD/YYYY).<br>- Signature field: accepts drawn, typed, drawn_or_typed (default), or upload.<br>- Number field: accepts currency formats such as usd, eur, gbp.
          */
@@ -3411,9 +3451,13 @@ export type CreateTemplateFromPdfResponse = {
        */
       color?: string;
       /**
-       * Text alignment of the field value.
+       * Horizontal alignment of the field text value.
        */
       align?: string;
+      /**
+       * Vertical alignment of the field text value.
+       */
+      valign?: string;
       /**
        * The data format for different field types.
        */
@@ -3662,9 +3706,13 @@ export type MergeTemplateResponse = {
        */
       color?: string;
       /**
-       * Text alignment of the field value.
+       * Horizontal alignment of the field text value.
        */
       align?: string;
+      /**
+       * Vertical alignment of the field text value.
+       */
+      valign?: string;
       /**
        * The data format for different field types.
        */
