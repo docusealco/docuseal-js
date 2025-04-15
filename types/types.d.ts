@@ -27,6 +27,10 @@ export type GetTemplatesQuery = {
      * Filter templates based on the name partial match.
      */
     q?: string;
+    /**
+     * Filter templates by unique slug.
+     */
+    slug?: string;
 };
 export type GetTemplatesResponse = {
     /**
@@ -534,6 +538,10 @@ export type GetSubmissionsQuery = {
      * Filter submissions based on submitters name, email or phone partial match.
      */
     q?: string;
+    /**
+     * Filter submissions by unique slug.
+     */
+    slug?: string;
     /**
      * Filter submissions by status.
      */
@@ -1253,6 +1261,22 @@ export type ArchiveSubmissionResponse = {
      */
     archived_at: string | null;
 };
+export type GetSubmissionDocumentsResponse = {
+    /**
+     * Submission unique ID number.
+     */
+    id: number;
+    documents: Array<{
+        /**
+         * Document name.
+         */
+        name: string;
+        /**
+         * Document URL.
+         */
+        url: string;
+    }>;
+};
 export type CreateSubmissionsFromEmailsData = {
     /**
      * The unique identifier of the template.
@@ -1778,6 +1802,10 @@ export type GetSubmittersQuery = {
      * Filter submitters on name, email or phone partial match.
      */
     q?: string;
+    /**
+     * Filter submitters by unique slug.
+     */
+    slug?: string;
     /**
      * The submission ID allows you to receive only the submitters related to that specific submission.
      */

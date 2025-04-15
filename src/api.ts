@@ -31,6 +31,7 @@ import {
   UpdateSubmitterResponse,
   GetSubmittersQuery,
   GetSubmittersResponse,
+  GetSubmissionDocumentsResponse
 } from "./types.js";
 
 export type {
@@ -63,7 +64,8 @@ export type {
   UpdateSubmitterData,
   UpdateSubmitterResponse,
   GetSubmittersQuery,
-  GetSubmittersResponse
+  GetSubmittersResponse,
+  GetSubmissionDocumentsResponse
 }
 
 export type DocusealConfig = {
@@ -198,6 +200,10 @@ export class DocusealApi {
 
   async getSubmission(id: number): Promise<GetSubmissionResponse> {
     return this.http.get<GetSubmissionResponse>(`/submissions/${id}`);
+  }
+
+  async getSubmissionDocuments(id: number): Promise<GetSubmissionDocumentsResponse> {
+    return this.http.get<GetSubmissionDocumentsResponse>(`/submissions/${id}/documents`);
   }
 
   async createSubmission(
