@@ -98,6 +98,17 @@ Provides the functionality to retrieve information about a submission.
 const submission = await docuseal.getSubmission(1001);
 ```
 
+### getSubmissionDocuments(id)
+
+[Documentation](https://www.docuseal.com/docs/api?lang=javascript#get-submission-documents)
+
+This endpoint returns a list of partially filled documents for a submission. If the submission has been completed, the final signed documents are returned.
+
+
+```javascript
+const submission = await docuseal.getSubmissionDocuments(1001);
+```
+
 ### createSubmission(data)
 
 [Documentation](https://www.docuseal.com/docs/api?lang=javascript#create-a-submission)
@@ -162,11 +173,11 @@ const { data, pagination } = await docuseal.listSubmitters({ limit: 10 });
 
 [Documentation](https://www.docuseal.com/docs/api?lang=javascript#get-a-submitter)
 
-Provides the functionality to retrieve information about a submitter.
+Provides functionality to retrieve information about a submitter, along with the submitter documents and field values.
 
 
 ```javascript
-const submitter = await docuseal.getSubmitter(100001);
+const submitter = await docuseal.getSubmitter(500001);
 ```
 
 ### updateSubmitter(id, data)
@@ -180,7 +191,7 @@ Allows you to update submitter details, pre-fill or update field values and re-s
 
 
 ```javascript
-const submitter = await docuseal.updateSubmitter(100001, {
+const submitter = await docuseal.updateSubmitter(500001, {
   email: "john.doe@example.com",
   fields: [
     {

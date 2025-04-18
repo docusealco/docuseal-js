@@ -1184,7 +1184,7 @@ export type GetSubmissionResponse = {
      */
     status: "completed" | "declined" | "opened" | "sent" | "awaiting";
     /**
-     * An array of pre-filled values for the submission.
+     * An array of field values for the submitter.
      */
     values: Array<{
       /**
@@ -1197,7 +1197,7 @@ export type GetSubmissionResponse = {
       value: string | number | boolean | Array<string | number | boolean>;
     }>;
     /**
-     * An array of documents that the submitter has to sign.
+     * An array of completed or signed documents by the submitter.
      */
     documents: Array<{
       /**
@@ -1292,6 +1292,9 @@ export type GetSubmissionResponse = {
      */
     event_timestamp: string;
   }>;
+  /**
+   * An array of completed or signed documents of the submission.
+   */
   documents: Array<{
     /**
      * Document name.
@@ -1604,7 +1607,7 @@ export type GetSubmitterResponse = {
     value: string | number | boolean | Array<string | number | boolean>;
   }>;
   /**
-   * An array of documents that the submitter has to sign.
+   * An array of completed or signed documents by the submitter.
    */
   documents: Array<{
     /**
@@ -1845,7 +1848,7 @@ export type UpdateSubmitterResponse = {
     value: string | number | boolean | Array<string | number | boolean>;
   }>;
   /**
-   * An array of documents that the submitter has to sign.
+   * An array of completed or signed documents by the submitter.
    */
   documents: Array<{
     /**
@@ -2028,7 +2031,7 @@ export type GetSubmittersResponse = {
       value: string | number | boolean | Array<string | number | boolean>;
     }>;
     /**
-     * An array of documents that the submitter has to sign.
+     * An array of completed or signed documents by the submitter.
      */
     documents: Array<{
       /**
