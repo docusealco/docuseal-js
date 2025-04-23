@@ -11,6 +11,13 @@ export type CreateSubmissionResponse = {
     expired_at: string | null;
     created_at: string;
 };
+type IncludeQuery = {
+    include?: string;
+};
+export type GetTemplateQuery = IncludeQuery;
+export type GetSubmissionQuery = IncludeQuery;
+export type GetSubmitterQuery = IncludeQuery;
+export type GetSubmissionDocumentsQuery = IncludeQuery;
 export declare class DocusealApi {
     private http;
     key: string;
@@ -19,7 +26,7 @@ export declare class DocusealApi {
     constructor(config?: DocusealConfig);
     configure(config?: DocusealConfig): void;
     listTemplates(query?: GetTemplatesQuery): Promise<GetTemplatesResponse>;
-    getTemplate(id: number): Promise<GetTemplateResponse>;
+    getTemplate(id: number, query?: GetTemplateQuery): Promise<GetTemplateResponse>;
     createTemplateFromDocx(data: CreateTemplateFromDocxData): Promise<CreateTemplateFromDocxResponse>;
     createTemplateFromHtml(data: CreateTemplateFromHtmlData): Promise<CreateTemplateFromHtmlResponse>;
     createTemplateFromPdf(data: CreateTemplateFromPdfData): Promise<CreateTemplateFromPdfResponse>;
@@ -30,13 +37,13 @@ export declare class DocusealApi {
     archiveTemplate(id: number): Promise<ArchiveTemplateResponse>;
     permanentlyDeleteTemplate(id: number): Promise<ArchiveTemplateResponse>;
     listSubmissions(query?: GetSubmissionsQuery): Promise<GetSubmissionsResponse>;
-    getSubmission(id: number): Promise<GetSubmissionResponse>;
-    getSubmissionDocuments(id: number): Promise<GetSubmissionDocumentsResponse>;
+    getSubmission(id: number, query?: GetSubmissionQuery): Promise<GetSubmissionResponse>;
+    getSubmissionDocuments(id: number, query?: GetSubmissionDocumentsQuery): Promise<GetSubmissionDocumentsResponse>;
     createSubmission(data: CreateSubmissionData): Promise<CreateSubmissionResponse>;
     createSubmissionFromEmails(data: CreateSubmissionsFromEmailsData): Promise<CreateSubmissionsFromEmailsResponse>;
     archiveSubmission(id: number): Promise<ArchiveSubmissionResponse>;
     permanentlyDeleteSubmission(id: number): Promise<ArchiveSubmissionResponse>;
     listSubmitters(query?: GetSubmittersQuery): Promise<GetSubmittersResponse>;
-    getSubmitter(id: number): Promise<GetSubmitterResponse>;
+    getSubmitter(id: number, query?: GetSubmitterQuery): Promise<GetSubmitterResponse>;
     updateSubmitter(id: number, data: UpdateSubmitterData): Promise<UpdateSubmitterResponse>;
 }

@@ -81,6 +81,15 @@ export type CreateSubmissionResponse = {
   created_at: string;
 }
 
+type IncludeQuery = {
+  include?: string;
+}
+
+export type GetTemplateQuery = IncludeQuery;
+export type GetSubmissionQuery = IncludeQuery;
+export type GetSubmitterQuery = IncludeQuery;
+export type GetSubmissionDocumentsQuery = IncludeQuery;
+
 export class DocusealApi {
   private http: Http;
 
@@ -116,8 +125,8 @@ export class DocusealApi {
     return this.http.get<GetTemplatesResponse>("/templates", query);
   }
 
-  async getTemplate(id: number): Promise<GetTemplateResponse> {
-    return this.http.get<GetTemplateResponse>(`/templates/${id}`);
+  async getTemplate(id: number, query?: GetTemplateQuery): Promise<GetTemplateResponse> {
+    return this.http.get<GetTemplateResponse>(`/templates/${id}`, query);
   }
 
   async createTemplateFromDocx(
@@ -198,12 +207,12 @@ export class DocusealApi {
     return this.http.get<GetSubmissionsResponse>("/submissions", query);
   }
 
-  async getSubmission(id: number): Promise<GetSubmissionResponse> {
-    return this.http.get<GetSubmissionResponse>(`/submissions/${id}`);
+  async getSubmission(id: number, query?: GetSubmissionQuery): Promise<GetSubmissionResponse> {
+    return this.http.get<GetSubmissionResponse>(`/submissions/${id}`, query);
   }
 
-  async getSubmissionDocuments(id: number): Promise<GetSubmissionDocumentsResponse> {
-    return this.http.get<GetSubmissionDocumentsResponse>(`/submissions/${id}/documents`);
+  async getSubmissionDocuments(id: number, query?: GetSubmissionDocumentsQuery): Promise<GetSubmissionDocumentsResponse> {
+    return this.http.get<GetSubmissionDocumentsResponse>(`/submissions/${id}/documents`, query);
   }
 
   async createSubmission(
@@ -237,8 +246,8 @@ export class DocusealApi {
     return this.http.get<GetSubmittersResponse>("/submitters", query);
   }
 
-  async getSubmitter(id: number): Promise<GetSubmitterResponse> {
-    return this.http.get<GetSubmitterResponse>(`/submitters/${id}`);
+  async getSubmitter(id: number, query?: GetSubmitterQuery): Promise<GetSubmitterResponse> {
+    return this.http.get<GetSubmitterResponse>(`/submitters/${id}`, query);
   }
 
   async updateSubmitter(
