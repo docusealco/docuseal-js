@@ -133,17 +133,81 @@ const submission = await docuseal.createSubmission({
 });
 ```
 
-### createSubmissionFromEmails(data)
+### createSubmissionFromPdf(data)
 
-[Documentation](https://www.docuseal.com/docs/api?lang=javascript#create-submissions-from-emails)
+[Documentation](https://www.docuseal.com/docs/api?lang=javascript#create-a-submission-from-pdf)
 
-This API endpoint allows you to create submissions for a document template and send them to the specified email addresses. This is a simplified version of the POST /submissions API to be used with Zapier or other automation tools.
+Provides the functionality to create one-off submission request from a PDF file. Use `{{Field Name;role=Signer1;type=date}}` text tags to define fillable fields in the document. See [https://www.docuseal.com/examples/fieldtags.pdf](https://www.docuseal.com/examples/fieldtags.pdf) for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.
+
+**Related Guides:**<br>
+[Use embedded text field tags to create a fillable form](https://www.docuseal.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form)
 
 
 ```javascript
-const submission = await docuseal.createSubmissionFromEmails({
-  template_id: 1000001,
-  emails: "hi@docuseal.com, example@docuseal.com"
+const submission = await docuseal.createSubmissionFromPdf({
+  name: "Test PDF",
+  documents: [
+    {
+      name: "string",
+      file: "base64",
+      fields: [
+        {
+          name: "string",
+          areas: [
+            {
+              x: 0,
+              y: 0,
+              w: 0,
+              h: 0,
+              page: 1
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  submitters: [
+    {
+      role: "First Party",
+      email: "john.doe@example.com"
+    }
+  ]
+});
+```
+
+### createSubmissionFromHtml(data)
+
+[Documentation](https://www.docuseal.com/docs/api?lang=javascript#create-a-submission-from-html)
+
+This API endpoint allows you to create a one-off submission request document using the provided HTML content, with special field tags rendered as a fillable and signable form.
+
+**Related Guides:**<br>
+[Create PDF document fillable form with HTML](https://www.docuseal.com/guides/create-pdf-document-fillable-form-with-html-api)
+
+
+```javascript
+const submission = await docuseal.createSubmissionFromHtml({
+  name: "Test PDF",
+  documents: [
+    {
+      name: "Test Document",
+      html: `<p>Lorem Ipsum is simply dummy text of the
+<text-field
+  name="Industry"
+  role="First Party"
+  required="false"
+  style="width: 80px; height: 16px; display: inline-block; margin-bottom: -4px">
+</text-field>
+and typesetting industry</p>
+`
+    }
+  ],
+  submitters: [
+    {
+      role: "First Party",
+      email: "john.doe@example.com"
+    }
+  ]
 });
 ```
 
@@ -224,6 +288,42 @@ Provides the functionality to retrieve information about a document template.
 const template = await docuseal.getTemplate(1000001);
 ```
 
+### createTemplateFromPdf(data)
+
+[Documentation](https://www.docuseal.com/docs/api?lang=javascript#create-a-template-from-pdf)
+
+Provides the functionality to create a fillable document template for a PDF file. Use `{{Field Name;role=Signer1;type=date}}` text tags to define fillable fields in the document. See [https://www.docuseal.com/examples/fieldtags.pdf](https://www.docuseal.com/examples/fieldtags.pdf) for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.
+
+**Related Guides:**<br>
+[Use embedded text field tags to create a fillable form](https://www.docuseal.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form)
+
+
+```javascript
+const template = await docuseal.createTemplateFromPdf({
+  name: "Test PDF",
+  documents: [
+    {
+      name: "string",
+      file: "base64",
+      fields: [
+        {
+          name: "string",
+          areas: [
+            {
+              x: 0,
+              y: 0,
+              w: 0,
+              h: 0,
+              page: 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+});
+```
+
 ### createTemplateFromDocx(data)
 
 [Documentation](https://www.docuseal.com/docs/api?lang=javascript#create-a-template-from-word-docx)
@@ -271,6 +371,19 @@ and typesetting industry</p>
 });
 ```
 
+### cloneTemplate(id, data)
+
+[Documentation](https://www.docuseal.com/docs/api?lang=javascript#clone-a-template)
+
+Allows you to clone existing template into a new template.
+
+
+```javascript
+const template = await docuseal.cloneTemplate(1000001, {
+  name: "Cloned Template"
+});
+```
+
 ### mergeTemplates(data)
 
 [Documentation](https://www.docuseal.com/docs/api?lang=javascript#merge-templates)
@@ -288,55 +401,6 @@ const template = await docuseal.mergeTemplates({
 });
 ```
 
-### createTemplateFromPdf(data)
-
-[Documentation](https://www.docuseal.com/docs/api?lang=javascript#create-a-template-from-existing-pdf)
-
-Provides the functionality to create a fillable document template for existing PDF file. Use `{{Field Name;role=Signer1;type=date}}` text tags to define fillable fields in the document. See [https://www.docuseal.com/examples/fieldtags.pdf](https://www.docuseal.com/examples/fieldtags.pdf) for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.
-
-**Related Guides:**<br>
-[Use embedded text field tags to create a fillable form](https://www.docuseal.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form)
-
-
-```javascript
-const template = await docuseal.createTemplateFromPdf({
-  name: "Test PDF",
-  documents: [
-    {
-      name: "string",
-      file: "base64",
-      fields: [
-        {
-          name: "string",
-          areas: [
-            {
-              x: 0,
-              y: 0,
-              w: 0,
-              h: 0,
-              page: 1
-            }
-          ]
-        }
-      ]
-    }
-  ]
-});
-```
-
-### cloneTemplate(id, data)
-
-[Documentation](https://www.docuseal.com/docs/api?lang=javascript#clone-a-template)
-
-Allows you to clone existing template into a new template.
-
-
-```javascript
-const template = await docuseal.cloneTemplate(1000001, {
-  name: "Cloned Template"
-});
-```
-
 ### updateTemplate(id, data)
 
 [Documentation](https://www.docuseal.com/docs/api?lang=javascript#update-a-template)
@@ -349,6 +413,34 @@ const template = await docuseal.updateTemplate(1000001, {
   name: "New Document Name",
   folder_name: "New Folder"
 });
+```
+
+### updateTemplateDocuments(id, data)
+
+[Documentation](https://www.docuseal.com/docs/api?lang=javascript#update-template-documents)
+
+Allows you to add, remove or replace documents in the template with provided PDF/DOCX file or HTML content.
+
+
+```javascript
+const template = await docuseal.updateTemplateDocuments(1000001, {
+  documents: [
+    {
+      file: "string"
+    }
+  ]
+});
+```
+
+### archiveTemplate(id)
+
+[Documentation](https://www.docuseal.com/docs/api?lang=javascript#archive-a-template)
+
+Allows you to archive a document template.
+
+
+```javascript
+await docuseal.archiveTemplate(1000001);
 ```
 
 ### updateTemplateDocuments(id, data)

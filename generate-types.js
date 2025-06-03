@@ -3,7 +3,7 @@ const fs = require("fs");
 
 createClient({
   client: "@hey-api/client-fetch",
-  input: "https://console.docuseal.com/openapi.yml",
+  input: "http://console.localhost.io:3001/openapi.yaml",
   output: "src/temps",
   plugins: [
     ...defaultPlugins,

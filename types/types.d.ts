@@ -206,6 +206,10 @@ export type GetTemplatesResponse = {
          * Folder name where the template is placed.
          */
         folder_name: string;
+        /**
+         * Indicates if the template is accessible by link.
+         */
+        shared_link?: boolean;
         author: {
             /**
              * Unique identifier of the author.
@@ -435,6 +439,10 @@ export type GetTemplateResponse = {
      * Folder name where the template is placed.
      */
     folder_name: string;
+    /**
+     * Indicates if the template is accessible by link.
+     */
+    shared_link?: boolean;
     author: {
         /**
          * Unique identifier of the author.
@@ -562,6 +570,10 @@ export type GetSubmissionsResponse = {
          */
         id: number;
         /**
+         * Name of the document submission
+         */
+        name?: string;
+        /**
          * The source of the submission.
          */
         source: "invite" | "bulk" | "api" | "embed" | "link";
@@ -682,7 +694,7 @@ export type GetSubmissionsResponse = {
                 [key: string]: unknown;
             };
         }>;
-        template: {
+        template?: {
             /**
              * Template unique ID number.
              */
@@ -1038,6 +1050,10 @@ export type GetSubmissionResponse = {
      */
     id: number;
     /**
+     * Name of the document submission
+     */
+    name?: string;
+    /**
      * Unique slug of the submission.
      */
     slug: string;
@@ -1164,7 +1180,7 @@ export type GetSubmissionResponse = {
          */
         role: string;
     }>;
-    template: {
+    template?: {
         /**
          * Template unique ID number.
          */
@@ -1220,7 +1236,7 @@ export type GetSubmissionResponse = {
         /**
          * Event type.
          */
-        event_type: "send_email" | "send_reminder_email" | "send_sms" | "send_2fa_sms" | "open_email" | "click_email" | "click_sms" | "phone_verified" | "start_form" | "start_verification" | "complete_verification" | "view_form" | "invite_party" | "complete_form" | "decline_form" | "api_complete_form";
+        event_type: "send_email" | "bounce_email" | "complaint_email" | "send_reminder_email" | "send_sms" | "send_2fa_sms" | "open_email" | "click_email" | "click_sms" | "phone_verified" | "start_form" | "start_verification" | "complete_verification" | "view_form" | "invite_party" | "complete_form" | "decline_form" | "api_complete_form";
         /**
          * Date and time when the event was triggered.
          */
@@ -1400,6 +1416,958 @@ export type CreateSubmissionsFromEmailsResponse = Array<{
      */
     embed_src: string;
 }>;
+export type CreateSubmissionFromPdfData = {
+    /**
+     * Name of the document submission.
+     */
+    name?: string;
+    /**
+     * Set `false` to disable signature request emails sending.
+     */
+    send_email?: boolean;
+    /**
+     * Set `true` to send signature request via phone number and SMS.
+     */
+    send_sms?: boolean;
+    /**
+     * Pass 'random' to send signature request emails to all parties right away. The order is 'preserved' by default so the second party will receive a signature request email only after the document is signed by the first party.
+     */
+    order?: "preserved" | "random";
+    /**
+     * Specify URL to redirect to after the submission completion.
+     */
+    completed_redirect_url?: string;
+    /**
+     * Specify BCC address to send signed documents to after the completion.
+     */
+    bcc_completed?: string;
+    /**
+     * Specify Reply-To address to use in the notification emails.
+     */
+    reply_to?: string;
+    /**
+     * Specify the expiration date and time after which the submission becomes unavailable for signature.
+     */
+    expire_at?: string;
+    /**
+     * An optional array of template IDs to use in the submission along with the provided documents. This can be used to create multi-document submissions when some of the required documents exist within templates.
+     */
+    template_ids?: Array<number>;
+    documents: Array<{
+        /**
+         * Name of the document.
+         */
+        name: string;
+        /**
+         * Base64-encoded content of the PDF file or downloadable file URL.
+         */
+        file: string;
+        /**
+         * Fields are optional if you use {{...}} text tags to define fields in the document.
+         */
+        fields?: Array<{
+            /**
+             * Name of the field.
+             */
+            name?: string;
+            /**
+             * Type of the field (e.g., text, signature, date, initials).
+             */
+            type?: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification";
+            /**
+             * Role name of the signer.
+             */
+            role?: string;
+            /**
+             * Indicates if the field is required.
+             */
+            required?: boolean;
+            /**
+             * Field title displayed to the user instead of the name, shown on the signing form. Supports Markdown.
+             */
+            title?: string;
+            /**
+             * Field description displayed on the signing form. Supports Markdown.
+             */
+            description?: string;
+            areas?: Array<{
+                /**
+                 * X-coordinate of the field area.
+                 */
+                x: number;
+                /**
+                 * Y-coordinate of the field area.
+                 */
+                y: number;
+                /**
+                 * Width of the field area.
+                 */
+                w: number;
+                /**
+                 * Height of the field area.
+                 */
+                h: number;
+                /**
+                 * Page number of the field area. Starts from 1.
+                 */
+                page: number;
+                /**
+                 * Option string value for 'radio' and 'multiple' select field types.
+                 */
+                option?: string;
+            }>;
+            /**
+             * An array of option values for 'select' field type.
+             */
+            options?: Array<string>;
+        }>;
+    }>;
+    /**
+     * The list of submitters for the submission.
+     */
+    submitters: Array<{
+        /**
+         * The name of the submitter.
+         */
+        name?: string;
+        /**
+         * The role name or title of the submitter.
+         */
+        role?: string;
+        /**
+         * The email address of the submitter.
+         */
+        email: string;
+        /**
+         * The phone number of the submitter, formatted according to the E.164 standard.
+         */
+        phone?: string;
+        /**
+         * An object with pre-filled values for the submission. Use field names for keys of the object. For more configurations see `fields` param.
+         */
+        values?: {
+            [key: string]: unknown;
+        };
+        /**
+         * Your application-specific unique string key to identify this submitter within your app.
+         */
+        external_id?: string;
+        /**
+         * Pass `true` to mark submitter as completed and auto-signed via API.
+         */
+        completed?: boolean;
+        /**
+         * Metadata object with additional submitter information.
+         */
+        metadata?: {
+            [key: string]: unknown;
+        };
+        /**
+         * Set `false` to disable signature request emails sending only for this submitter.
+         */
+        send_email?: boolean;
+        /**
+         * Set `true` to send signature request via phone number and SMS.
+         */
+        send_sms?: boolean;
+        /**
+         * Specify Reply-To address to use in the notification emails for this submitter.
+         */
+        reply_to?: string;
+        /**
+         * Submitter specific URL to redirect to after the submission completion.
+         */
+        completed_redirect_url?: string;
+        /**
+         * A list of configurations for document form fields.
+         */
+        fields?: Array<{
+            /**
+             * Document field name.
+             */
+            name: string;
+            /**
+             * Default value of the field. Use base64 encoded file or a public URL to the image file to set default signature or image fields.
+             */
+            default_value?: string | number | boolean | Array<string | number | boolean>;
+            /**
+             * Set `true` to make it impossible for the submitter to edit predefined field value.
+             */
+            readonly?: boolean;
+            /**
+             * Set `true` to make the field required.
+             */
+            required?: boolean;
+            /**
+             * Field title displayed to the user instead of the name, shown on the signing form. Supports Markdown.
+             */
+            title?: string;
+            /**
+             * Field description displayed on the signing form. Supports Markdown.
+             */
+            description?: string;
+            /**
+             * HTML field validation pattern string based on https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern specification.
+             */
+            validation_pattern?: string;
+            /**
+             * A custom message to display on pattern validation failure.
+             */
+            invalid_message?: string;
+            preferences?: {
+                /**
+                 * Font size of the field value in pixels.
+                 */
+                font_size?: number;
+                /**
+                 * Font type of the field value.
+                 */
+                font_type?: "bold" | "italic" | "bold_italic";
+                /**
+                 * Font family of the field value.
+                 */
+                font?: "Times" | "Helvetica" | "Courier";
+                /**
+                 * Font color of the field value.
+                 */
+                color?: "black" | "white" | "blue";
+                /**
+                 * Horizontal alignment of the field text value.
+                 */
+                align?: "left" | "center" | "right";
+                /**
+                 * Vertical alignment of the field text value.
+                 */
+                valign?: "top" | "center" | "bottom";
+                /**
+                 * The data format for different field types.<br>- Date field: accepts formats such as DD/MM/YYYY (default: MM/DD/YYYY).<br>- Signature field: accepts drawn, typed, drawn_or_typed (default), or upload.<br>- Number field: accepts currency formats such as usd, eur, gbp.
+                 */
+                format?: string;
+                /**
+                 * Price value of the payment field. Only for payment fields.
+                 */
+                price?: number;
+                /**
+                 * Currency value of the payment field. Only for payment fields.
+                 */
+                currency?: "USD" | "EUR" | "GBP" | "CAD" | "AUD";
+                /**
+                 * Set `true` to make sensitive data masked on the document.
+                 */
+                mask?: number | boolean;
+            };
+        }>;
+        /**
+         * A list of roles for the submitter. Use this param to merge multiple roles into one submitter.
+         */
+        roles?: Array<string>;
+    }>;
+    message?: {
+        /**
+         * Custom signature request email subject.
+         */
+        subject?: string;
+        /**
+         * Custom signature request email body. Can include the following variables: {{submission.name}}, {{submitter.link}}, {{account.name}}.
+         */
+        body?: string;
+    };
+    /**
+     * Remove PDF form fields from the documents.
+     */
+    flatten?: boolean;
+    /**
+     * Set `true` to merge the documents into a single PDF file.
+     */
+    merge_documents?: boolean;
+    /**
+     * Pass `false` to disable the removal of {{text}} tags from the PDF. This can be used along with transparent text tags for faster and more robust PDF processing.
+     */
+    remove_tags?: boolean;
+};
+export type CreateSubmissionFromPdfResponse = {
+    /**
+     * Submission unique ID number.
+     */
+    id: number;
+    /**
+     * Submission name.
+     */
+    name?: string;
+    /**
+     * The list of submitters.
+     */
+    submitters: Array<{
+        /**
+         * Submission unique ID number.
+         */
+        id: number;
+        /**
+         * Submitter UUID.
+         */
+        uuid: string;
+        /**
+         * The email address of the submitter.
+         */
+        email: string | null;
+        /**
+         * Unique key to be used in the form signing link and embedded form.
+         */
+        slug: string;
+        /**
+         * The date and time when the signing request was sent to the submitter.
+         */
+        sent_at: string | null;
+        /**
+         * The date and time when the submitter opened the signing form.
+         */
+        opened_at: string | null;
+        /**
+         * The date and time when the submitter completed the signing form.
+         */
+        completed_at: string | null;
+        /**
+         * The date and time when the submitter declined to complete the signing form.
+         */
+        declined_at: string | null;
+        /**
+         * The date and time when the submitter was created.
+         */
+        created_at: string;
+        /**
+         * The date and time when the submitter was last updated.
+         */
+        updated_at: string;
+        /**
+         * Submitter name.
+         */
+        name: string | null;
+        /**
+         * Submitter phone number.
+         */
+        phone: string | null;
+        /**
+         * Your application-specific unique string key to identify this submitter within your app.
+         */
+        external_id?: string | null;
+        /**
+         * The status of signing request for the submitter.
+         */
+        status: "completed" | "declined" | "opened" | "sent" | "awaiting";
+        /**
+         * The role of the submitter.
+         */
+        role: string;
+        /**
+         * Metadata object with additional submitter information.
+         */
+        metadata: {
+            [key: string]: unknown;
+        };
+        /**
+         * Object with submitter preferences.
+         */
+        preferences: {
+            [key: string]: unknown;
+        };
+        /**
+         * The `src` URL value to embed the signing form or sign via a link.
+         */
+        embed_src?: string;
+    }>;
+    /**
+     * The source of the submission.
+     */
+    source: "invite" | "bulk" | "api" | "embed" | "link";
+    /**
+     * The order of submitters.
+     */
+    submitters_order: "random" | "preserved";
+    /**
+     * The status of the submission.
+     */
+    status: "completed" | "declined" | "expired" | "pending";
+    /**
+     * The one-off submission document files.
+     */
+    schema?: Array<{
+        /**
+         * The attachment UUID.
+         */
+        attachment_uuid?: string;
+        /**
+         * The attachment name.
+         */
+        name?: string;
+    }>;
+    /**
+     * List of fields to be filled in the one-off submission.
+     */
+    fields?: Array<{
+        /**
+         * Unique identifier of the field.
+         */
+        uuid: string;
+        /**
+         * Unique identifier of the submitter that filled the field.
+         */
+        submitter_uuid: string;
+        /**
+         * Field name.
+         */
+        name: string;
+        /**
+         * Type of the field (e.g., text, signature, date, initials).
+         */
+        type: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification";
+        /**
+         * Indicates if the field is required.
+         */
+        required: boolean;
+        preferences?: {
+            /**
+             * Font size of the field value in pixels.
+             */
+            font_size?: number;
+            /**
+             * Font type of the field value.
+             */
+            font_type?: string;
+            /**
+             * Font family of the field value.
+             */
+            font?: string;
+            /**
+             * Font color of the field value.
+             */
+            color?: string;
+            /**
+             * Horizontal alignment of the field text value.
+             */
+            align?: string;
+            /**
+             * Vertical alignment of the field text value.
+             */
+            valign?: string;
+            /**
+             * The data format for different field types.
+             */
+            format?: string;
+            /**
+             * Price value of the payment field. Only for payment fields.
+             */
+            price?: number;
+            /**
+             * Currency value of the payment field. Only for payment fields.
+             */
+            currency?: string;
+            /**
+             * Indicates if the field is masked on the document.
+             */
+            mask?: boolean;
+        };
+        /**
+         * List of areas where the field is located in the document.
+         */
+        areas: Array<{
+            /**
+             * X coordinate of the area where the field is located in the document.
+             */
+            x: number;
+            /**
+             * Y coordinate of the area where the field is located in the document.
+             */
+            y: number;
+            /**
+             * Width of the area where the field is located in the document.
+             */
+            w: number;
+            /**
+             * Height of the area where the field is located in the document.
+             */
+            h: number;
+            /**
+             * Unique identifier of the attached document where the field is located.
+             */
+            attachment_uuid: string;
+            /**
+             * Page number of the attached document where the field is located.
+             */
+            page: number;
+        }>;
+    }>;
+    /**
+     * List of documents attached to the one-off submission.
+     */
+    documents: Array<{
+        /**
+         * Unique indentifier of attached document to the one-off submission.
+         */
+        attachment_uuid: string;
+        /**
+         * Name of the attached document to the one-off submission.
+         */
+        name: string;
+    }>;
+    /**
+     * Specify the expiration date and time after which the submission becomes unavailable for signature.
+     */
+    expire_at: string;
+    /**
+     * The date and time when the submission was created.
+     */
+    created_at: string;
+};
+export type CreateSubmissionFromHtmlData = {
+    /**
+     * Name of the document submission
+     */
+    name?: string;
+    /**
+     * Set `false` to disable signature request emails sending.
+     */
+    send_email?: boolean;
+    /**
+     * Set `true` to send signature request via phone number and SMS.
+     */
+    send_sms?: boolean;
+    /**
+     * Pass 'random' to send signature request emails to all parties right away. The order is 'preserved' by default so the second party will receive a signature request email only after the document is signed by the first party.
+     */
+    order?: "preserved" | "random";
+    /**
+     * Specify URL to redirect to after the submission completion.
+     */
+    completed_redirect_url?: string;
+    /**
+     * Specify BCC address to send signed documents to after the completion.
+     */
+    bcc_completed?: string;
+    /**
+     * Specify Reply-To address to use in the notification emails.
+     */
+    reply_to?: string;
+    /**
+     * Specify the expiration date and time after which the submission becomes unavailable for signature.
+     */
+    expire_at?: string;
+    /**
+     * An optional array of template IDs to use in the submission along with the provided documents. This can be used to create multi-document submissions when some of the required documents exist within templates.
+     */
+    template_ids?: Array<number>;
+    /**
+     * The list of documents built from HTML. Can be used to create a submission with multiple documents.
+     */
+    documents: Array<{
+        /**
+         * Document name. Random uuid will be assigned when not specified.
+         */
+        name?: string;
+        /**
+         * HTML document content with field tags.
+         */
+        html: string;
+        /**
+         * HTML document content of the header to be displayed on every page.
+         */
+        html_header?: string;
+        /**
+         * HTML document content of the footer to be displayed on every page.
+         */
+        html_footer?: string;
+        /**
+         * Page size. Letter 8.5 x 11 will be assigned when not specified.
+         */
+        size?: "Letter" | "Legal" | "Tabloid" | "Ledger" | "A0" | "A1" | "A2" | "A3" | "A4" | "A5" | "A6";
+    }>;
+    /**
+     * The list of submitters for the submission.
+     */
+    submitters: Array<{
+        /**
+         * The name of the submitter.
+         */
+        name?: string;
+        /**
+         * The role name or title of the submitter.
+         */
+        role?: string;
+        /**
+         * The email address of the submitter.
+         */
+        email: string;
+        /**
+         * The phone number of the submitter, formatted according to the E.164 standard.
+         */
+        phone?: string;
+        /**
+         * An object with pre-filled values for the submission. Use field names for keys of the object. For more configurations see `fields` param.
+         */
+        values?: {
+            [key: string]: unknown;
+        };
+        /**
+         * Your application-specific unique string key to identify this submitter within your app.
+         */
+        external_id?: string;
+        /**
+         * Pass `true` to mark submitter as completed and auto-signed via API.
+         */
+        completed?: boolean;
+        /**
+         * Metadata object with additional submitter information.
+         */
+        metadata?: {
+            [key: string]: unknown;
+        };
+        /**
+         * Set `false` to disable signature request emails sending only for this submitter.
+         */
+        send_email?: boolean;
+        /**
+         * Set `true` to send signature request via phone number and SMS.
+         */
+        send_sms?: boolean;
+        /**
+         * Specify Reply-To address to use in the notification emails for this submitter.
+         */
+        reply_to?: string;
+        /**
+         * Submitter specific URL to redirect to after the submission completion.
+         */
+        completed_redirect_url?: string;
+        /**
+         * A list of configurations for document form fields.
+         */
+        fields?: Array<{
+            /**
+             * Document field name.
+             */
+            name: string;
+            /**
+             * Default value of the field. Use base64 encoded file or a public URL to the image file to set default signature or image fields.
+             */
+            default_value?: string | number | boolean | Array<string | number | boolean>;
+            /**
+             * Set `true` to make it impossible for the submitter to edit predefined field value.
+             */
+            readonly?: boolean;
+            /**
+             * Set `true` to make the field required.
+             */
+            required?: boolean;
+            /**
+             * Field title displayed to the user instead of the name, shown on the signing form. Supports Markdown.
+             */
+            title?: string;
+            /**
+             * Field description displayed on the signing form. Supports Markdown.
+             */
+            description?: string;
+            /**
+             * HTML field validation pattern string based on https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern specification.
+             */
+            validation_pattern?: string;
+            /**
+             * A custom message to display on pattern validation failure.
+             */
+            invalid_message?: string;
+            preferences?: {
+                /**
+                 * Font size of the field value in pixels.
+                 */
+                font_size?: number;
+                /**
+                 * Font type of the field value.
+                 */
+                font_type?: "bold" | "italic" | "bold_italic";
+                /**
+                 * Font family of the field value.
+                 */
+                font?: "Times" | "Helvetica" | "Courier";
+                /**
+                 * Font color of the field value.
+                 */
+                color?: "black" | "white" | "blue";
+                /**
+                 * Horizontal alignment of the field text value.
+                 */
+                align?: "left" | "center" | "right";
+                /**
+                 * Vertical alignment of the field text value.
+                 */
+                valign?: "top" | "center" | "bottom";
+                /**
+                 * The data format for different field types.<br>- Date field: accepts formats such as DD/MM/YYYY (default: MM/DD/YYYY).<br>- Signature field: accepts drawn, typed, drawn_or_typed (default), or upload.<br>- Number field: accepts currency formats such as usd, eur, gbp.
+                 */
+                format?: string;
+                /**
+                 * Price value of the payment field. Only for payment fields.
+                 */
+                price?: number;
+                /**
+                 * Currency value of the payment field. Only for payment fields.
+                 */
+                currency?: "USD" | "EUR" | "GBP" | "CAD" | "AUD";
+                /**
+                 * Set `true` to make sensitive data masked on the document.
+                 */
+                mask?: number | boolean;
+            };
+        }>;
+        /**
+         * A list of roles for the submitter. Use this param to merge multiple roles into one submitter.
+         */
+        roles?: Array<string>;
+    }>;
+    message?: {
+        /**
+         * Custom signature request email subject.
+         */
+        subject?: string;
+        /**
+         * Custom signature request email body. Can include the following variables: {{submission.name}}, {{submitter.link}}, {{account.name}}.
+         */
+        body?: string;
+    };
+    /**
+     * Set `true` to merge the documents into a single PDF file.
+     */
+    merge_documents?: boolean;
+};
+export type CreateSubmissionFromHtmlResponse = {
+    /**
+     * Submission unique ID number.
+     */
+    id: number;
+    /**
+     * Submission name.
+     */
+    name?: string;
+    /**
+     * The list of submitters.
+     */
+    submitters: Array<{
+        /**
+         * Submission unique ID number.
+         */
+        id: number;
+        /**
+         * Submitter UUID.
+         */
+        uuid: string;
+        /**
+         * The email address of the submitter.
+         */
+        email: string | null;
+        /**
+         * Unique key to be used in the form signing link and embedded form.
+         */
+        slug: string;
+        /**
+         * The date and time when the signing request was sent to the submitter.
+         */
+        sent_at: string | null;
+        /**
+         * The date and time when the submitter opened the signing form.
+         */
+        opened_at: string | null;
+        /**
+         * The date and time when the submitter completed the signing form.
+         */
+        completed_at: string | null;
+        /**
+         * The date and time when the submitter declined to complete the signing form.
+         */
+        declined_at: string | null;
+        /**
+         * The date and time when the submitter was created.
+         */
+        created_at: string;
+        /**
+         * The date and time when the submitter was last updated.
+         */
+        updated_at: string;
+        /**
+         * Submitter name.
+         */
+        name: string | null;
+        /**
+         * Submitter phone number.
+         */
+        phone: string | null;
+        /**
+         * Your application-specific unique string key to identify this submitter within your app.
+         */
+        external_id?: string | null;
+        /**
+         * The status of signing request for the submitter.
+         */
+        status: "completed" | "declined" | "opened" | "sent" | "awaiting";
+        /**
+         * The role of the submitter.
+         */
+        role: string;
+        /**
+         * Metadata object with additional submitter information.
+         */
+        metadata: {
+            [key: string]: unknown;
+        };
+        /**
+         * Object with submitter preferences.
+         */
+        preferences: {
+            [key: string]: unknown;
+        };
+        /**
+         * The `src` URL value to embed the signing form or sign via a link.
+         */
+        embed_src?: string;
+    }>;
+    /**
+     * The source of the submission.
+     */
+    source: "invite" | "bulk" | "api" | "embed" | "link";
+    /**
+     * The order of submitters.
+     */
+    submitters_order: "random" | "preserved";
+    /**
+     * The status of the submission.
+     */
+    status: "completed" | "declined" | "expired" | "pending";
+    /**
+     * The one-off submission document files.
+     */
+    schema?: Array<{
+        /**
+         * The attachment UUID.
+         */
+        attachment_uuid?: string;
+        /**
+         * The attachment name.
+         */
+        name?: string;
+    }>;
+    /**
+     * List of fields to be filled in the one-off submission.
+     */
+    fields?: Array<{
+        /**
+         * Unique identifier of the field.
+         */
+        uuid: string;
+        /**
+         * Unique identifier of the submitter that filled the field.
+         */
+        submitter_uuid: string;
+        /**
+         * Field name.
+         */
+        name: string;
+        /**
+         * Type of the field (e.g., text, signature, date, initials).
+         */
+        type: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification";
+        /**
+         * Indicates if the field is required.
+         */
+        required: boolean;
+        preferences?: {
+            /**
+             * Font size of the field value in pixels.
+             */
+            font_size?: number;
+            /**
+             * Font type of the field value.
+             */
+            font_type?: string;
+            /**
+             * Font family of the field value.
+             */
+            font?: string;
+            /**
+             * Font color of the field value.
+             */
+            color?: string;
+            /**
+             * Horizontal alignment of the field text value.
+             */
+            align?: string;
+            /**
+             * Vertical alignment of the field text value.
+             */
+            valign?: string;
+            /**
+             * The data format for different field types.
+             */
+            format?: string;
+            /**
+             * Price value of the payment field. Only for payment fields.
+             */
+            price?: number;
+            /**
+             * Currency value of the payment field. Only for payment fields.
+             */
+            currency?: string;
+            /**
+             * Indicates if the field is masked on the document.
+             */
+            mask?: boolean;
+        };
+        /**
+         * List of areas where the field is located in the document.
+         */
+        areas: Array<{
+            /**
+             * X coordinate of the area where the field is located in the document.
+             */
+            x: number;
+            /**
+             * Y coordinate of the area where the field is located in the document.
+             */
+            y: number;
+            /**
+             * Width of the area where the field is located in the document.
+             */
+            w: number;
+            /**
+             * Height of the area where the field is located in the document.
+             */
+            h: number;
+            /**
+             * Unique identifier of the attached document where the field is located.
+             */
+            attachment_uuid: string;
+            /**
+             * Page number of the attached document where the field is located.
+             */
+            page: number;
+        }>;
+    }>;
+    /**
+     * List of documents attached to the one-off submission.
+     */
+    documents: Array<{
+        /**
+         * Unique indentifier of attached document to the one-off submission.
+         */
+        attachment_uuid: string;
+        /**
+         * Name of the attached document to the one-off submission.
+         */
+        name: string;
+    }>;
+    /**
+     * Specify the expiration date and time after which the submission becomes unavailable for signature.
+     */
+    expire_at: string;
+    /**
+     * The date and time when the submission was created.
+     */
+    created_at: string;
+};
 export type GetSubmitterResponse = {
     /**
      * Submitter unique ID number.
@@ -1500,7 +2468,7 @@ export type GetSubmitterResponse = {
         /**
          * Event type.
          */
-        event_type: "send_email" | "send_reminder_email" | "send_sms" | "send_2fa_sms" | "open_email" | "click_email" | "click_sms" | "phone_verified" | "start_form" | "start_verification" | "complete_verification" | "view_form" | "invite_party" | "complete_form" | "decline_form" | "api_complete_form";
+        event_type: "send_email" | "bounce_email" | "complaint_email" | "send_reminder_email" | "send_sms" | "send_2fa_sms" | "open_email" | "click_email" | "click_sms" | "phone_verified" | "start_form" | "start_verification" | "complete_verification" | "view_form" | "invite_party" | "complete_form" | "decline_form" | "api_complete_form";
         /**
          * Date and time when the event was triggered.
          */
@@ -1900,7 +2868,7 @@ export type GetSubmittersResponse = {
             /**
              * Event type.
              */
-            event_type: "send_email" | "send_reminder_email" | "send_sms" | "send_2fa_sms" | "open_email" | "click_email" | "click_sms" | "phone_verified" | "start_form" | "start_verification" | "complete_verification" | "view_form" | "invite_party" | "complete_form" | "decline_form" | "api_complete_form";
+            event_type: "send_email" | "bounce_email" | "complaint_email" | "send_reminder_email" | "send_sms" | "send_2fa_sms" | "open_email" | "click_email" | "click_sms" | "phone_verified" | "start_form" | "start_verification" | "complete_verification" | "view_form" | "invite_party" | "complete_form" | "decline_form" | "api_complete_form";
             /**
              * Date and time when the event was triggered.
              */
@@ -2157,6 +3125,10 @@ export type AddDocumentToTemplateResponse = {
      * Folder name where the template is placed.
      */
     folder_name: string;
+    /**
+     * Indicates if the template is accessible by link.
+     */
+    shared_link?: boolean;
     author: {
         /**
          * Unique identifier of the author.
@@ -2385,6 +3357,10 @@ export type CloneTemplateResponse = {
      * Folder name where the template is placed.
      */
     folder_name: string;
+    /**
+     * Indicates if the template is accessible by link.
+     */
+    shared_link?: boolean;
     author: {
         /**
          * Unique identifier of the author.
@@ -2458,6 +3434,10 @@ export type CreateTemplateFromHtmlData = {
      * The folder's name to which the template should be created.
      */
     folder_name?: string;
+    /**
+     * set to `true` to make the template available via a shared link. This will allow anyone with the link to create a submission from this template.
+     */
+    shared_link?: boolean;
     /**
      * The list of documents built from HTML. Can be used to create a template with multiple documents. Leave `documents` param empty when using a top-level `html` param for a template with a single document.
      */
@@ -2642,6 +3622,10 @@ export type CreateTemplateFromHtmlResponse = {
      * Folder name where the template is placed.
      */
     folder_name: string;
+    /**
+     * Indicates if the template is accessible by link.
+     */
+    shared_link?: boolean;
     author: {
         /**
          * Unique identifier of the author.
@@ -2699,6 +3683,10 @@ export type CreateTemplateFromDocxData = {
      * The folder's name to which the template should be created.
      */
     folder_name?: string;
+    /**
+     * set to `true` to make the template available via a shared link. This will allow anyone with the link to create a submission from this template.
+     */
+    shared_link?: boolean;
     documents: Array<{
         /**
          * Name of the document.
@@ -2981,6 +3969,10 @@ export type CreateTemplateFromDocxResponse = {
      * Folder name where the template is placed.
      */
     folder_name: string;
+    /**
+     * Indicates if the template is accessible by link.
+     */
+    shared_link?: boolean;
     author: {
         /**
          * Unique identifier of the author.
@@ -3038,6 +4030,10 @@ export type CreateTemplateFromPdfData = {
      * Your application-specific unique string key to identify this template within your app. Existing template with specified `external_id` will be updated with a new PDF.
      */
     external_id?: string;
+    /**
+     * set to `true` to make the template available via a shared link. This will allow anyone with the link to create a submission from this template.
+     */
+    shared_link?: boolean;
     documents: Array<{
         /**
          * Name of the document.
@@ -3148,15 +4144,15 @@ export type CreateTemplateFromPdfData = {
                 mask?: number | boolean;
             };
         }>;
-        /**
-         * Remove PDF form fields from the document.
-         */
-        flatten?: boolean;
-        /**
-         * Pass `false` to disable the removal of {{text}} tags from the PDF. This can be used along with transparent text tags for faster and more robust PDF processing.
-         */
-        remove_tags?: boolean;
     }>;
+    /**
+     * Remove PDF form fields from the documents.
+     */
+    flatten?: boolean;
+    /**
+     * Pass `false` to disable the removal of {{text}} tags from the PDF. This can be used along with transparent text tags for faster and more robust PDF processing.
+     */
+    remove_tags?: boolean;
 };
 export type CreateTemplateFromPdfResponse = {
     /**
@@ -3328,6 +4324,10 @@ export type CreateTemplateFromPdfResponse = {
      * Folder name where the template is placed.
      */
     folder_name: string;
+    /**
+     * Indicates if the template is accessible by link.
+     */
+    shared_link?: boolean;
     author: {
         /**
          * Unique identifier of the author.
@@ -3389,6 +4389,10 @@ export type MergeTemplateData = {
      * Your application-specific unique string key to identify this template within your app.
      */
     external_id?: string;
+    /**
+     * set to `true` to make the template available via a shared link. This will allow anyone with the link to create a submission from this template.
+     */
+    shared_link?: boolean;
     /**
      * An array of submitter role names to be used in the merged template.
      */
@@ -3564,6 +4568,10 @@ export type MergeTemplateResponse = {
      * Folder name where the template is placed.
      */
     folder_name: string;
+    /**
+     * Indicates if the template is accessible by link.
+     */
+    shared_link?: boolean;
     author: {
         /**
          * Unique identifier of the author.
