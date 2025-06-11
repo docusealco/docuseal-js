@@ -1521,6 +1521,10 @@ export type CreateSubmissionFromPdfData = {
              */
             options?: Array<string>;
         }>;
+        /**
+         * Document position in the submission. If not specified, the document will be added in the order it appears in the documents array.
+         */
+        position?: number;
     }>;
     /**
      * The list of submitters for the submission.
@@ -1979,6 +1983,10 @@ export type CreateSubmissionFromHtmlData = {
          * Page size. Letter 8.5 x 11 will be assigned when not specified.
          */
         size?: "Letter" | "Legal" | "Tabloid" | "Ledger" | "A0" | "A1" | "A2" | "A3" | "A4" | "A5" | "A6";
+        /**
+         * Document position in the submission. If not specified, the document will be added in the order it appears in the documents array.
+         */
+        position?: number;
     }>;
     /**
      * The list of submitters for the submission.
