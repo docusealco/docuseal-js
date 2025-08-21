@@ -853,6 +853,14 @@ export type CreateSubmissionData = {
          * Submitter specific URL to redirect to after the submission completion.
          */
         completed_redirect_url?: string;
+        /**
+         * The order of the submitter in the workflow (e.g., 0 for the first signer, 1 for the second, etc.). Use the same order number to create order groups. By default, submitters are ordered as in the submitters array.
+         */
+        order?: number;
+        /**
+         * Set to `true` to require phone 2FA verification via a one-time code sent to the phone number in order to access the documents.
+         */
+        require_phone_2fa?: boolean;
         message?: {
             /**
              * Custom signature request email subject for the submitter.
@@ -891,14 +899,28 @@ export type CreateSubmissionData = {
              * Field description displayed on the signing form. Supports Markdown.
              */
             description?: string;
-            /**
-             * HTML field validation pattern string based on https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern specification.
-             */
-            validation_pattern?: string;
-            /**
-             * A custom message to display on pattern validation failure.
-             */
-            invalid_message?: string;
+            validation?: {
+                /**
+                 * HTML field validation pattern string based on https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern specification.
+                 */
+                pattern?: string;
+                /**
+                 * A custom error message to display on validation failure.
+                 */
+                message?: string;
+                /**
+                 * Minimum allowed number value or date depending on field type.
+                 */
+                min?: number | string;
+                /**
+                 * Maximum allowed number value or date depending on field type.
+                 */
+                max?: number | string;
+                /**
+                 * Increment step for number field. Pass 1 to accept only integers, or 0.01 to accept decimal currency.
+                 */
+                step?: number;
+            };
             preferences?: {
                 /**
                  * Font size of the field value in pixels.
@@ -1459,7 +1481,7 @@ export type CreateSubmissionFromPdfData = {
          */
         name: string;
         /**
-         * Base64-encoded content of the PDF file or downloadable file URL.
+         * Base64-encoded content of the PDF or DOCX file or downloadable file URL.
          */
         file: string;
         /**
@@ -1583,6 +1605,14 @@ export type CreateSubmissionFromPdfData = {
          */
         completed_redirect_url?: string;
         /**
+         * The order of the submitter in the workflow (e.g., 0 for the first signer, 1 for the second, etc.). Use the same order number to create order groups. By default, submitters are ordered as in the submitters array.
+         */
+        order?: number;
+        /**
+         * Set to `true` to require phone 2FA verification via a one-time code sent to the phone number in order to access the documents.
+         */
+        require_phone_2fa?: boolean;
+        /**
          * A list of configurations for document form fields.
          */
         fields?: Array<{
@@ -1610,14 +1640,28 @@ export type CreateSubmissionFromPdfData = {
              * Field description displayed on the signing form. Supports Markdown.
              */
             description?: string;
-            /**
-             * HTML field validation pattern string based on https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern specification.
-             */
-            validation_pattern?: string;
-            /**
-             * A custom message to display on pattern validation failure.
-             */
-            invalid_message?: string;
+            validation?: {
+                /**
+                 * HTML field validation pattern string based on https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern specification.
+                 */
+                pattern?: string;
+                /**
+                 * A custom error message to display on validation failure.
+                 */
+                message?: string;
+                /**
+                 * Minimum allowed number value or date depending on field type.
+                 */
+                min?: number | string;
+                /**
+                 * Maximum allowed number value or date depending on field type.
+                 */
+                max?: number | string;
+                /**
+                 * Increment step for number field. Pass 1 to accept only integers, or 0.01 to accept decimal currency.
+                 */
+                step?: number;
+            };
             preferences?: {
                 /**
                  * Font size of the field value in pixels.
@@ -2045,6 +2089,14 @@ export type CreateSubmissionFromHtmlData = {
          */
         completed_redirect_url?: string;
         /**
+         * The order of the submitter in the workflow (e.g., 0 for the first signer, 1 for the second, etc.). Use the same order number to create order groups. By default, submitters are ordered as in the submitters array.
+         */
+        order?: number;
+        /**
+         * Set to `true` to require phone 2FA verification via a one-time code sent to the phone number in order to access the documents.
+         */
+        require_phone_2fa?: boolean;
+        /**
          * A list of configurations for document form fields.
          */
         fields?: Array<{
@@ -2072,14 +2124,28 @@ export type CreateSubmissionFromHtmlData = {
              * Field description displayed on the signing form. Supports Markdown.
              */
             description?: string;
-            /**
-             * HTML field validation pattern string based on https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern specification.
-             */
-            validation_pattern?: string;
-            /**
-             * A custom message to display on pattern validation failure.
-             */
-            invalid_message?: string;
+            validation?: {
+                /**
+                 * HTML field validation pattern string based on https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern specification.
+                 */
+                pattern?: string;
+                /**
+                 * A custom error message to display on validation failure.
+                 */
+                message?: string;
+                /**
+                 * Minimum allowed number value or date depending on field type.
+                 */
+                min?: number | string;
+                /**
+                 * Maximum allowed number value or date depending on field type.
+                 */
+                max?: number | string;
+                /**
+                 * Increment step for number field. Pass 1 to accept only integers, or 0.01 to accept decimal currency.
+                 */
+                step?: number;
+            };
             preferences?: {
                 /**
                  * Font size of the field value in pixels.
@@ -2549,10 +2615,6 @@ export type UpdateSubmitterData = {
      */
     reply_to?: string;
     /**
-     * Submitter specific URL to redirect to after the submission completion.
-     */
-    completed_redirect_url?: string;
-    /**
      * Pass `true` to mark submitter as completed and auto-signed via API.
      */
     completed?: boolean;
@@ -2562,6 +2624,14 @@ export type UpdateSubmitterData = {
     metadata?: {
         [key: string]: unknown;
     };
+    /**
+     * Submitter specific URL to redirect to after the submission completion.
+     */
+    completed_redirect_url?: string;
+    /**
+     * Set to `true` to require phone 2FA verification via a one-time code sent to the phone number in order to access the documents.
+     */
+    require_phone_2fa?: boolean;
     message?: {
         /**
          * Custom signature request email subject.
@@ -2592,14 +2662,28 @@ export type UpdateSubmitterData = {
          * Set `true` to make the field required.
          */
         required?: boolean;
-        /**
-         * HTML field validation pattern string based on https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern specification.
-         */
-        validation_pattern?: string;
-        /**
-         * A custom message to display on pattern validation failure.
-         */
-        invalid_message?: string;
+        validation?: {
+            /**
+             * HTML field validation pattern string based on https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern specification.
+             */
+            pattern?: string;
+            /**
+             * A custom error message to display on validation failure.
+             */
+            message?: string;
+            /**
+             * Minimum allowed number value or date depending on field type.
+             */
+            min?: number | string;
+            /**
+             * Maximum allowed number value or date depending on field type.
+             */
+            max?: number | string;
+            /**
+             * Increment step for number field. Pass 1 to accept only integers, or 0.01 to accept decimal currency.
+             */
+            step?: number;
+        };
         preferences?: {
             /**
              * Font size of the field value in pixels.
@@ -3762,6 +3846,28 @@ export type CreateTemplateFromDocxData = {
              * An array of option values for 'select' field type.
              */
             options?: Array<string>;
+            validation?: {
+                /**
+                 * HTML field validation pattern string based on https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern specification.
+                 */
+                pattern?: string;
+                /**
+                 * A custom error message to display on validation failure.
+                 */
+                message?: string;
+                /**
+                 * Minimum allowed number value or date depending on field type.
+                 */
+                min?: number | string;
+                /**
+                 * Maximum allowed number value or date depending on field type.
+                 */
+                max?: number | string;
+                /**
+                 * Increment step for number field. Pass 1 to accept only integers, or 0.01 to accept decimal currency.
+                 */
+                step?: number;
+            };
             preferences?: {
                 /**
                  * Font size of the field value in pixels.
@@ -4109,6 +4215,28 @@ export type CreateTemplateFromPdfData = {
              * An array of option values for 'select' field type.
              */
             options?: Array<string>;
+            validation?: {
+                /**
+                 * HTML field validation pattern string based on https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern specification.
+                 */
+                pattern?: string;
+                /**
+                 * A custom error message to display on validation failure.
+                 */
+                message?: string;
+                /**
+                 * Minimum allowed number value or date depending on field type.
+                 */
+                min?: number | string;
+                /**
+                 * Maximum allowed number value or date depending on field type.
+                 */
+                max?: number | string;
+                /**
+                 * Increment step for number field. Pass 1 to accept only integers, or 0.01 to accept decimal currency.
+                 */
+                step?: number;
+            };
             preferences?: {
                 /**
                  * Font size of the field value in pixels.
