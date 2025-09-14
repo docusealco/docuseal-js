@@ -137,7 +137,7 @@ const submission = await docuseal.createSubmission({
 
 [Documentation](https://www.docuseal.com/docs/api?lang=javascript#create-a-submission-from-pdf)
 
-Provides the functionality to create one-off submission request from a PDF file. Use `{{Field Name;role=Signer1;type=date}}` text tags to define fillable fields in the document. See [https://www.docuseal.com/examples/fieldtags.pdf](https://www.docuseal.com/examples/fieldtags.pdf) for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.
+Provides the functionality to create one-off submission request from a PDF. Use `{{Field Name;role=Signer1;type=date}}` text tags to define fillable fields in the document. See [https://www.docuseal.com/examples/fieldtags.pdf](https://www.docuseal.com/examples/fieldtags.pdf) for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.
 
 **Related Guides:**<br>
 [Use embedded text field tags to create a fillable form](https://www.docuseal.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form)
@@ -145,7 +145,7 @@ Provides the functionality to create one-off submission request from a PDF file.
 
 ```javascript
 const submission = await docuseal.createSubmissionFromPdf({
-  name: "Test PDF",
+  name: "Test Submission Document",
   documents: [
     {
       name: "string",
@@ -175,6 +175,37 @@ const submission = await docuseal.createSubmissionFromPdf({
 });
 ```
 
+### createSubmissionFromDocx(data)
+
+[Documentation](https://www.docuseal.com/docs/api?lang=javascript#create-a-submission-from-docx)
+
+Provides functionality to create a one-off submission request from a DOCX file with dynamic content variables. Use `[[variable_name]]` text tags to define dynamic content variables in the document. See [https://www.docuseal.com/examples/demo\_template.docx](https://www.docuseal.com/examples/demo_template.docx) for the specific text variable syntax, including dynamic content tables and list. You can also use the `{{signature}}` fillable field syntax to define fillable fields, as in a PDF.
+
+**Related Guides:**<br>
+[Use embedded text field tags to create a fillable form](https://www.docuseal.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form)
+
+
+```javascript
+const submission = await docuseal.createSubmissionFromDocx({
+  name: "Test Submission Document",
+  variables: {
+    variable_name: "value"
+  },
+  documents: [
+    {
+      name: "string",
+      file: "base64"
+    }
+  ],
+  submitters: [
+    {
+      role: "First Party",
+      email: "john.doe@example.com"
+    }
+  ]
+});
+```
+
 ### createSubmissionFromHtml(data)
 
 [Documentation](https://www.docuseal.com/docs/api?lang=javascript#create-a-submission-from-html)
@@ -187,7 +218,7 @@ This API endpoint allows you to create a one-off submission request document usi
 
 ```javascript
 const submission = await docuseal.createSubmissionFromHtml({
-  name: "Test PDF",
+  name: "Test Submission Document",
   documents: [
     {
       name: "Test Document",
@@ -413,34 +444,6 @@ const template = await docuseal.updateTemplate(1000001, {
   name: "New Document Name",
   folder_name: "New Folder"
 });
-```
-
-### updateTemplateDocuments(id, data)
-
-[Documentation](https://www.docuseal.com/docs/api?lang=javascript#update-template-documents)
-
-Allows you to add, remove or replace documents in the template with provided PDF/DOCX file or HTML content.
-
-
-```javascript
-const template = await docuseal.updateTemplateDocuments(1000001, {
-  documents: [
-    {
-      file: "string"
-    }
-  ]
-});
-```
-
-### archiveTemplate(id)
-
-[Documentation](https://www.docuseal.com/docs/api?lang=javascript#archive-a-template)
-
-Allows you to archive a document template.
-
-
-```javascript
-await docuseal.archiveTemplate(1000001);
 ```
 
 ### updateTemplateDocuments(id, data)

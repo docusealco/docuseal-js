@@ -1,6 +1,6 @@
 {
   "name": "@docuseal/api",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "JavaScript / TypeScript library for the DocuSeal API",
   "main": "cjs/index.cjs.js",
   "module": "esm/index.js",
