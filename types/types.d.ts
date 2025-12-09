@@ -87,7 +87,7 @@ export type GetTemplatesResponse = {
             /**
              * Type of the field (e.g., text, signature, date, initials).
              */
-            type: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification";
+            type: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification" | "strikethrough";
             /**
              * Indicates if the field is required.
              */
@@ -109,6 +109,10 @@ export type GetTemplatesResponse = {
                  * Font color of the field value.
                  */
                 color?: string;
+                /**
+                 * Field box background color.
+                 */
+                background?: string;
                 /**
                  * Horizontal alignment of the field text value.
                  */
@@ -133,6 +137,10 @@ export type GetTemplatesResponse = {
                  * Indicates if the field is masked on the document.
                  */
                 mask?: boolean;
+                /**
+                 * An array of signature reasons to choose from.
+                 */
+                reasons?: Array<string>;
             };
             /**
              * List of areas where the field is located in the document.
@@ -320,7 +328,7 @@ export type GetTemplateResponse = {
         /**
          * Type of the field (e.g., text, signature, date, initials).
          */
-        type: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification";
+        type: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification" | "strikethrough";
         /**
          * Indicates if the field is required.
          */
@@ -342,6 +350,10 @@ export type GetTemplateResponse = {
              * Font color of the field value.
              */
             color?: string;
+            /**
+             * Field box background color.
+             */
+            background?: string;
             /**
              * Horizontal alignment of the field text value.
              */
@@ -366,6 +378,10 @@ export type GetTemplateResponse = {
              * Indicates if the field is masked on the document.
              */
             mask?: boolean;
+            /**
+             * An array of signature reasons to choose from.
+             */
+            reasons?: Array<string>;
         };
         /**
          * List of areas where the field is located in the document.
@@ -861,6 +877,10 @@ export type CreateSubmissionData = {
          * Set to `true` to require phone 2FA verification via a one-time code sent to the phone number in order to access the documents.
          */
         require_phone_2fa?: boolean;
+        /**
+         * Set to `true` to require email 2FA verification via a one-time code sent to the email address in order to access the documents.
+         */
+        require_email_2fa?: boolean;
         message?: {
             /**
              * Custom signature request email subject for the submitter.
@@ -939,6 +959,10 @@ export type CreateSubmissionData = {
                  */
                 color?: "black" | "white" | "blue";
                 /**
+                 * Field box background color.
+                 */
+                background?: "black" | "white" | "blue";
+                /**
                  * Horizontal alignment of the field text value.
                  */
                 align?: "left" | "center" | "right";
@@ -962,6 +986,10 @@ export type CreateSubmissionData = {
                  * Set `true` to make sensitive data masked on the document.
                  */
                 mask?: number | boolean;
+                /**
+                 * An array of signature reasons to choose from.
+                 */
+                reasons?: Array<string>;
             };
         }>;
         /**
@@ -1263,6 +1291,12 @@ export type GetSubmissionResponse = {
          * Date and time when the event was triggered.
          */
         event_timestamp: string;
+        /**
+         * Additional event details object.
+         */
+        data?: {
+            [key: string]: unknown;
+        };
     }>;
     /**
      * An array of completed or signed documents of the submission.
@@ -1495,7 +1529,7 @@ export type CreateSubmissionFromPdfData = {
             /**
              * Type of the field (e.g., text, signature, date, initials).
              */
-            type?: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification";
+            type?: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification" | "strikethrough";
             /**
              * Role name of the signer.
              */
@@ -1613,6 +1647,14 @@ export type CreateSubmissionFromPdfData = {
          */
         require_phone_2fa?: boolean;
         /**
+         * Set to `true` to require email 2FA verification via a one-time code sent to the email address in order to access the documents.
+         */
+        require_email_2fa?: boolean;
+        /**
+         * Set the role name of the previous party that should invite this party via email.
+         */
+        invite_by?: string;
+        /**
          * A list of configurations for document form fields.
          */
         fields?: Array<{
@@ -1680,6 +1722,10 @@ export type CreateSubmissionFromPdfData = {
                  */
                 color?: "black" | "white" | "blue";
                 /**
+                 * Field box background color.
+                 */
+                background?: "black" | "white" | "blue";
+                /**
                  * Horizontal alignment of the field text value.
                  */
                 align?: "left" | "center" | "right";
@@ -1703,6 +1749,10 @@ export type CreateSubmissionFromPdfData = {
                  * Set `true` to make sensitive data masked on the document.
                  */
                 mask?: number | boolean;
+                /**
+                 * An array of signature reasons to choose from.
+                 */
+                reasons?: Array<string>;
             };
         }>;
         /**
@@ -1803,6 +1853,19 @@ export type CreateSubmissionFromPdfResponse = {
          */
         status: "completed" | "declined" | "opened" | "sent" | "awaiting";
         /**
+         * An array of pre-filled values for the submitter.
+         */
+        values?: Array<{
+            /**
+             * Document template field name.
+             */
+            field: string;
+            /**
+             * Pre-filled value of the field.
+             */
+            value: string | number | boolean | Array<string | number | boolean>;
+        }>;
+        /**
          * The role of the submitter.
          */
         role: string;
@@ -1867,7 +1930,7 @@ export type CreateSubmissionFromPdfResponse = {
         /**
          * Type of the field (e.g., text, signature, date, initials).
          */
-        type: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification";
+        type: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification" | "strikethrough";
         /**
          * Indicates if the field is required.
          */
@@ -1889,6 +1952,10 @@ export type CreateSubmissionFromPdfResponse = {
              * Font color of the field value.
              */
             color?: string;
+            /**
+             * Field box background color.
+             */
+            background?: string;
             /**
              * Horizontal alignment of the field text value.
              */
@@ -1913,6 +1980,10 @@ export type CreateSubmissionFromPdfResponse = {
              * Indicates if the field is masked on the document.
              */
             mask?: boolean;
+            /**
+             * An array of signature reasons to choose from.
+             */
+            reasons?: Array<string>;
         };
         /**
          * List of areas where the field is located in the document.
@@ -1943,19 +2014,6 @@ export type CreateSubmissionFromPdfResponse = {
              */
             page: number;
         }>;
-    }>;
-    /**
-     * List of documents attached to the one-off submission.
-     */
-    documents: Array<{
-        /**
-         * Unique indentifier of attached document to the one-off submission.
-         */
-        attachment_uuid: string;
-        /**
-         * Name of the attached document to the one-off submission.
-         */
-        name: string;
     }>;
     /**
      * Specify the expiration date and time after which the submission becomes unavailable for signature.
@@ -2088,6 +2146,14 @@ export type CreateSubmissionFromDocxData = {
          */
         require_phone_2fa?: boolean;
         /**
+         * Set to `true` to require email 2FA verification via a one-time code sent to the email address in order to access the documents.
+         */
+        require_email_2fa?: boolean;
+        /**
+         * Set the role name of the previous party that should invite this party via email.
+         */
+        invite_by?: string;
+        /**
          * A list of configurations for document form fields.
          */
         fields?: Array<{
@@ -2155,6 +2221,10 @@ export type CreateSubmissionFromDocxData = {
                  */
                 color?: "black" | "white" | "blue";
                 /**
+                 * Field box background color.
+                 */
+                background?: "black" | "white" | "blue";
+                /**
                  * Horizontal alignment of the field text value.
                  */
                 align?: "left" | "center" | "right";
@@ -2178,6 +2248,10 @@ export type CreateSubmissionFromDocxData = {
                  * Set `true` to make sensitive data masked on the document.
                  */
                 mask?: number | boolean;
+                /**
+                 * An array of signature reasons to choose from.
+                 */
+                reasons?: Array<string>;
             };
         }>;
         /**
@@ -2274,6 +2348,19 @@ export type CreateSubmissionFromDocxResponse = {
          */
         status: "completed" | "declined" | "opened" | "sent" | "awaiting";
         /**
+         * An array of pre-filled values for the submitter.
+         */
+        values?: Array<{
+            /**
+             * Document template field name.
+             */
+            field: string;
+            /**
+             * Pre-filled value of the field.
+             */
+            value: string | number | boolean | Array<string | number | boolean>;
+        }>;
+        /**
          * The role of the submitter.
          */
         role: string;
@@ -2338,7 +2425,7 @@ export type CreateSubmissionFromDocxResponse = {
         /**
          * Type of the field (e.g., text, signature, date, initials).
          */
-        type: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification";
+        type: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification" | "strikethrough";
         /**
          * Indicates if the field is required.
          */
@@ -2360,6 +2447,10 @@ export type CreateSubmissionFromDocxResponse = {
              * Font color of the field value.
              */
             color?: string;
+            /**
+             * Field box background color.
+             */
+            background?: string;
             /**
              * Horizontal alignment of the field text value.
              */
@@ -2384,6 +2475,10 @@ export type CreateSubmissionFromDocxResponse = {
              * Indicates if the field is masked on the document.
              */
             mask?: boolean;
+            /**
+             * An array of signature reasons to choose from.
+             */
+            reasons?: Array<string>;
         };
         /**
          * List of areas where the field is located in the document.
@@ -2414,19 +2509,6 @@ export type CreateSubmissionFromDocxResponse = {
              */
             page: number;
         }>;
-    }>;
-    /**
-     * List of documents attached to the one-off submission.
-     */
-    documents: Array<{
-        /**
-         * Unique indentifier of attached document to the one-off submission.
-         */
-        attachment_uuid: string;
-        /**
-         * Name of the attached document to the one-off submission.
-         */
-        name: string;
     }>;
     /**
      * Specify the expiration date and time after which the submission becomes unavailable for signature.
@@ -2568,6 +2650,14 @@ export type CreateSubmissionFromHtmlData = {
          */
         require_phone_2fa?: boolean;
         /**
+         * Set to `true` to require email 2FA verification via a one-time code sent to the email address in order to access the documents.
+         */
+        require_email_2fa?: boolean;
+        /**
+         * Set the role name of the previous party that should invite this party via email.
+         */
+        invite_by?: string;
+        /**
          * A list of configurations for document form fields.
          */
         fields?: Array<{
@@ -2635,6 +2725,10 @@ export type CreateSubmissionFromHtmlData = {
                  */
                 color?: "black" | "white" | "blue";
                 /**
+                 * Field box background color.
+                 */
+                background?: "black" | "white" | "blue";
+                /**
                  * Horizontal alignment of the field text value.
                  */
                 align?: "left" | "center" | "right";
@@ -2658,6 +2752,10 @@ export type CreateSubmissionFromHtmlData = {
                  * Set `true` to make sensitive data masked on the document.
                  */
                 mask?: number | boolean;
+                /**
+                 * An array of signature reasons to choose from.
+                 */
+                reasons?: Array<string>;
             };
         }>;
         /**
@@ -2750,6 +2848,19 @@ export type CreateSubmissionFromHtmlResponse = {
          */
         status: "completed" | "declined" | "opened" | "sent" | "awaiting";
         /**
+         * An array of pre-filled values for the submitter.
+         */
+        values?: Array<{
+            /**
+             * Document template field name.
+             */
+            field: string;
+            /**
+             * Pre-filled value of the field.
+             */
+            value: string | number | boolean | Array<string | number | boolean>;
+        }>;
+        /**
          * The role of the submitter.
          */
         role: string;
@@ -2814,7 +2925,7 @@ export type CreateSubmissionFromHtmlResponse = {
         /**
          * Type of the field (e.g., text, signature, date, initials).
          */
-        type: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification";
+        type: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification" | "strikethrough";
         /**
          * Indicates if the field is required.
          */
@@ -2836,6 +2947,10 @@ export type CreateSubmissionFromHtmlResponse = {
              * Font color of the field value.
              */
             color?: string;
+            /**
+             * Field box background color.
+             */
+            background?: string;
             /**
              * Horizontal alignment of the field text value.
              */
@@ -2860,6 +2975,10 @@ export type CreateSubmissionFromHtmlResponse = {
              * Indicates if the field is masked on the document.
              */
             mask?: boolean;
+            /**
+             * An array of signature reasons to choose from.
+             */
+            reasons?: Array<string>;
         };
         /**
          * List of areas where the field is located in the document.
@@ -2890,19 +3009,6 @@ export type CreateSubmissionFromHtmlResponse = {
              */
             page: number;
         }>;
-    }>;
-    /**
-     * List of documents attached to the one-off submission.
-     */
-    documents: Array<{
-        /**
-         * Unique indentifier of attached document to the one-off submission.
-         */
-        attachment_uuid: string;
-        /**
-         * Name of the attached document to the one-off submission.
-         */
-        name: string;
     }>;
     /**
      * Specify the expiration date and time after which the submission becomes unavailable for signature.
@@ -3018,6 +3124,12 @@ export type GetSubmitterResponse = {
          * Date and time when the event was triggered.
          */
         event_timestamp: string;
+        /**
+         * Additional event details object.
+         */
+        data?: {
+            [key: string]: unknown;
+        };
     }>;
     /**
      * An array of pre-filled values for the submitter.
@@ -3173,6 +3285,10 @@ export type UpdateSubmitterData = {
              */
             color?: "black" | "white" | "blue";
             /**
+             * Field box background color.
+             */
+            background?: "black" | "white" | "blue";
+            /**
              * Horizontal alignment of the field text value.
              */
             align?: "left" | "center" | "right";
@@ -3196,6 +3312,10 @@ export type UpdateSubmitterData = {
              * Set `true` to make sensitive data masked on the document.
              */
             mask?: number | boolean;
+            /**
+             * An array of signature reasons to choose from.
+             */
+            reasons?: Array<string>;
         };
     }>;
 };
@@ -3436,6 +3556,12 @@ export type GetSubmittersResponse = {
              * Date and time when the event was triggered.
              */
             event_timestamp: string;
+            /**
+             * Additional event details object.
+             */
+            data?: {
+                [key: string]: unknown;
+            };
         }>;
         /**
          * An array of pre-filled values for the submission.
@@ -3569,7 +3695,7 @@ export type AddDocumentToTemplateResponse = {
         /**
          * Type of the field (e.g., text, signature, date, initials).
          */
-        type: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification";
+        type: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification" | "strikethrough";
         /**
          * Indicates if the field is required.
          */
@@ -3591,6 +3717,10 @@ export type AddDocumentToTemplateResponse = {
              * Font color of the field value.
              */
             color?: string;
+            /**
+             * Field box background color.
+             */
+            background?: string;
             /**
              * Horizontal alignment of the field text value.
              */
@@ -3615,6 +3745,10 @@ export type AddDocumentToTemplateResponse = {
              * Indicates if the field is masked on the document.
              */
             mask?: boolean;
+            /**
+             * An array of signature reasons to choose from.
+             */
+            reasons?: Array<string>;
         };
         /**
          * List of areas where the field is located in the document.
@@ -3801,7 +3935,7 @@ export type CloneTemplateResponse = {
         /**
          * Type of the field (e.g., text, signature, date, initials).
          */
-        type: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification";
+        type: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification" | "strikethrough";
         /**
          * Indicates if the field is required.
          */
@@ -3823,6 +3957,10 @@ export type CloneTemplateResponse = {
              * Font color of the field value.
              */
             color?: string;
+            /**
+             * Field box background color.
+             */
+            background?: string;
             /**
              * Horizontal alignment of the field text value.
              */
@@ -3847,6 +3985,10 @@ export type CloneTemplateResponse = {
              * Indicates if the field is masked on the document.
              */
             mask?: boolean;
+            /**
+             * An array of signature reasons to choose from.
+             */
+            reasons?: Array<string>;
         };
         /**
          * List of areas where the field is located in the document.
@@ -4066,7 +4208,7 @@ export type CreateTemplateFromHtmlResponse = {
         /**
          * Type of the field (e.g., text, signature, date, initials).
          */
-        type: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification";
+        type: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification" | "strikethrough";
         /**
          * Indicates if the field is required.
          */
@@ -4088,6 +4230,10 @@ export type CreateTemplateFromHtmlResponse = {
              * Font color of the field value.
              */
             color?: string;
+            /**
+             * Field box background color.
+             */
+            background?: string;
             /**
              * Horizontal alignment of the field text value.
              */
@@ -4112,6 +4258,10 @@ export type CreateTemplateFromHtmlResponse = {
              * Indicates if the field is masked on the document.
              */
             mask?: boolean;
+            /**
+             * An array of signature reasons to choose from.
+             */
+            reasons?: Array<string>;
         };
         /**
          * List of areas where the field is located in the document.
@@ -4270,7 +4420,7 @@ export type CreateTemplateFromDocxData = {
             /**
              * Type of the field (e.g., text, signature, date, initials).
              */
-            type?: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification";
+            type?: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification" | "strikethrough";
             /**
              * Role name of the signer.
              */
@@ -4357,6 +4507,10 @@ export type CreateTemplateFromDocxData = {
                  */
                 color?: "black" | "white" | "blue";
                 /**
+                 * Field box background color.
+                 */
+                background?: "black" | "white" | "blue";
+                /**
                  * Horizontal alignment of the field text value.
                  */
                 align?: "left" | "center" | "right";
@@ -4380,6 +4534,10 @@ export type CreateTemplateFromDocxData = {
                  * Set `true` to make sensitive data masked on the document.
                  */
                 mask?: number | boolean;
+                /**
+                 * An array of signature reasons to choose from.
+                 */
+                reasons?: Array<string>;
             };
         }>;
     }>;
@@ -4435,7 +4593,7 @@ export type CreateTemplateFromDocxResponse = {
         /**
          * Type of the field (e.g., text, signature, date, initials).
          */
-        type: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification";
+        type: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification" | "strikethrough";
         /**
          * Indicates if the field is required.
          */
@@ -4457,6 +4615,10 @@ export type CreateTemplateFromDocxResponse = {
              * Font color of the field value.
              */
             color?: string;
+            /**
+             * Field box background color.
+             */
+            background?: string;
             /**
              * Horizontal alignment of the field text value.
              */
@@ -4481,6 +4643,10 @@ export type CreateTemplateFromDocxResponse = {
              * Indicates if the field is masked on the document.
              */
             mask?: boolean;
+            /**
+             * An array of signature reasons to choose from.
+             */
+            reasons?: Array<string>;
         };
         /**
          * List of areas where the field is located in the document.
@@ -4639,7 +4805,7 @@ export type CreateTemplateFromPdfData = {
             /**
              * Type of the field (e.g., text, signature, date, initials).
              */
-            type?: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification";
+            type?: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification" | "strikethrough";
             /**
              * Role name of the signer.
              */
@@ -4726,6 +4892,10 @@ export type CreateTemplateFromPdfData = {
                  */
                 color?: "black" | "white" | "blue";
                 /**
+                 * Field box background color.
+                 */
+                background?: "black" | "white" | "blue";
+                /**
                  * Horizontal alignment of the field text value.
                  */
                 align?: "left" | "center" | "right";
@@ -4749,6 +4919,10 @@ export type CreateTemplateFromPdfData = {
                  * Set `true` to make sensitive data masked on the document.
                  */
                 mask?: number | boolean;
+                /**
+                 * An array of signature reasons to choose from.
+                 */
+                reasons?: Array<string>;
             };
         }>;
     }>;
@@ -4812,7 +4986,7 @@ export type CreateTemplateFromPdfResponse = {
         /**
          * Type of the field (e.g., text, signature, date, initials).
          */
-        type: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification";
+        type: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification" | "strikethrough";
         /**
          * Indicates if the field is required.
          */
@@ -4834,6 +5008,10 @@ export type CreateTemplateFromPdfResponse = {
              * Font color of the field value.
              */
             color?: string;
+            /**
+             * Field box background color.
+             */
+            background?: string;
             /**
              * Horizontal alignment of the field text value.
              */
@@ -4858,6 +5036,10 @@ export type CreateTemplateFromPdfResponse = {
              * Indicates if the field is masked on the document.
              */
             mask?: boolean;
+            /**
+             * An array of signature reasons to choose from.
+             */
+            reasons?: Array<string>;
         };
         /**
          * List of areas where the field is located in the document.
@@ -5056,7 +5238,7 @@ export type MergeTemplateResponse = {
         /**
          * Type of the field (e.g., text, signature, date, initials).
          */
-        type: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification";
+        type: "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification" | "strikethrough";
         /**
          * Indicates if the field is required.
          */
@@ -5078,6 +5260,10 @@ export type MergeTemplateResponse = {
              * Font color of the field value.
              */
             color?: string;
+            /**
+             * Field box background color.
+             */
+            background?: string;
             /**
              * Horizontal alignment of the field text value.
              */
@@ -5102,6 +5288,10 @@ export type MergeTemplateResponse = {
              * Indicates if the field is masked on the document.
              */
             mask?: boolean;
+            /**
+             * An array of signature reasons to choose from.
+             */
+            reasons?: Array<string>;
         };
         /**
          * List of areas where the field is located in the document.
