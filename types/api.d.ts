@@ -4,6 +4,7 @@ export type DocusealConfig = {
     key?: string;
     url?: string;
     openTimeout?: number;
+    userAgent?: string;
 };
 export type CreateSubmissionResponse = {
     id: number;
@@ -23,6 +24,7 @@ export declare class DocusealApi {
     key: string;
     url: string;
     openTimeout: number;
+    userAgent?: string;
     constructor(config?: DocusealConfig);
     configure(config?: DocusealConfig): void;
     listTemplates(query?: GetTemplatesQuery): Promise<GetTemplatesResponse>;

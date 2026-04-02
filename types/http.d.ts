@@ -2,6 +2,7 @@ export interface HttpConfig {
     key: string;
     url: string;
     openTimeout: number;
+    userAgent?: string;
 }
 export declare class DocusealApiError extends Error {
     constructor(message: string);

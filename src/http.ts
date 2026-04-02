@@ -8,6 +8,7 @@ export interface HttpConfig {
   key: string;
   url: string;
   openTimeout: number;
+  userAgent?: string;
 }
 
 export class DocusealApiError extends Error {
@@ -74,7 +75,7 @@ export class Http {
         headers: {
           "X-Auth-Token": this.config.key,
           "Content-Type": "application/json",
-          "User-Agent": `DocuSeal JS v${VERSION}`,
+          "User-Agent": this.config.userAgent || `DocuSeal JS v${VERSION}`,
         },
         timeout: this.config.openTimeout,
       };

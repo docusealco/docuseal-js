@@ -84,6 +84,7 @@ export type DocusealConfig = {
   key?: string;
   url?: string;
   openTimeout?: number;
+  userAgent?: string;
 }
 
 export type CreateSubmissionResponse = {
@@ -108,11 +109,13 @@ export class DocusealApi {
   public key: string;
   public url: string;
   public openTimeout: number;
+  public userAgent?: string;
 
   constructor(config: DocusealConfig = {}) {
     this.key = config.key || "";
     this.url = config.url || "https://api.docuseal.com";
     this.openTimeout = config.openTimeout || 60000;
+    this.userAgent = config.userAgent;
 
     this.http = new Http(this);
   }
@@ -128,6 +131,10 @@ export class DocusealApi {
 
     if (config.openTimeout) {
       this.openTimeout = config.openTimeout;
+    }
+
+    if (config.userAgent) {
+      this.userAgent = config.userAgent;
     }
   }
 
