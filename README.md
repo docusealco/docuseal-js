@@ -34,7 +34,7 @@ Set up the library with your DocuSeal API key based on your deployment. Retrieve
 
 API keys for the global cloud can be obtained from your [Global DocuSeal Console](https://console.docuseal.com/api).
 
-```ts
+```javascript
 const docuseal = require("@docuseal/api");
 
 docuseal.configure({ key: "your_api_key_here" });
@@ -42,7 +42,7 @@ docuseal.configure({ key: "your_api_key_here" });
 
 Or initiate a new api client object:
 
-```ts
+```javascript
 const { DocusealApi } = require("@docuseal/api");
 
 const docuseal = new DocusealApi({ key: "your_api_key_here" });
@@ -52,7 +52,7 @@ const docuseal = new DocusealApi({ key: "your_api_key_here" });
 
 API keys for the EU cloud can be obtained from your [EU DocuSeal Console](https://console.docuseal.eu/api).
 
-```ts
+```javascript
 const docuseal = require("@docuseal/api");
 
 docuseal.configure({
@@ -65,7 +65,7 @@ docuseal.configure({
 
 For on-premises installations, API keys can be retrieved from the API settings page of your deployed application, e.g., https://yourdocusealapp.com/settings/api.
 
-```ts
+```javascript
 const docuseal = require("@docuseal/api");
 
 docuseal.configure({
@@ -179,10 +179,10 @@ const submission = await docuseal.createSubmissionFromPdf({
 
 [Documentation](https://www.docuseal.com/docs/api?lang=javascript#create-a-submission-from-docx)
 
-Provides functionality to create a one-off submission request from a DOCX file with dynamic content variables. Use `[[variable_name]]` text tags to define dynamic content variables in the document. See [https://www.docuseal.com/examples/demo\_template.docx](https://www.docuseal.com/examples/demo_template.docx) for the specific text variable syntax, including dynamic content tables and list. You can also use the `{{signature}}` fillable field syntax to define fillable fields, as in a PDF.
+Provides functionality to create a one-off submission request from a DOCX file with dynamic content variables. Use `[[variable_name]]` text tags to define dynamic content variables in the document. See [https://www.docuseal.com/examples/demo\_template.docx](https://www.docuseal.com/examples/demo_template.docx) for the specific text variable syntax, including dynamic content tables and lists. You can also use the `{{signature}}` field syntax to define fillable fields, as in a PDF.
 
 **Related Guides:**<br>
-[Use embedded text field tags to create a fillable form](https://www.docuseal.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form)
+[Use dynamic content variables in DOCX to create personalized documents](https://www.docuseal.com/guides/use-dynamic-content-variables-in-docx-to-create-personalized-documents)
 
 
 ```javascript
@@ -359,7 +359,7 @@ const template = await docuseal.createTemplateFromPdf({
 
 [Documentation](https://www.docuseal.com/docs/api?lang=javascript#create-a-template-from-word-docx)
 
-Provides the functionality to create a fillable document template for existing Microsoft Word document. Use `{{Field Name;role=Signer1;type=date}}` text tags to define fillable fields in the document. See [https://www.docuseal.com/examples/fieldtags.docx](https://www.docuseal.com/examples/fieldtags.docx) for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.
+Provides the functionality to create a fillable document template for an existing Microsoft Word document. Use `{{Field Name;role=Signer1;type=date}}` text tags to define fillable fields in the document. See [https://www.docuseal.com/examples/fieldtags.docx](https://www.docuseal.com/examples/fieldtags.docx) for more text tag formats. Or specify the exact pixel coordinates of the document fields using `fields` param.
 
 **Related Guides:**<br>
 [Use embedded text field tags to create a fillable form](https://www.docuseal.com/guides/use-embedded-text-field-tags-in-the-pdf-to-create-a-fillable-form)
@@ -406,7 +406,7 @@ and typesetting industry</p>
 
 [Documentation](https://www.docuseal.com/docs/api?lang=javascript#clone-a-template)
 
-Allows you to clone existing template into a new template.
+Allows you to clone an existing template into a new template.
 
 
 ```javascript
@@ -478,7 +478,7 @@ await docuseal.archiveTemplate(1000001);
 
 Set timeouts to avoid hanging requests:
 
-```ts
+```javascript
 const { DocusealApi } = require('@docuseal/api')
 
 const docuseal = new DocusealApi({
@@ -494,4 +494,4 @@ For feature requests or bug reports, visit our [GitHub Issues page](https://gith
 
 ## License
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+The library is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).

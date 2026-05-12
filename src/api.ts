@@ -37,6 +37,7 @@ import {
   UpdateSubmitterResponse,
   GetSubmittersQuery,
   GetSubmittersResponse,
+  GetSubmissionDocumentsQuery,
   GetSubmissionDocumentsResponse
 } from "./types.js";
 
@@ -77,6 +78,7 @@ export type {
   UpdateSubmitterResponse,
   GetSubmittersQuery,
   GetSubmittersResponse,
+  GetSubmissionDocumentsQuery,
   GetSubmissionDocumentsResponse
 }
 
@@ -101,7 +103,6 @@ type IncludeQuery = {
 export type GetTemplateQuery = IncludeQuery;
 export type GetSubmissionQuery = IncludeQuery;
 export type GetSubmitterQuery = IncludeQuery;
-export type GetSubmissionDocumentsQuery = IncludeQuery;
 
 export class DocusealApi {
   private http: Http;

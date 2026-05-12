@@ -2,7 +2,7 @@
 
 export type GetTemplatesQuery = {
   /**
-   * The unique identifier of the template to start the list from. It allows you to receive only templates with id greater than the specified value. Pass ID value from the `pagination.next` response to load the next batch of templates.
+   * The unique identifier of the template to start the list from. It allows you to receive only templates with an ID greater than the specified value. Pass ID value from the `pagination.next` response to load the next batch of templates.
    */
   after?: number;
   /**
@@ -10,11 +10,11 @@ export type GetTemplatesQuery = {
    */
   archived?: boolean;
   /**
-   * The unique identifier of the template to end the list with. It allows you to receive only templates with id less than the specified value.
+   * The unique identifier of the template to end the list with. It allows you to receive only templates with an ID less than the specified value.
    */
   before?: number;
   /**
-   * The unique applications-specific identifier provided for the template via API or Embedded template form builder. It allows you to receive only templates with your specified external id.
+   * The unique application-specific identifier provided for the template via API or Embedded template form builder. It allows you to receive only templates with your specified external ID.
    */
   external_id?: string;
   /**
@@ -49,7 +49,7 @@ export type GetTemplatesResponse = {
      */
     slug: string;
     /**
-     * Name of the template.
+     * The name of the template.
      */
     name: string;
     /**
@@ -63,7 +63,7 @@ export type GetTemplatesResponse = {
      */
     schema: Array<{
       /**
-       * Unique indentifier of attached document to the template.
+       * Unique identifier of attached document to the template.
        */
       attachment_uuid: string;
       /**
@@ -108,11 +108,15 @@ export type GetTemplatesResponse = {
         | "payment"
         | "phone"
         | "verification"
+        | "kba"
         | "strikethrough";
       /**
        * Indicates if the field is required.
        */
       required: boolean;
+      /**
+       * Field display preferences.
+       */
       preferences?: {
         /**
          * Font size of the field value in pixels.
@@ -193,9 +197,12 @@ export type GetTemplatesResponse = {
         page: number;
       }>;
     }>;
+    /**
+     * The list of submitters for the template.
+     */
     submitters: Array<{
       /**
-       * Submitter name.
+       * The name of the submitter.
        */
       name: string;
       /**
@@ -212,11 +219,11 @@ export type GetTemplatesResponse = {
      */
     archived_at?: string | null;
     /**
-     * Date and time when the template was created.
+     * The date and time when the template was created.
      */
     created_at: string;
     /**
-     * Date and time when the template was updated.
+     * The date and time when the template was last updated.
      */
     updated_at: string;
     /**
@@ -224,15 +231,15 @@ export type GetTemplatesResponse = {
      */
     source: "native" | "api" | "embed";
     /**
-     * Identifier of the template in the external system.
+     * Your application-specific unique string key to identify this template within your app.
      */
     external_id: string | null;
     /**
-     * Unique identifier of the folder where the template is placed.
+     * Unique identifier of the folder where the template is located.
      */
     folder_id: number;
     /**
-     * Folder name where the template is placed.
+     * Folder name where the template is located.
      */
     folder_name: string;
     /**
@@ -289,11 +296,11 @@ export type GetTemplatesResponse = {
      */
     count: number;
     /**
-     * The ID of the tempate after which the next page starts.
+     * The ID of the template after which the next page starts.
      */
     next: number | null;
     /**
-     * The ID of the tempate before which the previous page ends.
+     * The ID of the template before which the previous page ends.
      */
     prev: number | null;
   };
@@ -309,7 +316,7 @@ export type GetTemplateResponse = {
    */
   slug: string;
   /**
-   * Name of the template.
+   * The name of the template.
    */
   name: string;
   /**
@@ -323,7 +330,7 @@ export type GetTemplateResponse = {
    */
   schema: Array<{
     /**
-     * Unique indentifier of attached document to the template.
+     * Unique identifier of attached document to the template.
      */
     attachment_uuid: string;
     /**
@@ -368,11 +375,15 @@ export type GetTemplateResponse = {
       | "payment"
       | "phone"
       | "verification"
+      | "kba"
       | "strikethrough";
     /**
      * Indicates if the field is required.
      */
     required: boolean;
+    /**
+     * Field display preferences.
+     */
     preferences?: {
       /**
        * Font size of the field value in pixels.
@@ -453,9 +464,12 @@ export type GetTemplateResponse = {
       page: number;
     }>;
   }>;
+  /**
+   * The list of submitters for the template.
+   */
   submitters: Array<{
     /**
-     * Submitter name.
+     * The name of the submitter.
      */
     name: string;
     /**
@@ -472,11 +486,11 @@ export type GetTemplateResponse = {
    */
   archived_at: string | null;
   /**
-   * Date and time when the template was created.
+   * The date and time when the template was created.
    */
   created_at: string;
   /**
-   * Date and time when the template was updated.
+   * The date and time when the template was last updated.
    */
   updated_at: string;
   /**
@@ -484,15 +498,15 @@ export type GetTemplateResponse = {
    */
   source: "native" | "api" | "embed";
   /**
-   * Identifier of the template in the external system.
+   * Your application-specific unique string key to identify this template within your app.
    */
   external_id: string | null;
   /**
-   * Unique identifier of the folder where the template is placed.
+   * Unique identifier of the folder where the template is located.
    */
   folder_id: number;
   /**
-   * Folder name where the template is placed.
+   * Folder name where the template is located.
    */
   folder_name: string;
   /**
@@ -557,7 +571,7 @@ export type ArchiveTemplateResponse = {
 
 export type UpdateTemplateData = {
   /**
-   * The name of the template
+   * The name of the template.
    */
   name?: string;
   /**
@@ -603,7 +617,7 @@ export type GetSubmissionsQuery = {
    */
   limit?: number;
   /**
-   * Filter submissions based on submitters name, email or phone partial match.
+   * Filter submissions based on submitter's name, email or phone partial match.
    */
   q?: string;
   /**
@@ -631,7 +645,7 @@ export type GetSubmissionsResponse = {
      */
     id: number;
     /**
-     * Name of the document submission
+     * Name of the document submission.
      */
     name?: string;
     /**
@@ -679,11 +693,11 @@ export type GetSubmissionsResponse = {
      */
     submitters: Array<{
       /**
-       * Submission unique ID number.
+       * Submitter unique ID number.
        */
       id: number;
       /**
-       * Submission ID number.
+       * Submission unique ID number.
        */
       submission_id: number;
       /**
@@ -711,7 +725,7 @@ export type GetSubmissionsResponse = {
        */
       completed_at: string | null;
       /**
-       * The date and time when the submitter declined to complete the signing form.
+       * The date and time when the submitter declined the signing form.
        */
       declined_at: string | null;
       /**
@@ -723,11 +737,11 @@ export type GetSubmissionsResponse = {
        */
       updated_at: string;
       /**
-       * Submitter name.
+       * The name of the submitter.
        */
       name: string | null;
       /**
-       * Submitter phone number.
+       * The phone number of the submitter.
        */
       phone: string | null;
       /**
@@ -739,7 +753,7 @@ export type GetSubmissionsResponse = {
        */
       status: "completed" | "declined" | "opened" | "sent" | "awaiting";
       /**
-       * The role of the submitter.
+       * The role of the submitter in the signing process.
        */
       role: string;
       /**
@@ -749,7 +763,7 @@ export type GetSubmissionsResponse = {
         [key: string]: unknown;
       };
       /**
-       * Object with submitter preferences.
+       * Submitter preferences.
        */
       preferences: {
         [key: string]: unknown;
@@ -757,11 +771,11 @@ export type GetSubmissionsResponse = {
     }>;
     template?: {
       /**
-       * Template unique ID number.
+       * Unique identifier of the document template.
        */
       id: number;
       /**
-       * The name of the submission template.
+       * The name of the template.
        */
       name: string;
       /**
@@ -773,11 +787,11 @@ export type GetSubmissionsResponse = {
        */
       folder_name: string;
       /**
-       * The date and time when the submission template was created.
+       * The date and time when the template was created.
        */
       created_at: string;
       /**
-       * The date and time when the submission template was last updated.
+       * The date and time when the template was last updated.
        */
       updated_at: string;
     };
@@ -849,6 +863,15 @@ export type CreateSubmissionData = {
    * Specify the expiration date and time after which the submission becomes unavailable for signature.
    */
   expire_at?: string;
+  /**
+   * Dynamic content variables object. Variable values can be strings, numbers, arrays, objects, or HTML content used to generate styled text, paragraphs, and tables in dynamic template documents.
+   */
+  variables?: {
+    [key: string]: unknown;
+  };
+  /**
+   * Custom signature request email message.
+   */
   message?: {
     /**
      * Custom signature request email subject.
@@ -874,7 +897,7 @@ export type CreateSubmissionData = {
     /**
      * The email address of the submitter.
      */
-    email: string;
+    email?: string;
     /**
      * The phone number of the submitter, formatted according to the E.164 standard.
      */
@@ -927,6 +950,9 @@ export type CreateSubmissionData = {
      * Set to `true` to require email 2FA verification via a one-time code sent to the email address in order to access the documents.
      */
     require_email_2fa?: boolean;
+    /**
+     * Custom signature request email message for the submitter.
+     */
     message?: {
       /**
        * Custom signature request email subject for the submitter.
@@ -969,6 +995,9 @@ export type CreateSubmissionData = {
        * Field description displayed on the signing form. Supports Markdown.
        */
       description?: string;
+      /**
+       * Field validation rules.
+       */
       validation?: {
         /**
          * HTML field validation pattern string based on https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern specification.
@@ -991,6 +1020,9 @@ export type CreateSubmissionData = {
          */
         step?: number;
       };
+      /**
+       * Field display preferences.
+       */
       preferences?: {
         /**
          * Font size of the field value in pixels.
@@ -1055,7 +1087,7 @@ export type CreateSubmissionResponse = Array<{
    */
   id: number;
   /**
-   * Submission UUID.
+   * Submission unique ID number.
    */
   submission_id: number;
   /**
@@ -1067,7 +1099,7 @@ export type CreateSubmissionResponse = Array<{
    */
   email: string | null;
   /**
-   * Unique key to be used in the signing form URL.
+   * Unique key to be used in the form signing link and embedded form.
    */
   slug: string;
   /**
@@ -1075,7 +1107,7 @@ export type CreateSubmissionResponse = Array<{
    */
   status: "completed" | "declined" | "opened" | "sent" | "awaiting";
   /**
-   * An array of pre-filled values for the submission.
+   * An array of pre-filled values for the submitter.
    */
   values: Array<{
     /**
@@ -1087,6 +1119,9 @@ export type CreateSubmissionResponse = Array<{
      */
     value: string | number | boolean | Array<string | number | boolean>;
   }>;
+  /**
+   * Metadata object with additional submitter information.
+   */
   metadata: {
     [key: string]: unknown;
   };
@@ -1126,6 +1161,9 @@ export type CreateSubmissionResponse = Array<{
    * Your application-specific unique string key to identify this submitter within your app.
    */
   external_id: string | null;
+  /**
+   * Submitter preferences.
+   */
   preferences: {
     /**
      * Indicates whether the signature request email should be sent.
@@ -1152,7 +1190,7 @@ export type GetSubmissionResponse = {
    */
   id: number;
   /**
-   * Name of the document submission
+   * Name of the document submission.
    */
   name?: string;
   /**
@@ -1236,11 +1274,11 @@ export type GetSubmissionResponse = {
      */
     updated_at: string;
     /**
-     * Submitter name.
+     * The name of the submitter.
      */
     name: string | null;
     /**
-     * Submitter phone number.
+     * The phone number of the submitter.
      */
     phone: string | null;
     /**
@@ -1252,7 +1290,7 @@ export type GetSubmissionResponse = {
      */
     status: "completed" | "declined" | "opened" | "sent" | "awaiting";
     /**
-     * An array of field values for the submitter.
+     * An array of pre-filled values for the submitter.
      */
     values: Array<{
       /**
@@ -1284,11 +1322,11 @@ export type GetSubmissionResponse = {
   }>;
   template?: {
     /**
-     * Template unique ID number.
+     * Unique identifier of the document template.
      */
     id: number;
     /**
-     * The name of the submission template.
+     * The name of the template.
      */
     name: string;
     /**
@@ -1300,11 +1338,11 @@ export type GetSubmissionResponse = {
      */
     folder_name: string;
     /**
-     * The date and time when the submission template was created.
+     * The date and time when the template was created.
      */
     created_at: string;
     /**
-     * The date and time when the submission template was last updated.
+     * The date and time when the template was last updated.
      */
     updated_at: string;
   };
@@ -1326,6 +1364,9 @@ export type GetSubmissionResponse = {
      */
     email: string;
   } | null;
+  /**
+   * An array of events related to the submission.
+   */
   submission_events: Array<{
     /**
      * Submission event unique ID number.
@@ -1392,7 +1433,7 @@ export type GetSubmissionResponse = {
     [key: string]: unknown;
   };
   /**
-   * The date and time when the submission was fully completed.
+   * The date and time when the submission was completed.
    */
   completed_at: string | null;
 };
@@ -1408,11 +1449,21 @@ export type ArchiveSubmissionResponse = {
   archived_at: string | null;
 };
 
+export type GetSubmissionDocumentsQuery = {
+  /**
+   * When `true`, merges all documents into a single PDF.
+   */
+  merge?: boolean;
+};
+
 export type GetSubmissionDocumentsResponse = {
   /**
    * Submission unique ID number.
    */
   id: number;
+  /**
+   * An array of completed or signed documents of the submission.
+   */
   documents: Array<{
     /**
      * Document name.
@@ -1438,6 +1489,9 @@ export type CreateSubmissionsFromEmailsData = {
    * Set `false` to disable signature request emails sending.
    */
   send_email?: boolean;
+  /**
+   * Custom signature request email message.
+   */
   message?: {
     /**
      * Custom signature request email subject.
@@ -1456,7 +1510,7 @@ export type CreateSubmissionsFromEmailsResponse = Array<{
    */
   id: number;
   /**
-   * Submission UUID.
+   * Submission unique ID number.
    */
   submission_id: number;
   /**
@@ -1468,7 +1522,7 @@ export type CreateSubmissionsFromEmailsResponse = Array<{
    */
   email: string | null;
   /**
-   * Unique key to be used in the signing form URL.
+   * Unique key to be used in the form signing link and embedded form.
    */
   slug: string;
   /**
@@ -1476,7 +1530,7 @@ export type CreateSubmissionsFromEmailsResponse = Array<{
    */
   status: "completed" | "declined" | "opened" | "sent" | "awaiting";
   /**
-   * An array of pre-filled values for the submission.
+   * An array of pre-filled values for the submitter.
    */
   values: Array<{
     /**
@@ -1488,6 +1542,9 @@ export type CreateSubmissionsFromEmailsResponse = Array<{
      */
     value: string | number | boolean | Array<string | number | boolean>;
   }>;
+  /**
+   * Metadata object with additional submitter information.
+   */
   metadata: {
     [key: string]: unknown;
   };
@@ -1527,6 +1584,9 @@ export type CreateSubmissionsFromEmailsResponse = Array<{
    * Your application-specific unique string key to identify this submitter within your app.
    */
   external_id: string | null;
+  /**
+   * Submitter preferences.
+   */
   preferences: {
     /**
      * Indicates whether the signature request email should be sent.
@@ -1584,6 +1644,9 @@ export type CreateSubmissionFromPdfData = {
    * An optional array of template IDs to use in the submission along with the provided documents. This can be used to create multi-document submissions when some of the required documents exist within templates.
    */
   template_ids?: Array<number>;
+  /**
+   * An array of PDF documents to create a submission.
+   */
   documents: Array<{
     /**
      * Name of the document.
@@ -1622,6 +1685,7 @@ export type CreateSubmissionFromPdfData = {
         | "payment"
         | "phone"
         | "verification"
+        | "kba"
         | "strikethrough";
       /**
        * Role name of the signer.
@@ -1639,6 +1703,9 @@ export type CreateSubmissionFromPdfData = {
        * Field description displayed on the signing form. Supports Markdown.
        */
       description?: string;
+      /**
+       * List of areas where the field is located in the document.
+       */
       areas?: Array<{
         /**
          * X-coordinate of the field area.
@@ -1690,7 +1757,7 @@ export type CreateSubmissionFromPdfData = {
     /**
      * The email address of the submitter.
      */
-    email: string;
+    email?: string;
     /**
      * The phone number of the submitter, formatted according to the E.164 standard.
      */
@@ -1779,6 +1846,9 @@ export type CreateSubmissionFromPdfData = {
        * Field description displayed on the signing form. Supports Markdown.
        */
       description?: string;
+      /**
+       * Field validation rules.
+       */
       validation?: {
         /**
          * HTML field validation pattern string based on https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern specification.
@@ -1801,6 +1871,9 @@ export type CreateSubmissionFromPdfData = {
          */
         step?: number;
       };
+      /**
+       * Field display preferences.
+       */
       preferences?: {
         /**
          * Font size of the field value in pixels.
@@ -1857,6 +1930,9 @@ export type CreateSubmissionFromPdfData = {
      */
     roles?: Array<string>;
   }>;
+  /**
+   * Custom signature request email message.
+   */
   message?: {
     /**
      * Custom signature request email subject.
@@ -1895,7 +1971,7 @@ export type CreateSubmissionFromPdfResponse = {
    */
   submitters: Array<{
     /**
-     * Submission unique ID number.
+     * Submitter unique ID number.
      */
     id: number;
     /**
@@ -1923,7 +1999,7 @@ export type CreateSubmissionFromPdfResponse = {
      */
     completed_at: string | null;
     /**
-     * The date and time when the submitter declined to complete the signing form.
+     * The date and time when the submitter declined the signing form.
      */
     declined_at: string | null;
     /**
@@ -1935,11 +2011,11 @@ export type CreateSubmissionFromPdfResponse = {
      */
     updated_at: string;
     /**
-     * Submitter name.
+     * The name of the submitter.
      */
     name: string | null;
     /**
-     * Submitter phone number.
+     * The phone number of the submitter.
      */
     phone: string | null;
     /**
@@ -1964,7 +2040,7 @@ export type CreateSubmissionFromPdfResponse = {
       value: string | number | boolean | Array<string | number | boolean>;
     }>;
     /**
-     * The role of the submitter.
+     * The role of the submitter in the signing process.
      */
     role: string;
     /**
@@ -1974,7 +2050,7 @@ export type CreateSubmissionFromPdfResponse = {
       [key: string]: unknown;
     };
     /**
-     * Object with submitter preferences.
+     * Submitter preferences.
      */
     preferences: {
       [key: string]: unknown;
@@ -2046,11 +2122,15 @@ export type CreateSubmissionFromPdfResponse = {
       | "payment"
       | "phone"
       | "verification"
+      | "kba"
       | "strikethrough";
     /**
      * Indicates if the field is required.
      */
     required: boolean;
+    /**
+     * Field display preferences.
+     */
     preferences?: {
       /**
        * Font size of the field value in pixels.
@@ -2184,6 +2264,9 @@ export type CreateSubmissionFromDocxData = {
    * An optional array of template IDs to use in the submission along with the provided documents. This can be used to create multi-document submissions when some of the required documents exist within templates.
    */
   template_ids?: Array<number>;
+  /**
+   * An array of DOCX documents to create a submission.
+   */
   documents: Array<{
     /**
      * Name of the document.
@@ -2213,7 +2296,7 @@ export type CreateSubmissionFromDocxData = {
     /**
      * The email address of the submitter.
      */
-    email: string;
+    email?: string;
     /**
      * The phone number of the submitter, formatted according to the E.164 standard.
      */
@@ -2302,6 +2385,9 @@ export type CreateSubmissionFromDocxData = {
        * Field description displayed on the signing form. Supports Markdown.
        */
       description?: string;
+      /**
+       * Field validation rules.
+       */
       validation?: {
         /**
          * HTML field validation pattern string based on https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern specification.
@@ -2324,6 +2410,9 @@ export type CreateSubmissionFromDocxData = {
          */
         step?: number;
       };
+      /**
+       * Field display preferences.
+       */
       preferences?: {
         /**
          * Font size of the field value in pixels.
@@ -2380,6 +2469,9 @@ export type CreateSubmissionFromDocxData = {
      */
     roles?: Array<string>;
   }>;
+  /**
+   * Custom signature request email message.
+   */
   message?: {
     /**
      * Custom signature request email subject.
@@ -2395,7 +2487,7 @@ export type CreateSubmissionFromDocxData = {
    */
   merge_documents?: boolean;
   /**
-   * Pass `false` to disable the removal of {{text}} tags from the PDF. This can be used along with transparent text tags for faster and more robust PDF processing.
+   * Pass `false` to disable the removal of {{text}} tags from the document. This can be used along with transparent text tags for faster and more robust document processing.
    */
   remove_tags?: boolean;
 };
@@ -2414,7 +2506,7 @@ export type CreateSubmissionFromDocxResponse = {
    */
   submitters: Array<{
     /**
-     * Submission unique ID number.
+     * Submitter unique ID number.
      */
     id: number;
     /**
@@ -2442,7 +2534,7 @@ export type CreateSubmissionFromDocxResponse = {
      */
     completed_at: string | null;
     /**
-     * The date and time when the submitter declined to complete the signing form.
+     * The date and time when the submitter declined the signing form.
      */
     declined_at: string | null;
     /**
@@ -2454,11 +2546,11 @@ export type CreateSubmissionFromDocxResponse = {
      */
     updated_at: string;
     /**
-     * Submitter name.
+     * The name of the submitter.
      */
     name: string | null;
     /**
-     * Submitter phone number.
+     * The phone number of the submitter.
      */
     phone: string | null;
     /**
@@ -2483,7 +2575,7 @@ export type CreateSubmissionFromDocxResponse = {
       value: string | number | boolean | Array<string | number | boolean>;
     }>;
     /**
-     * The role of the submitter.
+     * The role of the submitter in the signing process.
      */
     role: string;
     /**
@@ -2493,7 +2585,7 @@ export type CreateSubmissionFromDocxResponse = {
       [key: string]: unknown;
     };
     /**
-     * Object with submitter preferences.
+     * Submitter preferences.
      */
     preferences: {
       [key: string]: unknown;
@@ -2565,11 +2657,15 @@ export type CreateSubmissionFromDocxResponse = {
       | "payment"
       | "phone"
       | "verification"
+      | "kba"
       | "strikethrough";
     /**
      * Indicates if the field is required.
      */
     required: boolean;
+    /**
+     * Field display preferences.
+     */
     preferences?: {
       /**
        * Font size of the field value in pixels.
@@ -2662,7 +2758,7 @@ export type CreateSubmissionFromDocxResponse = {
 
 export type CreateSubmissionFromHtmlData = {
   /**
-   * Name of the document submission
+   * Name of the document submission.
    */
   name?: string;
   /**
@@ -2752,7 +2848,7 @@ export type CreateSubmissionFromHtmlData = {
     /**
      * The email address of the submitter.
      */
-    email: string;
+    email?: string;
     /**
      * The phone number of the submitter, formatted according to the E.164 standard.
      */
@@ -2841,6 +2937,9 @@ export type CreateSubmissionFromHtmlData = {
        * Field description displayed on the signing form. Supports Markdown.
        */
       description?: string;
+      /**
+       * Field validation rules.
+       */
       validation?: {
         /**
          * HTML field validation pattern string based on https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern specification.
@@ -2863,6 +2962,9 @@ export type CreateSubmissionFromHtmlData = {
          */
         step?: number;
       };
+      /**
+       * Field display preferences.
+       */
       preferences?: {
         /**
          * Font size of the field value in pixels.
@@ -2919,6 +3021,9 @@ export type CreateSubmissionFromHtmlData = {
      */
     roles?: Array<string>;
   }>;
+  /**
+   * Custom signature request email message.
+   */
   message?: {
     /**
      * Custom signature request email subject.
@@ -2949,7 +3054,7 @@ export type CreateSubmissionFromHtmlResponse = {
    */
   submitters: Array<{
     /**
-     * Submission unique ID number.
+     * Submitter unique ID number.
      */
     id: number;
     /**
@@ -2977,7 +3082,7 @@ export type CreateSubmissionFromHtmlResponse = {
      */
     completed_at: string | null;
     /**
-     * The date and time when the submitter declined to complete the signing form.
+     * The date and time when the submitter declined the signing form.
      */
     declined_at: string | null;
     /**
@@ -2989,11 +3094,11 @@ export type CreateSubmissionFromHtmlResponse = {
      */
     updated_at: string;
     /**
-     * Submitter name.
+     * The name of the submitter.
      */
     name: string | null;
     /**
-     * Submitter phone number.
+     * The phone number of the submitter.
      */
     phone: string | null;
     /**
@@ -3018,7 +3123,7 @@ export type CreateSubmissionFromHtmlResponse = {
       value: string | number | boolean | Array<string | number | boolean>;
     }>;
     /**
-     * The role of the submitter.
+     * The role of the submitter in the signing process.
      */
     role: string;
     /**
@@ -3028,7 +3133,7 @@ export type CreateSubmissionFromHtmlResponse = {
       [key: string]: unknown;
     };
     /**
-     * Object with submitter preferences.
+     * Submitter preferences.
      */
     preferences: {
       [key: string]: unknown;
@@ -3100,11 +3205,15 @@ export type CreateSubmissionFromHtmlResponse = {
       | "payment"
       | "phone"
       | "verification"
+      | "kba"
       | "strikethrough";
     /**
      * Indicates if the field is required.
      */
     required: boolean;
+    /**
+     * Field display preferences.
+     */
     preferences?: {
       /**
        * Font size of the field value in pixels.
@@ -3241,19 +3350,19 @@ export type GetSubmitterResponse = {
    */
   updated_at: string;
   /**
-   * Submitter name.
+   * The name of the submitter.
    */
   name: string | null;
   /**
-   * Submitter phone number.
+   * The phone number of the submitter.
    */
   phone: string | null;
   /**
-   * Submitter's submission status.
+   * The status of signing request for the submitter.
    */
   status: "completed" | "declined" | "opened" | "sent" | "awaiting";
   /**
-   * The unique applications-specific identifier
+   * Your application-specific unique string key to identify this submitter within your app.
    */
   external_id: string | null;
   /**
@@ -3273,16 +3382,25 @@ export type GetSubmitterResponse = {
    */
   template: {
     /**
-     * The template's unique identifier.
+     * Unique identifier of the document template.
      */
     id: number;
     /**
-     * The template's name.
+     * The name of the template.
      */
     name: string;
+    /**
+     * The date and time when the template was created.
+     */
     created_at: string;
+    /**
+     * The date and time when the template was last updated.
+     */
     updated_at: string;
   };
+  /**
+   * An array of events related to the submission.
+   */
   submission_events: Array<{
     /**
      * Submission event unique ID number.
@@ -3410,6 +3528,13 @@ export type UpdateSubmitterData = {
    * Set to `true` to require phone 2FA verification via a one-time code sent to the phone number in order to access the documents.
    */
   require_phone_2fa?: boolean;
+  /**
+   * Set to `true` to require email 2FA verification via a one-time code sent to the email address in order to access the documents.
+   */
+  require_email_2fa?: boolean;
+  /**
+   * Custom signature request email message.
+   */
   message?: {
     /**
      * Custom signature request email subject.
@@ -3444,6 +3569,9 @@ export type UpdateSubmitterData = {
      * Set `true` to make the field required.
      */
     required?: boolean;
+    /**
+     * Field validation rules.
+     */
     validation?: {
       /**
        * HTML field validation pattern string based on https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern specification.
@@ -3466,6 +3594,9 @@ export type UpdateSubmitterData = {
        */
       step?: number;
     };
+    /**
+     * Field display preferences.
+     */
     preferences?: {
       /**
        * Font size of the field value in pixels.
@@ -3565,19 +3696,19 @@ export type UpdateSubmitterResponse = {
    */
   updated_at: string;
   /**
-   * Submitter name.
+   * The name of the submitter.
    */
   name: string | null;
   /**
-   * Submitter phone number.
+   * The phone number of the submitter.
    */
   phone: string | null;
   /**
-   * Submitter's submission status.
+   * The status of signing request for the submitter.
    */
   status: "completed" | "declined" | "opened" | "sent" | "awaiting";
   /**
-   * The unique applications-specific identifier
+   * Your application-specific unique string key to identify this submitter within your app.
    */
   external_id: string | null;
   /**
@@ -3630,11 +3761,11 @@ export type UpdateSubmitterResponse = {
 
 export type GetSubmittersQuery = {
   /**
-   * The unique identifier of the submitter to start the list from. It allows you to receive only submitters with id greater than the specified value. Pass ID value from the `pagination.next` response to load the next batch of submitters.
+   * The unique identifier of the submitter to start the list from. It allows you to receive only submitters with an ID greater than the specified value. Pass ID value from the `pagination.next` response to load the next batch of submitters.
    */
   after?: number;
   /**
-   * The unique identifier of the submitter to end the list with. It allows you to receive only submitters with id less than the specified value.
+   * The unique identifier of the submitter to end the list with. It allows you to receive only submitters with an ID less than the specified value.
    */
   before?: number;
   /**
@@ -3646,7 +3777,7 @@ export type GetSubmittersQuery = {
    */
   completed_before?: string;
   /**
-   * The unique applications-specific identifier provided for a submitter when initializing a signature request. It allows you to receive only submitters with a specified external id.
+   * The unique application-specific identifier provided for a submitter when initializing a signature request. It allows you to receive only submitters with a specified external ID.
    */
   external_id?: string;
   /**
@@ -3686,7 +3817,7 @@ export type GetSubmittersResponse = {
      */
     email: string;
     /**
-     * Unique slug of the submitter form.
+     * Unique key to be used in the form signing link and embedded form.
      */
     slug: string;
     /**
@@ -3714,19 +3845,19 @@ export type GetSubmittersResponse = {
      */
     updated_at: string;
     /**
-     * Submitter name.
+     * The name of the submitter.
      */
     name: string | null;
     /**
-     * Submitter phone number.
+     * The phone number of the submitter.
      */
     phone: string | null;
     /**
-     * Submitter's submission status.
+     * The status of signing request for the submitter.
      */
     status: "completed" | "declined" | "opened" | "sent" | "awaiting";
     /**
-     * The unique applications-specific identifier
+     * Your application-specific unique string key to identify this submitter within your app.
      */
     external_id: string | null;
     /**
@@ -3741,9 +3872,12 @@ export type GetSubmittersResponse = {
     metadata: {
       [key: string]: unknown;
     };
+    /**
+     * An array of events related to the submission.
+     */
     submission_events: Array<{
       /**
-       * Unique identifier of the submission event.
+       * Submission event unique ID number.
        */
       id: number;
       /**
@@ -3784,7 +3918,7 @@ export type GetSubmittersResponse = {
       };
     }>;
     /**
-     * An array of pre-filled values for the submission.
+     * An array of pre-filled values for the submitter.
      */
     values: Array<{
       /**
@@ -3876,7 +4010,7 @@ export type AddDocumentToTemplateResponse = {
    */
   slug: string;
   /**
-   * Name of the template.
+   * The name of the template.
    */
   name: string;
   /**
@@ -3890,7 +4024,7 @@ export type AddDocumentToTemplateResponse = {
    */
   schema: Array<{
     /**
-     * Unique indentifier of attached document to the template.
+     * Unique identifier of attached document to the template.
      */
     attachment_uuid: string;
     /**
@@ -3935,11 +4069,15 @@ export type AddDocumentToTemplateResponse = {
       | "payment"
       | "phone"
       | "verification"
+      | "kba"
       | "strikethrough";
     /**
      * Indicates if the field is required.
      */
     required: boolean;
+    /**
+     * Field display preferences.
+     */
     preferences?: {
       /**
        * Font size of the field value in pixels.
@@ -4020,9 +4158,12 @@ export type AddDocumentToTemplateResponse = {
       page: number;
     }>;
   }>;
+  /**
+   * The list of submitters for the template.
+   */
   submitters: Array<{
     /**
-     * Submitter name.
+     * The name of the submitter.
      */
     name: string;
     /**
@@ -4039,11 +4180,11 @@ export type AddDocumentToTemplateResponse = {
    */
   archived_at: string | null;
   /**
-   * Date and time when the template was created.
+   * The date and time when the template was created.
    */
   created_at: string;
   /**
-   * Date and time when the template was updated.
+   * The date and time when the template was last updated.
    */
   updated_at: string;
   /**
@@ -4051,15 +4192,15 @@ export type AddDocumentToTemplateResponse = {
    */
   source: "native" | "api" | "embed";
   /**
-   * Identifier of the template in the external system.
+   * Your application-specific unique string key to identify this template within your app.
    */
   external_id: string | null;
   /**
-   * Unique identifier of the folder where the template is placed.
+   * Unique identifier of the folder where the template is located.
    */
   folder_id: number;
   /**
-   * Folder name where the template is placed.
+   * Folder name where the template is located.
    */
   folder_name: string;
   /**
@@ -4136,7 +4277,7 @@ export type CloneTemplateResponse = {
    */
   slug: string;
   /**
-   * Name of the template.
+   * The name of the template.
    */
   name: string;
   /**
@@ -4150,7 +4291,7 @@ export type CloneTemplateResponse = {
    */
   schema: Array<{
     /**
-     * Unique indentifier of attached document to the template.
+     * Unique identifier of attached document to the template.
      */
     attachment_uuid: string;
     /**
@@ -4195,11 +4336,15 @@ export type CloneTemplateResponse = {
       | "payment"
       | "phone"
       | "verification"
+      | "kba"
       | "strikethrough";
     /**
      * Indicates if the field is required.
      */
     required: boolean;
+    /**
+     * Field display preferences.
+     */
     preferences?: {
       /**
        * Font size of the field value in pixels.
@@ -4280,9 +4425,12 @@ export type CloneTemplateResponse = {
       page: number;
     }>;
   }>;
+  /**
+   * The list of submitters for the template.
+   */
   submitters: Array<{
     /**
-     * Submitter name.
+     * The name of the submitter.
      */
     name: string;
     /**
@@ -4299,11 +4447,11 @@ export type CloneTemplateResponse = {
    */
   archived_at: string | null;
   /**
-   * Date and time when the template was created.
+   * The date and time when the template was created.
    */
   created_at: string;
   /**
-   * Date and time when the template was updated.
+   * The date and time when the template was last updated.
    */
   updated_at: string;
   /**
@@ -4311,15 +4459,15 @@ export type CloneTemplateResponse = {
    */
   source: "native" | "api" | "embed";
   /**
-   * Identifier of the template in the external system.
+   * Your application-specific unique string key to identify this template within your app.
    */
   external_id: string | null;
   /**
-   * Unique identifier of the folder where the template is placed.
+   * Unique identifier of the folder where the template is located.
    */
   folder_id: number;
   /**
-   * Folder name where the template is placed.
+   * Folder name where the template is located.
    */
   folder_name: string;
   /**
@@ -4408,11 +4556,11 @@ export type CreateTemplateFromHtmlData = {
    */
   external_id?: string;
   /**
-   * The folder's name to which the template should be created.
+   * The folder's name in which the template should be created.
    */
   folder_name?: string;
   /**
-   * set to `true` to make the template available via a shared link. This will allow anyone with the link to create a submission from this template.
+   * Set to `true` to make the template available via a shared link. This will allow anyone with the link to create a submission from this template.
    */
   shared_link?: boolean;
   /**
@@ -4440,7 +4588,7 @@ export type CreateTemplateFromHtmlResponse = {
    */
   slug: string;
   /**
-   * Name of the template.
+   * The name of the template.
    */
   name: string;
   /**
@@ -4454,7 +4602,7 @@ export type CreateTemplateFromHtmlResponse = {
    */
   schema: Array<{
     /**
-     * Unique indentifier of attached document to the template.
+     * Unique identifier of attached document to the template.
      */
     attachment_uuid: string;
     /**
@@ -4499,11 +4647,15 @@ export type CreateTemplateFromHtmlResponse = {
       | "payment"
       | "phone"
       | "verification"
+      | "kba"
       | "strikethrough";
     /**
      * Indicates if the field is required.
      */
     required: boolean;
+    /**
+     * Field display preferences.
+     */
     preferences?: {
       /**
        * Font size of the field value in pixels.
@@ -4584,9 +4736,12 @@ export type CreateTemplateFromHtmlResponse = {
       page: number;
     }>;
   }>;
+  /**
+   * The list of submitters for the template.
+   */
   submitters: Array<{
     /**
-     * Submitter name.
+     * The name of the submitter.
      */
     name: string;
     /**
@@ -4603,11 +4758,11 @@ export type CreateTemplateFromHtmlResponse = {
    */
   archived_at: string | null;
   /**
-   * Date and time when the template was created.
+   * The date and time when the template was created.
    */
   created_at: string;
   /**
-   * Date and time when the template was updated.
+   * The date and time when the template was last updated.
    */
   updated_at: string;
   /**
@@ -4615,15 +4770,15 @@ export type CreateTemplateFromHtmlResponse = {
    */
   source: "native" | "api" | "embed";
   /**
-   * Identifier of the template in the external system.
+   * Your application-specific unique string key to identify this template within your app.
    */
   external_id: string | null;
   /**
-   * Unique identifier of the folder where the template is placed.
+   * Unique identifier of the folder where the template is located.
    */
   folder_id: number;
   /**
-   * Folder name where the template is placed.
+   * Folder name where the template is located.
    */
   folder_name: string;
   /**
@@ -4677,7 +4832,7 @@ export type CreateTemplateFromHtmlResponse = {
 
 export type CreateTemplateFromDocxData = {
   /**
-   * Name of the template
+   * Name of the template.
    */
   name?: string;
   /**
@@ -4685,22 +4840,29 @@ export type CreateTemplateFromDocxData = {
    */
   external_id?: string;
   /**
-   * The folder's name to which the template should be created.
+   * The folder's name in which the template should be created.
    */
   folder_name?: string;
   /**
-   * set to `true` to make the template available via a shared link. This will allow anyone with the link to create a submission from this template.
+   * Set to `true` to make the template available via a shared link. This will allow anyone with the link to create a submission from this template.
    */
   shared_link?: boolean;
+  /**
+   * An array of DOCX documents to create a template.
+   */
   documents: Array<{
     /**
      * Name of the document.
      */
     name: string;
     /**
-     * Base64-encoded content of the DOCX file or downloadable file URL
+     * Base64-encoded content of the DOCX file or downloadable file URL.
      */
     file: string;
+    /**
+     * Set to `true` to make the document dynamic. When enabled, the DOCX document content can be edited or use [[variables]] in the template editor.
+     */
+    dynamic?: boolean;
     /**
      * Fields are optional if you use {{...}} text tags to define fields in the document.
      */
@@ -4730,6 +4892,7 @@ export type CreateTemplateFromDocxData = {
         | "payment"
         | "phone"
         | "verification"
+        | "kba"
         | "strikethrough";
       /**
        * Role name of the signer.
@@ -4747,6 +4910,9 @@ export type CreateTemplateFromDocxData = {
        * Field description displayed on the signing form. Supports Markdown.
        */
       description?: string;
+      /**
+       * List of areas where the field is located in the document.
+       */
       areas?: Array<{
         /**
          * X-coordinate of the field area.
@@ -4777,6 +4943,9 @@ export type CreateTemplateFromDocxData = {
        * An array of option values for 'select' field type.
        */
       options?: Array<string>;
+      /**
+       * Field validation rules.
+       */
       validation?: {
         /**
          * HTML field validation pattern string based on https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern specification.
@@ -4799,6 +4968,9 @@ export type CreateTemplateFromDocxData = {
          */
         step?: number;
       };
+      /**
+       * Field display preferences.
+       */
       preferences?: {
         /**
          * Font size of the field value in pixels.
@@ -4863,7 +5035,7 @@ export type CreateTemplateFromDocxResponse = {
    */
   slug: string;
   /**
-   * Name of the template.
+   * The name of the template.
    */
   name: string;
   /**
@@ -4877,7 +5049,7 @@ export type CreateTemplateFromDocxResponse = {
    */
   schema: Array<{
     /**
-     * Unique indentifier of attached document to the template.
+     * Unique identifier of attached document to the template.
      */
     attachment_uuid: string;
     /**
@@ -4922,11 +5094,15 @@ export type CreateTemplateFromDocxResponse = {
       | "payment"
       | "phone"
       | "verification"
+      | "kba"
       | "strikethrough";
     /**
      * Indicates if the field is required.
      */
     required: boolean;
+    /**
+     * Field display preferences.
+     */
     preferences?: {
       /**
        * Font size of the field value in pixels.
@@ -5007,9 +5183,12 @@ export type CreateTemplateFromDocxResponse = {
       page: number;
     }>;
   }>;
+  /**
+   * The list of submitters for the template.
+   */
   submitters: Array<{
     /**
-     * Submitter name.
+     * The name of the submitter.
      */
     name: string;
     /**
@@ -5026,11 +5205,11 @@ export type CreateTemplateFromDocxResponse = {
    */
   archived_at: string | null;
   /**
-   * Date and time when the template was created.
+   * The date and time when the template was created.
    */
   created_at: string;
   /**
-   * Date and time when the template was updated.
+   * The date and time when the template was last updated.
    */
   updated_at: string;
   /**
@@ -5038,15 +5217,15 @@ export type CreateTemplateFromDocxResponse = {
    */
   source: "native" | "api" | "embed";
   /**
-   * Identifier of the template in the external system.
+   * Your application-specific unique string key to identify this template within your app.
    */
   external_id: string | null;
   /**
-   * Unique identifier of the folder where the template is placed.
+   * Unique identifier of the folder where the template is located.
    */
   folder_id: number;
   /**
-   * Folder name where the template is placed.
+   * Folder name where the template is located.
    */
   folder_name: string;
   /**
@@ -5100,11 +5279,11 @@ export type CreateTemplateFromDocxResponse = {
 
 export type CreateTemplateFromPdfData = {
   /**
-   * Name of the template
+   * Name of the template.
    */
   name?: string;
   /**
-   * The folder's name to which the template should be created.
+   * The folder's name in which the template should be created.
    */
   folder_name?: string;
   /**
@@ -5112,9 +5291,12 @@ export type CreateTemplateFromPdfData = {
    */
   external_id?: string;
   /**
-   * set to `true` to make the template available via a shared link. This will allow anyone with the link to create a submission from this template.
+   * Set to `true` to make the template available via a shared link. This will allow anyone with the link to create a submission from this template.
    */
   shared_link?: boolean;
+  /**
+   * An array of PDF documents to create a template.
+   */
   documents: Array<{
     /**
      * Name of the document.
@@ -5153,6 +5335,7 @@ export type CreateTemplateFromPdfData = {
         | "payment"
         | "phone"
         | "verification"
+        | "kba"
         | "strikethrough";
       /**
        * Role name of the signer.
@@ -5170,6 +5353,9 @@ export type CreateTemplateFromPdfData = {
        * Field description displayed on the signing form. Supports Markdown.
        */
       description?: string;
+      /**
+       * List of areas where the field is located in the document.
+       */
       areas?: Array<{
         /**
          * X-coordinate of the field area.
@@ -5200,6 +5386,9 @@ export type CreateTemplateFromPdfData = {
        * An array of option values for 'select' field type.
        */
       options?: Array<string>;
+      /**
+       * Field validation rules.
+       */
       validation?: {
         /**
          * HTML field validation pattern string based on https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern specification.
@@ -5222,6 +5411,9 @@ export type CreateTemplateFromPdfData = {
          */
         step?: number;
       };
+      /**
+       * Field display preferences.
+       */
       preferences?: {
         /**
          * Font size of the field value in pixels.
@@ -5294,7 +5486,7 @@ export type CreateTemplateFromPdfResponse = {
    */
   slug: string;
   /**
-   * Name of the template.
+   * The name of the template.
    */
   name: string;
   /**
@@ -5308,7 +5500,7 @@ export type CreateTemplateFromPdfResponse = {
    */
   schema: Array<{
     /**
-     * Unique indentifier of attached document to the template.
+     * Unique identifier of attached document to the template.
      */
     attachment_uuid: string;
     /**
@@ -5353,11 +5545,15 @@ export type CreateTemplateFromPdfResponse = {
       | "payment"
       | "phone"
       | "verification"
+      | "kba"
       | "strikethrough";
     /**
      * Indicates if the field is required.
      */
     required: boolean;
+    /**
+     * Field display preferences.
+     */
     preferences?: {
       /**
        * Font size of the field value in pixels.
@@ -5438,9 +5634,12 @@ export type CreateTemplateFromPdfResponse = {
       page: number;
     }>;
   }>;
+  /**
+   * The list of submitters for the template.
+   */
   submitters: Array<{
     /**
-     * Submitter name.
+     * The name of the submitter.
      */
     name: string;
     /**
@@ -5457,11 +5656,11 @@ export type CreateTemplateFromPdfResponse = {
    */
   archived_at: string | null;
   /**
-   * Date and time when the template was created.
+   * The date and time when the template was created.
    */
   created_at: string;
   /**
-   * Date and time when the template was updated.
+   * The date and time when the template was last updated.
    */
   updated_at: string;
   /**
@@ -5469,15 +5668,15 @@ export type CreateTemplateFromPdfResponse = {
    */
   source: "native" | "api" | "embed";
   /**
-   * Identifier of the template in the external system.
+   * Your application-specific unique string key to identify this template within your app.
    */
   external_id: string | null;
   /**
-   * Unique identifier of the folder where the template is placed.
+   * Unique identifier of the folder where the template is located.
    */
   folder_id: number;
   /**
-   * Folder name where the template is placed.
+   * Folder name where the template is located.
    */
   folder_name: string;
   /**
@@ -5547,7 +5746,7 @@ export type MergeTemplateData = {
    */
   external_id?: string;
   /**
-   * set to `true` to make the template available via a shared link. This will allow anyone with the link to create a submission from this template.
+   * Set to `true` to make the template available via a shared link. This will allow anyone with the link to create a submission from this template.
    */
   shared_link?: boolean;
   /**
@@ -5566,7 +5765,7 @@ export type MergeTemplateResponse = {
    */
   slug: string;
   /**
-   * Name of the template.
+   * The name of the template.
    */
   name: string;
   /**
@@ -5580,7 +5779,7 @@ export type MergeTemplateResponse = {
    */
   schema: Array<{
     /**
-     * Unique indentifier of attached document to the template.
+     * Unique identifier of attached document to the template.
      */
     attachment_uuid: string;
     /**
@@ -5625,11 +5824,15 @@ export type MergeTemplateResponse = {
       | "payment"
       | "phone"
       | "verification"
+      | "kba"
       | "strikethrough";
     /**
      * Indicates if the field is required.
      */
     required: boolean;
+    /**
+     * Field display preferences.
+     */
     preferences?: {
       /**
        * Font size of the field value in pixels.
@@ -5710,9 +5913,12 @@ export type MergeTemplateResponse = {
       page: number;
     }>;
   }>;
+  /**
+   * The list of submitters for the template.
+   */
   submitters: Array<{
     /**
-     * Submitter name.
+     * The name of the submitter.
      */
     name: string;
     /**
@@ -5729,11 +5935,11 @@ export type MergeTemplateResponse = {
    */
   archived_at: string | null;
   /**
-   * Date and time when the template was created.
+   * The date and time when the template was created.
    */
   created_at: string;
   /**
-   * Date and time when the template was updated.
+   * The date and time when the template was last updated.
    */
   updated_at: string;
   /**
@@ -5741,15 +5947,15 @@ export type MergeTemplateResponse = {
    */
   source: "native" | "api" | "embed";
   /**
-   * Identifier of the template in the external system.
+   * Your application-specific unique string key to identify this template within your app.
    */
   external_id: string | null;
   /**
-   * Unique identifier of the folder where the template is placed.
+   * Unique identifier of the folder where the template is located.
    */
   folder_id: number;
   /**
-   * Folder name where the template is placed.
+   * Folder name where the template is located.
    */
   folder_name: string;
   /**

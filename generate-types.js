@@ -45,7 +45,7 @@ createClient({
 
   content = result.join("\n").trim();
 
-  ["GetTemplatesData", "GetSubmittersData", "GetSubmissionsData"].forEach(
+  ["GetTemplatesData", "GetSubmittersData", "GetSubmissionsData", "GetSubmissionDocumentsData"].forEach(
     (name) => {
       content = content.replace(
         new RegExp(name, "g"),
