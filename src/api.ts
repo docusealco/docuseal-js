@@ -21,6 +21,8 @@ import {
   GetSubmissionsQuery,
   GetSubmissionsResponse,
   GetSubmissionResponse,
+  UpdateSubmissionData,
+  UpdateSubmissionResponse,
   CreateSubmissionData,
   CreateSubmissionResponse as CreateSubmissionLegacyResponse,
   CreateSubmissionsFromEmailsData,
@@ -63,6 +65,8 @@ export type {
   GetSubmissionsQuery,
   GetSubmissionsResponse,
   GetSubmissionResponse,
+  UpdateSubmissionData,
+  UpdateSubmissionResponse,
   CreateSubmissionData,
   CreateSubmissionsFromEmailsData,
   CreateSubmissionsFromEmailsResponse,
@@ -266,6 +270,13 @@ export class DocusealApi {
     data: CreateSubmissionFromDocxData,
   ): Promise<CreateSubmissionFromDocxResponse> {
     return this.http.post("/submissions/docx", data);
+  }
+
+  async updateSubmission(
+    id: number,
+    data: UpdateSubmissionData,
+  ): Promise<UpdateSubmissionResponse> {
+    return this.http.put<UpdateSubmissionResponse>(`/submissions/${id}`, data);
   }
 
   async archiveSubmission(id: number): Promise<ArchiveSubmissionResponse> {

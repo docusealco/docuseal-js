@@ -6,7 +6,7 @@ export type GetTemplatesQuery = {
    */
   after?: number;
   /**
-   * Get only archived templates instead of active ones.
+   * List only archived templates instead of active ones.
    */
   archived?: boolean;
   /**
@@ -29,6 +29,10 @@ export type GetTemplatesQuery = {
    * Filter templates based on the name partial match.
    */
   q?: string;
+  /**
+   * List templates shared with test mode.
+   */
+  shared?: boolean;
   /**
    * Filter templates by unique slug.
    */
@@ -1447,6 +1451,230 @@ export type ArchiveSubmissionResponse = {
    * Date and time when the submission was archived.
    */
   archived_at: string | null;
+};
+
+export type UpdateSubmissionData = {
+  /**
+   * The name of the submission.
+   */
+  name?: string;
+  /**
+   * The date and time when the submission will expire and no longer be available. Pass `null` to remove the expiration.
+   */
+  expire_at?: string | null;
+  /**
+   * Set `true` to archive the submission or `false` to unarchive it.
+   */
+  archived?: boolean;
+};
+
+export type UpdateSubmissionResponse = {
+  /**
+   * Submission unique ID number.
+   */
+  id: number;
+  /**
+   * Name of the document submission.
+   */
+  name?: string;
+  /**
+   * Unique slug of the submission.
+   */
+  slug: string;
+  /**
+   * The source of the submission.
+   */
+  source: "invite" | "bulk" | "api" | "embed" | "link";
+  /**
+   * The order of submitters.
+   */
+  submitters_order: "random" | "preserved";
+  /**
+   * Audit log file URL.
+   */
+  audit_log_url: string | null;
+  /**
+   * Combined PDF file URL with documents and Audit Log.
+   */
+  combined_document_url: string | null;
+  /**
+   * The date and time when the submission was created.
+   */
+  created_at: string;
+  /**
+   * The date and time when the submission was last updated.
+   */
+  updated_at: string;
+  /**
+   * The date and time when the submission was archived.
+   */
+  archived_at: string | null;
+  /**
+   * The list of submitters.
+   */
+  submitters: Array<{
+    /**
+     * Submitter unique ID number.
+     */
+    id: number;
+    /**
+     * Submission unique ID number.
+     */
+    submission_id: number;
+    /**
+     * Submitter UUID.
+     */
+    uuid: string;
+    /**
+     * The email address of the submitter.
+     */
+    email: string | null;
+    /**
+     * Unique key to be used in the form signing link and embedded form.
+     */
+    slug: string;
+    /**
+     * The date and time when the signing request was sent to the submitter.
+     */
+    sent_at: string | null;
+    /**
+     * The date and time when the submitter opened the signing form.
+     */
+    opened_at: string | null;
+    /**
+     * The date and time when the submitter completed the signing form.
+     */
+    completed_at: string | null;
+    /**
+     * The date and time when the submitter declined the signing form.
+     */
+    declined_at: string | null;
+    /**
+     * The date and time when the submitter was created.
+     */
+    created_at: string;
+    /**
+     * The date and time when the submitter was last updated.
+     */
+    updated_at: string;
+    /**
+     * The name of the submitter.
+     */
+    name: string | null;
+    /**
+     * The phone number of the submitter.
+     */
+    phone: string | null;
+    /**
+     * Your application-specific unique string key to identify this submitter within your app.
+     */
+    external_id: string | null;
+    /**
+     * The status of signing request for the submitter.
+     */
+    status: "completed" | "declined" | "opened" | "sent" | "awaiting";
+    /**
+     * An array of pre-filled values for the submitter.
+     */
+    values: Array<{
+      /**
+       * Document template field name.
+       */
+      field: string;
+      /**
+       * Pre-filled value of the field.
+       */
+      value: string | number | boolean | Array<string | number | boolean>;
+    }>;
+    /**
+     * An array of completed or signed documents by the submitter.
+     */
+    documents: Array<{
+      /**
+       * Document name.
+       */
+      name: string;
+      /**
+       * Document URL.
+       */
+      url: string;
+    }>;
+    /**
+     * The role of the submitter in the signing process.
+     */
+    role: string;
+  }>;
+  template?: {
+    /**
+     * Unique identifier of the document template.
+     */
+    id: number;
+    /**
+     * The name of the template.
+     */
+    name: string;
+    /**
+     * Your application-specific unique string key to identify this template within your app.
+     */
+    external_id: string | null;
+    /**
+     * Folder name where the template is located.
+     */
+    folder_name: string;
+    /**
+     * The date and time when the template was created.
+     */
+    created_at: string;
+    /**
+     * The date and time when the template was last updated.
+     */
+    updated_at: string;
+  };
+  created_by_user: {
+    /**
+     * Unique identifier of the user who created the submission.
+     */
+    id: number;
+    /**
+     * The first name of the user who created the submission.
+     */
+    first_name: string;
+    /**
+     * The last name of the user who created the submission.
+     */
+    last_name: string;
+    /**
+     * The email address of the user who created the submission.
+     */
+    email: string;
+  } | null;
+  /**
+   * An array of completed or signed documents of the submission.
+   */
+  documents: Array<{
+    /**
+     * Document name.
+     */
+    name: string;
+    /**
+     * Document URL.
+     */
+    url: string;
+  }>;
+  /**
+   * The status of the submission.
+   */
+  status: "completed" | "declined" | "expired" | "pending";
+  /**
+   * Object with custom metadata.
+   */
+  metadata: {
+    [key: string]: unknown;
+  };
+  /**
+   * The date and time when the submission was completed.
+   */
+  completed_at: string | null;
 };
 
 export type GetSubmissionDocumentsQuery = {
