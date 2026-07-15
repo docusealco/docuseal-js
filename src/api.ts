@@ -15,8 +15,8 @@ import {
   CloneTemplateResponse,
   UpdateTemplateData,
   UpdateTemplateResponse,
-  AddDocumentToTemplateData,
-  AddDocumentToTemplateResponse,
+  UpdateTemplateDocumentsData,
+  UpdateTemplateDocumentsResponse,
   ArchiveTemplateResponse,
   GetSubmissionsQuery,
   GetSubmissionsResponse,
@@ -59,8 +59,10 @@ export type {
   CloneTemplateResponse,
   UpdateTemplateData,
   UpdateTemplateResponse,
-  AddDocumentToTemplateData,
-  AddDocumentToTemplateResponse,
+  UpdateTemplateDocumentsData,
+  UpdateTemplateDocumentsData as AddDocumentToTemplateData,
+  UpdateTemplateDocumentsResponse,
+  UpdateTemplateDocumentsResponse as AddDocumentToTemplateResponse,
   ArchiveTemplateResponse,
   GetSubmissionsQuery,
   GetSubmissionsResponse,
@@ -96,7 +98,7 @@ export type DocusealConfig = {
 export type CreateSubmissionResponse = {
   id: number;
   submitters: CreateSubmissionLegacyResponse;
-  expired_at: string | null;
+  expire_at: string | null;
   created_at: string;
 }
 
@@ -205,9 +207,9 @@ export class DocusealApi {
 
   async updateTemplateDocuments(
     id: number,
-    data: AddDocumentToTemplateData,
-  ): Promise<AddDocumentToTemplateResponse> {
-    return this.http.put<AddDocumentToTemplateResponse>(
+    data: UpdateTemplateDocumentsData,
+  ): Promise<UpdateTemplateDocumentsResponse> {
+    return this.http.put<UpdateTemplateDocumentsResponse>(
       `/templates/${id}/documents`,
       data,
     );

@@ -45,6 +45,13 @@ createClient({
 
   content = result.join("\n").trim();
 
+  // components spec: request bodies are $refs, so Data types come out as
+  // `{ body: XRequest }` wrappers - unwrap them to the request type itself
+  content = content.replace(
+    /export\s+type\s+(\w+Data)\s*=\s*{\s*body\??:\s*(\w+);?\s*};?/g,
+    "export type $1 = $2;",
+  );
+
   ["GetTemplatesData", "GetSubmittersData", "GetSubmissionsData", "GetSubmissionDocumentsData"].forEach(
     (name) => {
       content = content.replace(
