@@ -924,7 +924,7 @@ export type Field = {
   /**
    * Field name.
    */
-  name: string;
+  name: string | null;
   /**
    * Type of the field (e.g., text, signature, date, initials).
    */
@@ -932,12 +932,12 @@ export type Field = {
   /**
    * Indicates if the field is required.
    */
-  required: boolean;
+  required?: boolean;
   preferences?: FieldPreferences;
   /**
    * List of areas where the field is located in the document.
    */
-  areas: Array<FieldArea>;
+  areas?: Array<FieldArea>;
 };
 
 export enum FieldAlign {
@@ -1075,7 +1075,7 @@ export type FieldValue = {
   /**
    * Pre-filled value of the field.
    */
-  value: string | number | boolean | Array<string | number | boolean>;
+  value: string | number | boolean | Array<string | number | boolean> | null;
 };
 
 export type FormCompletedEvent = {
@@ -1383,7 +1383,7 @@ export type Submission = {
    */
   submitters: Array<SubmissionSubmitter>;
   template?: TemplateSummary;
-  created_by_user?: User;
+  created_by_user: User | null;
   /**
    * An array of events related to the submission.
    */
@@ -1630,7 +1630,7 @@ export type SubmissionListItem = {
    */
   submitters: Array<SubmitterSummary>;
   template?: TemplateSummary;
-  created_by_user?: User;
+  created_by_user: User | null;
 };
 
 export enum SubmissionSource {
@@ -1791,7 +1791,7 @@ export type SubmissionUpdateResult = {
    */
   submitters: Array<SubmissionSubmitter>;
   template?: TemplateSummary;
-  created_by_user?: User;
+  created_by_user: User | null;
   /**
    * An array of completed or signed documents of the submission.
    */
@@ -1879,7 +1879,7 @@ export type Submitter = {
   preferences: {
     [key: string]: unknown;
   };
-  template: SubmitterTemplate;
+  template: SubmitterTemplate | null;
   /**
    * An array of events related to the submission.
    */
@@ -2664,11 +2664,11 @@ export type User = {
   /**
    * The first name of the user.
    */
-  first_name: string;
+  first_name: string | null;
   /**
    * The last name of the user.
    */
-  last_name: string;
+  last_name: string | null;
   /**
    * The email address of the user.
    */
