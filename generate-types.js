@@ -5,13 +5,7 @@ createClient({
   client: "@hey-api/client-fetch",
   input: "https://console.docuseal.com/openapi.yml",
   output: "src/temps",
-  plugins: [
-    ...defaultPlugins,
-    {
-      enums: "typescript",
-      name: "@hey-api/typescript",
-    },
-  ],
+  plugins: [...defaultPlugins],
 }).then(() => {
   const filePath = "./src/temps/types.gen.ts";
   let content = fs.readFileSync(filePath, "utf8");

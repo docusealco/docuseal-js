@@ -841,15 +841,7 @@ export type CreateTemplateFromPdfRequest = {
      */
     remove_tags?: boolean;
 };
-export declare enum Currency {
-    USD = "USD",
-    EUR = "EUR",
-    GBP = "GBP",
-    CAD = "CAD",
-    AUD = "AUD",
-    CHF = "CHF",
-    SEK = "SEK"
-}
+export type Currency = "USD" | "EUR" | "GBP" | "CAD" | "AUD" | "CHF" | "SEK";
 /**
  * Default value of the field. Use base64 encoded file or a public URL to the image file to set default signature or image fields.
  */
@@ -865,19 +857,7 @@ export type Document = {
      */
     url: string;
 };
-export declare enum EventType {
-    FORM_VIEWED = "form.viewed",
-    FORM_STARTED = "form.started",
-    FORM_COMPLETED = "form.completed",
-    FORM_DECLINED = "form.declined",
-    SUBMISSION_CREATED = "submission.created",
-    SUBMISSION_COMPLETED = "submission.completed",
-    SUBMISSION_EXPIRED = "submission.expired",
-    SUBMISSION_ARCHIVED = "submission.archived",
-    TEMPLATE_CREATED = "template.created",
-    TEMPLATE_UPDATED = "template.updated",
-    TEMPLATE_ARCHIVED = "template.archived"
-}
+export type EventType = "form.viewed" | "form.started" | "form.completed" | "form.declined" | "submission.created" | "submission.completed" | "submission.expired" | "submission.archived" | "template.created" | "template.updated" | "template.archived";
 export type Field = {
     /**
      * Unique identifier of the field.
@@ -905,11 +885,7 @@ export type Field = {
      */
     areas?: Array<FieldArea>;
 };
-export declare enum FieldAlign {
-    LEFT = "left",
-    CENTER = "center",
-    RIGHT = "right"
-}
+export type FieldAlign = "left" | "center" | "right";
 export type FieldArea = {
     /**
      * X coordinate of the area where the field is located in the document.
@@ -936,16 +912,8 @@ export type FieldArea = {
      */
     page: number;
 };
-export declare enum FieldFont {
-    TIMES = "Times",
-    HELVETICA = "Helvetica",
-    COURIER = "Courier"
-}
-export declare enum FieldFontType {
-    BOLD = "bold",
-    ITALIC = "italic",
-    BOLD_ITALIC = "bold_italic"
-}
+export type FieldFont = "Times" | "Helvetica" | "Courier";
+export type FieldFontType = "bold" | "italic" | "bold_italic";
 /**
  * Field display preferences.
  */
@@ -999,32 +967,8 @@ export type FieldPreferences = {
      */
     reasons?: Array<string> | null;
 };
-export declare enum FieldType {
-    HEADING = "heading",
-    TEXT = "text",
-    SIGNATURE = "signature",
-    INITIALS = "initials",
-    DATE = "date",
-    NUMBER = "number",
-    IMAGE = "image",
-    CHECKBOX = "checkbox",
-    MULTIPLE = "multiple",
-    FILE = "file",
-    RADIO = "radio",
-    SELECT = "select",
-    CELLS = "cells",
-    STAMP = "stamp",
-    PAYMENT = "payment",
-    PHONE = "phone",
-    VERIFICATION = "verification",
-    KBA = "kba",
-    STRIKETHROUGH = "strikethrough"
-}
-export declare enum FieldValign {
-    TOP = "top",
-    CENTER = "center",
-    BOTTOM = "bottom"
-}
+export type FieldType = "heading" | "text" | "signature" | "initials" | "date" | "number" | "image" | "checkbox" | "multiple" | "file" | "radio" | "select" | "cells" | "stamp" | "payment" | "phone" | "verification" | "kba" | "strikethrough";
+export type FieldValign = "top" | "center" | "bottom";
 export type FieldValue = {
     /**
      * Document template field name.
@@ -1237,19 +1181,7 @@ export type MergeTemplateRequest = {
      */
     roles?: Array<string>;
 };
-export declare enum PageSize {
-    LETTER = "Letter",
-    LEGAL = "Legal",
-    TABLOID = "Tabloid",
-    LEDGER = "Ledger",
-    A0 = "A0",
-    A1 = "A1",
-    A2 = "A2",
-    A3 = "A3",
-    A4 = "A4",
-    A5 = "A5",
-    A6 = "A6"
-}
+export type PageSize = "Letter" | "Legal" | "Tabloid" | "Ledger" | "A0" | "A1" | "A2" | "A3" | "A4" | "A5" | "A6";
 export type Pagination = {
     /**
      * Items count.
@@ -1467,26 +1399,7 @@ export type SubmissionEvent = {
         [key: string]: unknown;
     };
 };
-export declare enum SubmissionEventType {
-    SEND_EMAIL = "send_email",
-    BOUNCE_EMAIL = "bounce_email",
-    COMPLAINT_EMAIL = "complaint_email",
-    SEND_REMINDER_EMAIL = "send_reminder_email",
-    SEND_SMS = "send_sms",
-    SEND_2FA_SMS = "send_2fa_sms",
-    OPEN_EMAIL = "open_email",
-    CLICK_EMAIL = "click_email",
-    CLICK_SMS = "click_sms",
-    PHONE_VERIFIED = "phone_verified",
-    START_FORM = "start_form",
-    START_VERIFICATION = "start_verification",
-    COMPLETE_VERIFICATION = "complete_verification",
-    VIEW_FORM = "view_form",
-    INVITE_PARTY = "invite_party",
-    COMPLETE_FORM = "complete_form",
-    DECLINE_FORM = "decline_form",
-    API_COMPLETE_FORM = "api_complete_form"
-}
+export type SubmissionEventType = "send_email" | "bounce_email" | "complaint_email" | "send_reminder_email" | "send_sms" | "send_2fa_sms" | "open_email" | "click_email" | "click_sms" | "phone_verified" | "start_form" | "start_verification" | "complete_verification" | "view_form" | "invite_party" | "complete_form" | "decline_form" | "api_complete_form";
 export type SubmissionExpiredEvent = {
     /**
      * The event type.
@@ -1568,19 +1481,8 @@ export type SubmissionListItem = {
     template?: TemplateSummary;
     created_by_user: User | null;
 };
-export declare enum SubmissionSource {
-    INVITE = "invite",
-    BULK = "bulk",
-    API = "api",
-    EMBED = "embed",
-    LINK = "link"
-}
-export declare enum SubmissionStatus {
-    COMPLETED = "completed",
-    DECLINED = "declined",
-    EXPIRED = "expired",
-    PENDING = "pending"
-}
+export type SubmissionSource = "invite" | "bulk" | "api" | "embed" | "link";
+export type SubmissionStatus = "completed" | "declined" | "expired" | "pending";
 export type SubmissionSubmitter = {
     /**
      * Submitter unique ID number.
@@ -1918,17 +1820,8 @@ export type SubmitterList = {
     data?: Array<Submitter>;
     pagination?: Pagination;
 };
-export declare enum SubmittersOrder {
-    RANDOM = "random",
-    PRESERVED = "preserved"
-}
-export declare enum SubmitterStatus {
-    COMPLETED = "completed",
-    DECLINED = "declined",
-    OPENED = "opened",
-    SENT = "sent",
-    AWAITING = "awaiting"
-}
+export type SubmittersOrder = "random" | "preserved";
+export type SubmitterStatus = "completed" | "declined" | "opened" | "sent" | "awaiting";
 export type SubmitterSummary = {
     /**
      * Submitter unique ID number.
@@ -2258,11 +2151,7 @@ export type TemplateList = {
     data: Array<Template>;
     pagination: Pagination;
 };
-export declare enum TemplateSource {
-    NATIVE = "native",
-    API = "api",
-    EMBED = "embed"
-}
+export type TemplateSource = "native" | "api" | "embed";
 export type TemplateSubmitter = {
     /**
      * The name of the submitter.
